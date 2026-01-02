@@ -1,5 +1,12 @@
 ## Project Structure
+### src/
+For .c files that get injected into covecaves
 
+### asm/
+Generally for hooks, but can be for small asm patches
 
-## Project Paradigm
-When you add a symbol for V1.0, try to find it in V1.1 and sync the build versions.
+### symbols/
+For the 1.0 and 1.1 differing symbol addresses
+
+### include/
+For headers
