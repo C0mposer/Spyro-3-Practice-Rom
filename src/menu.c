@@ -20,10 +20,8 @@ MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0
 // Menu Logic
 void UpdateMenu(Menu* menu)
 {
-    //printf_syscall("--- Update Menu ---\n");
     if (isButtonPressed == TRIANGLE_BUTTON && !menu->is_open)
     {
-        //printf_syscall("UpdateMenu: OPENING\n");
         menu->is_open = true;
         gamestate = fireworksMatrixCutscene;
     }
@@ -120,19 +118,3 @@ void AddMenuElement(Menu* menu, MenuElement element)
 
     menu->amount_of_elements++;
 }
-
-
-
-// MenuElement CreateToggleMenuElement(const char* off_text, const char* on_text)
-// {
-//     MenuElement temp = { 0 };
-
-//     temp.type = MENU_TYPE_TOGGLE;
-//     temp.enabled = false;
-
-//     temp.text[0] = off_text;
-//     temp.text[1] = on_text;
-
-//     return temp;
-
-// }
