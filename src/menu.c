@@ -10,7 +10,7 @@ Menu main_menu = { .title = "* Waffle Menu v1.0 *", .x1 = 114, .x2 = 400, .y1 = 
 
 MenuElement vibration_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Vibration Off", .text[1] = "Vibration On" };
 MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Rose Toy Off", .text[1] = "Rose Toy On" };
-MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Dereklander Chatmode Off", .text[1] = "Dereklander Chatmode On" };
+MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "My Balls Don't Itch", .text[1] = "My Balls Do Itch" };
 
 
 

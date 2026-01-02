@@ -1,7 +1,11 @@
 #ifndef MENU_H
 #define MENU_H
 
-enum
+#define UNSELECTED_COLOR 0x4,
+#define SELECTED_COLOR 0x6
+
+// Enums
+enum MenuTypes
 {
     MENU_TYPE_TOGGLE,
     MENU_TYPE_MULTI
@@ -9,16 +13,12 @@ enum
 
 enum
 {
-    UNSELECTED_COLOR = 0x4,
-    SELECTED_COLOR = 0x6
-};
-
-enum
-{
     VIBRATION_TOGGLE,
-    ROSETOY_TOGGLE,
+    BALLS_TOGGLE,
+    CHEAT_TOGGLE
 };
 
+// Scructs
 struct MenuElement
 {
     const char* text[16];
@@ -27,8 +27,6 @@ struct MenuElement
     int type;
 };
 typedef struct MenuElement MenuElement;
-
-
 
 struct Menu
 {
@@ -44,7 +42,14 @@ struct Menu
 };
 typedef struct Menu Menu;
 
+// Prototypes
 void UpdateMenu(Menu* menu);
 void AddMenuElement(Menu* menu, MenuElement element);
+
+// Include these global menu's and menu elements with anything that includes menu.h
+extern Menu main_menu;
+extern MenuElement vibration_toggle;
+extern MenuElement balls_toggle;
+extern MenuElement cheat_toggle;
 
 #endif /* MENU_H */

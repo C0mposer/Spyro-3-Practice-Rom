@@ -5,12 +5,6 @@
 #include <gamestates.h>
 #include <menu.h>
 
-extern Menu main_menu;
-extern MenuElement vibration_toggle;
-extern MenuElement balls_toggle;
-extern MenuElement cheat_toggle;
-
-
 
 void ModMain(void) {
     ONCE
@@ -23,7 +17,7 @@ void ModMain(void) {
     UpdateMenu(&main_menu);
 
     // Example triggers from the menu
-    if (main_menu.elements[ROSETOY_TOGGLE].enabled)
+    if (main_menu.elements[BALLS_TOGGLE].enabled)
     {
         printf_syscall("Rose Toy buzzing mmm\n");
     }
