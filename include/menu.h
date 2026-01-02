@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#define UNSELECTED_COLOR 0x4,
+#define UNSELECTED_COLOR 0x4
 #define SELECTED_COLOR 0x6
 
 // Enums
