@@ -1,0 +1,165 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "compile",
+                "Spyro 3"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build ISO",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "build",
+                "Spyro 3"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Inject into DuckStation",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "inject",
+                "Spyro 3",
+                "DuckStation"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Inject into PCSX-Redux",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "inject",
+                "Spyro 3",
+                "PCSX-Redux"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Inject into BizHawk",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "inject",
+                "Spyro 3",
+                "BizHawk"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Inject into Mednafen 1.29",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "inject",
+                "Spyro 3",
+                "Mednafen 1.29"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Inject into Mednafen 1.31",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "inject",
+                "Spyro 3",
+                "Mednafen 1.31"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain\\CLI.py",
+                "clean",
+                "Spyro 3"
+            ],
+            "options": {
+                "cwd": "C:\\Users\\torbo\\OneDrive\\Documents\\My-Documents\\Coding\\Python\\Code Injection Toolchain"
+            },
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
