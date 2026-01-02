@@ -5,9 +5,9 @@
   "currently_selected_build_index": 0,
   "build_versions": [
     {
-      "build_name": "DEFAULT_BUILD",
+      "build_name": "VERSION10",
       "platform": "PS1",
-      "symbols_file": "DEFAULT_BUILD.txt",
+      "symbols_file": "1.0.txt",
       "injection_files": [
         "SCUS_944.67"
       ],
@@ -58,6 +58,72 @@
           "name": "AutoHook_Main",
           "code_files": [
             "./asm/AutoHook_Main.s"
+          ],
+          "memory_address": "8005A654",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "4AE54",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        }
+      ],
+      "binary_patches": [],
+      "multi_patches": []
+    },
+    {
+      "build_name": "VERSION11",
+      "platform": "PS1",
+      "symbols_file": "1.1.txt",
+      "injection_files": [
+        "SCUS_944.67"
+      ],
+      "injection_file_offsets": {
+        "SCUS_944.67": "F800"
+      },
+      "injection_file_types": {
+        "SCUS_944.67": "disk"
+      },
+      "extracted_game_folder": "./.config/game_files/VERSION11",
+      "main_executable": "SCUS_944.67",
+      "source_path": "D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.1).bin",
+      "compiler_flags": "-O2",
+      "is_single_file_mode": false,
+      "single_file_path": null,
+      "section_maps": {},
+      "code_caves": [
+        {
+          "name": "PS1_Header",
+          "code_files": [
+            "./asm/syscalls.s",
+            "./src/menu.c"
+          ],
+          "memory_address": "8000c000",
+          "size": "2000",
+          "injection_file": "",
+          "injection_file_address": "",
+          "auto_calculate_injection_file_address": false,
+          "injection_type": "memory_only",
+          "enabled": true
+        },
+        {
+          "name": "debug_strings",
+          "code_files": [
+            "./src/main.c"
+          ],
+          "memory_address": "8001174C",
+          "size": "2F5",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x1F4C",
+          "auto_calculate_injection_file_address": false,
+          "injection_type": "existing_file",
+          "enabled": true
+        }
+      ],
+      "hooks": [
+        {
+          "name": "AutoHook_VERSION11",
+          "code_files": [
+            "./asm/AutoHook_VERSION11.s"
           ],
           "memory_address": "8005A654",
           "size": "0",
