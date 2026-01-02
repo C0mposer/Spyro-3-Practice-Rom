@@ -29,7 +29,8 @@
           "name": "PS1_Header",
           "code_files": [
             "./asm/syscalls.s",
-            "./src/menu.c"
+            "./src/menu.c",
+            "./src/menu_triggers.c"
           ],
           "memory_address": "8000c000",
           "size": "2000",
@@ -95,7 +96,8 @@
           "name": "PS1_Header",
           "code_files": [
             "./asm/syscalls.s",
-            "./src/menu.c"
+            "./src/menu.c",
+            "./src/menu_triggers.c"
           ],
           "memory_address": "8000c000",
           "size": "2000",

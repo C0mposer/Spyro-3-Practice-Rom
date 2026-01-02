@@ -14,8 +14,8 @@ enum MenuTypes
 enum
 {
     VIBRATION_TOGGLE,
-    BALLS_TOGGLE,
-    CHEAT_TOGGLE
+    WAFFLE_TOGGLE,
+    DEREK_TOGGLE
 };
 
 // Scructs
