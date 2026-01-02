@@ -1,0 +1,8 @@
+isButtonPressed = 0x8006e53c;
+gamestate = 0x8006e344;
+
+
+DrawTextbox = 0x8001fd00;
+DrawShadedLine = 0x8001fb74;
+DrawText = 0x8002e748;
+DrawTextCentered = 0x800202dc;
