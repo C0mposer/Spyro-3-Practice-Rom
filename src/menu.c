@@ -13,10 +13,6 @@ MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0
 MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "My Balls Don't Itch", .text[1] = "My Balls Do Itch" };
 
 
-
-
-
-
 // Menu Logic
 void UpdateMenu(Menu* menu)
 {
