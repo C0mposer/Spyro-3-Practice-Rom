@@ -25,10 +25,12 @@ void UpdateMenu(Menu* menu)
     {
         //printf_syscall("UpdateMenu: OPENING\n");
         menu->is_open = true;
+        gamestate = fireworksMatrixCutscene;
     }
     else if (isButtonPressed == TRIANGLE_BUTTON && menu->is_open)
     {
         menu->is_open = false;
+        gamestate = gameplay;
     }
 
 
