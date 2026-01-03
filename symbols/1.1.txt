@@ -1,0 +1,13 @@
+
+
+/*  
+isButtonPressed = 0x;
+gamestate = 0x;
+
+
+DrawTextbox = 0x;
+DrawShadedLine = 0x;
+DrawText = 0x;
+DrawTextCentered = 0x;
+
+*/
