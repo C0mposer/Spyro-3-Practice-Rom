@@ -49,6 +49,8 @@ void UpdateMenu(Menu* menu)
         menu->should_open = false;
 
     }
+
+    // Close the menu
     else if (menu->is_open)
     {
         if (isButtonPressed == CIRCLE_BUTTON || isButtonPressed == TRIANGLE_BUTTON)
