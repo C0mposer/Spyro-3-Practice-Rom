@@ -41,15 +41,15 @@
           "enabled": true
         },
         {
-          "name": "debug_strings",
+          "name": "CheatCodes",
           "code_files": [
             "./src/main.c"
           ],
-          "memory_address": "8001174C",
-          "size": "2F5",
+          "memory_address": "80017b7c",
+          "size": "78C",
           "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x1F4C",
-          "auto_calculate_injection_file_address": false,
+          "injection_file_address": "0x837C",
+          "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
           "enabled": true
         }
