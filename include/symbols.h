@@ -8,7 +8,7 @@
 
 
 
-extern int buttonJoker;
+extern int isButtonHeld;
 extern int isButtonPressed;
 extern int gamestate;
 extern short musicVolume;

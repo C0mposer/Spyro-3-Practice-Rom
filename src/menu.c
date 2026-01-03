@@ -21,7 +21,21 @@ MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] 
 // Menu Logic
 void UpdateMenu(Menu* menu)
 {
-    if (buttonJoker == TRIANGLE_BUTTON && !menu->is_open)
+    // If you press the combo, mark it as held, and open the menu
+    if (isButtonHeld == L2_BUTTON + R2_BUTTON + TRIANGLE_BUTTON && !menu->is_combo_held)
+    {
+        menu->should_open = true;
+        menu->is_combo_held = true;
+    }
+
+    // Don't allow to press again until fully released
+    if (isButtonHeld == 0)
+    {
+        menu->is_combo_held = false;
+    }
+
+    // Open the menu
+    if (!menu->is_open && menu->should_open)
     {
         menu->is_open = true;
         gamestate = fireworksMatrixCutscene;
@@ -31,17 +45,22 @@ void UpdateMenu(Menu* menu)
         {
             musicVolume /= 4;
         }
-        
+
+        menu->should_open = false;
+
     }
-    else if (buttonJoker == TRIANGLE_BUTTON && menu->is_open)
+    else if (menu->is_open)
     {
-        menu->is_open = false;
-        gamestate = gameplay;
-        PlaySound(7, 0, 0);
-        
-        if (musicVolume != 0)
+        if (isButtonPressed == CIRCLE_BUTTON || isButtonPressed == TRIANGLE_BUTTON)
         {
-            musicVolume *= 4;
+            menu->is_open = false;
+            gamestate = gameplay;
+            PlaySound(7, 0, 0);
+
+            if (musicVolume != 0)
+            {
+                musicVolume *= 4;
+            }
         }
     }
 

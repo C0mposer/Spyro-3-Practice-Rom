@@ -31,6 +31,8 @@ typedef struct MenuElement MenuElement;
 struct Menu
 {
     const char* title;
+    bool should_open;
+    bool is_combo_held;
     bool is_open;
     MenuElement elements[16];
     int amount_of_elements;
