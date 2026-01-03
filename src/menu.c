@@ -25,13 +25,13 @@ void UpdateMenu(Menu* menu)
     {
         menu->is_open = true;
         gamestate = fireworksMatrixCutscene;
-        PlaySound(14,0,0);
+        PlaySound(14, 0, 0);
     }
     else if (isButtonPressed == TRIANGLE_BUTTON && menu->is_open)
     {
         menu->is_open = false;
         gamestate = gameplay;
-        PlaySound(7,0,0);
+        PlaySound(7, 0, 0);
     }
 
 
@@ -84,11 +84,11 @@ void UpdateMenuElements(Menu* menu)
         if (isButtonPressed == RIGHT_BUTTON && !menu->elements[menu->current_selection].enabled)
         {
             menu->elements[menu->current_selection].enabled = true;
-            PlaySound(11,0,0);
+            PlaySound(11, 0, 0);
         }
         else if (isButtonPressed == LEFT_BUTTON && menu->elements[menu->current_selection].enabled)
         {
-            PlaySound(11,0,0);
+            PlaySound(11, 0, 0);
             menu->elements[menu->current_selection].enabled = false;
 
         }
@@ -97,16 +97,16 @@ void UpdateMenuElements(Menu* menu)
         if (isButtonPressed == UP_BUTTON && menu->current_selection > 0)
         {
             menu->current_selection--;
-            PlaySound(10,0,0);
+            PlaySound(10, 0, 0);
             if (menu->current_selection < 0)
             {
                 menu->current_selection = 0;
             }
         }
-        if (isButtonPressed == DOWN_BUTTON && menu->current_selection < (menu->amount_of_elements - 1))
+        else if (isButtonPressed == DOWN_BUTTON && menu->current_selection < (menu->amount_of_elements - 1))
         {
             menu->current_selection++;
-            PlaySound(10,0,0);
+            PlaySound(10, 0, 0);
             if (menu->current_selection > 15)
             {
                 menu->current_selection = 16;
