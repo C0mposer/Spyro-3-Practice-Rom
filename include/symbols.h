@@ -21,7 +21,7 @@ void DrawTextCentered(const char* text, int x, int y, int color);
 extern void DrawText(byte *text,int x,short y,int colour,int *unkptr);
 
 
-
+int PlaySound(int param_1,int param_2,byte param_3);
 
 
 

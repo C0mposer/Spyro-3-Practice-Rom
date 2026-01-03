@@ -9,8 +9,13 @@
 Menu main_menu = { .title = "* Waffle Menu v1.0 *", .x1 = 114, .x2 = 400, .y1 = 60, .y2 = 180, .amount_of_elements = 0, .current_selection = 0 };
 
 MenuElement vibration_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Vibration Off", .text[1] = "Vibration On" };
-MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Waffle's Server is Off", .text[1] = "Waffle's Server is On" };
-MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "My Balls Don't Itch", .text[1] = "My Balls Do Itch" };
+MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Rose Toy Off", .text[1] = "Rose Toy On" };
+MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Dereklander Chatmode Off", .text[1] = "Dereklander Chatmode On" };
+MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] = "Squirt machine off", .text[1] = "Squirt machine on!!**" };
+
+
+
+
 
 
 // Menu Logic
@@ -20,11 +25,13 @@ void UpdateMenu(Menu* menu)
     {
         menu->is_open = true;
         gamestate = fireworksMatrixCutscene;
+        PlaySound(14,0,0);
     }
     else if (isButtonPressed == TRIANGLE_BUTTON && menu->is_open)
     {
         menu->is_open = false;
         gamestate = gameplay;
+        PlaySound(7,0,0);
     }
 
 
@@ -74,35 +81,35 @@ void UpdateMenuElements(Menu* menu)
         }
 
         // Update Selection
-        if (isButtonPressed == RIGHT_BUTTON)
+        if (isButtonPressed == RIGHT_BUTTON && !menu->elements[menu->current_selection].enabled)
         {
             menu->elements[menu->current_selection].enabled = true;
+            PlaySound(11,0,0);
         }
-        else if (isButtonPressed == LEFT_BUTTON)
+        else if (isButtonPressed == LEFT_BUTTON && menu->elements[menu->current_selection].enabled)
         {
+            PlaySound(11,0,0);
             menu->elements[menu->current_selection].enabled = false;
+
         }
 
         // Change selection
-        if (isButtonPressed == UP_BUTTON)
+        if (isButtonPressed == UP_BUTTON && menu->current_selection > 0)
         {
             menu->current_selection--;
+            PlaySound(10,0,0);
             if (menu->current_selection < 0)
             {
                 menu->current_selection = 0;
             }
         }
-        if (isButtonPressed == DOWN_BUTTON)
+        if (isButtonPressed == DOWN_BUTTON && menu->current_selection < (menu->amount_of_elements - 1))
         {
             menu->current_selection++;
+            PlaySound(10,0,0);
             if (menu->current_selection > 15)
             {
                 menu->current_selection = 16;
-            }
-
-            else if (menu->current_selection > menu->amount_of_elements - 1)
-            {
-                menu->current_selection = menu->amount_of_elements - 1;
             }
         }
     }
