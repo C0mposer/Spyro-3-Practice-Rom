@@ -17,3 +17,4 @@ void ModMain(void) {
     UpdateMenu(&main_menu);
     UpdateMenuTriggers();
 }
+
