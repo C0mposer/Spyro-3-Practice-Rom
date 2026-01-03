@@ -22,7 +22,7 @@ MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] 
 void UpdateMenu(Menu* menu)
 {
     // If you press the combo, mark it as held, and open the menu
-    if (isButtonHeld == L2_BUTTON + R2_BUTTON + TRIANGLE_BUTTON && !menu->is_combo_held)
+    if (isButtonHeld == L2_BUTTON + R2_BUTTON + TRIANGLE_BUTTON && !menu->is_combo_held && !menu->is_open)
     {
         menu->should_open = true;
         menu->is_combo_held = true;
