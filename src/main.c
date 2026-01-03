@@ -5,15 +5,6 @@
 #include <gamestates.h>
 #include <menu.h>
 
-<<<<<<< HEAD
-extern Menu main_menu;
-extern MenuElement vibration_toggle;
-extern MenuElement balls_toggle;
-extern MenuElement cheat_toggle;
-extern MenuElement test_toggle;
-
-=======
->>>>>>> 38c1baa9fbd55833da954a0e362f4c0a73853998
 
 void ModMain(void) {
     ONCE
