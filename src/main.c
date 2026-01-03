@@ -5,6 +5,11 @@
 #include <gamestates.h>
 #include <menu.h>
 
+extern Menu main_menu;
+extern MenuElement vibration_toggle;
+extern MenuElement balls_toggle;
+extern MenuElement cheat_toggle;
+extern MenuElement test_toggle;
 
 void ModMain(void) {
     ONCE
@@ -18,3 +23,4 @@ void ModMain(void) {
     UpdateMenu(&main_menu);
     UpdateMenuTriggers();
 }
+
