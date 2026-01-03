@@ -28,7 +28,7 @@ void UpdateMenu(Menu* menu)
         menu->is_combo_held = true;
     }
 
-    // Don't allow to press again until fully released
+    // Don't allow to press again until fully released to avoid looping
     if (isButtonHeld == 0)
     {
         menu->is_combo_held = false;
