@@ -3,6 +3,7 @@
 #include <syscalls.h>
 #include <buttons.h>
 #include <gamestates.h>
+#include <menu_triggers.h>
 #include <menu.h>
 
 extern Menu main_menu;
