@@ -1,6 +1,7 @@
 isButtonPressed = 0x8006e53c;
 gamestate = 0x8006e344;
-
+musicVolume = 0x8006E4AC;
+buttonJoker = 0x8006e538;
 
 DrawTextbox = 0x8001fd00;
 DrawShadedLine = 0x8001fb74;

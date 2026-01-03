@@ -21,17 +21,28 @@ MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] 
 // Menu Logic
 void UpdateMenu(Menu* menu)
 {
-    if (isButtonPressed == TRIANGLE_BUTTON && !menu->is_open)
+    if (buttonJoker == TRIANGLE_BUTTON && !menu->is_open)
     {
         menu->is_open = true;
         gamestate = fireworksMatrixCutscene;
         PlaySound(14, 0, 0);
+
+        if (musicVolume != 0)
+        {
+            musicVolume /= 4;
+        }
+        
     }
-    else if (isButtonPressed == TRIANGLE_BUTTON && menu->is_open)
+    else if (buttonJoker == TRIANGLE_BUTTON && menu->is_open)
     {
         menu->is_open = false;
         gamestate = gameplay;
         PlaySound(7, 0, 0);
+        
+        if (musicVolume != 0)
+        {
+            musicVolume *= 4;
+        }
     }
 
 

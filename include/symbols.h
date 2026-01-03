@@ -8,9 +8,10 @@
 
 
 
-
+extern int buttonJoker;
 extern int isButtonPressed;
 extern int gamestate;
+extern short musicVolume;
 
 extern void DrawTextbox(int x1,int x2,int y1,int y2);
 extern void DrawShadedLine(short x1,short y1,short x2,short y2);
