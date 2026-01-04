@@ -11,6 +11,14 @@ enum MenuTypes
     MENU_TYPE_MULTI
 };
 
+typedef enum
+{
+    MENU_STATE_CLOSED = 0,
+    MENU_STATE_OPENING,
+    MENU_STATE_OPEN,
+    MENU_STATE_CLOSING
+} MenuState;
+
 enum
 {
     VIBRATION_TOGGLE,
@@ -34,22 +42,18 @@ typedef struct MenuElement MenuElement;
 struct Menu
 {
     const char* title;
-    bool should_open;
-    bool is_combo_held;
-    bool is_open;
+    int x1, x2, y1, y2;
+
+    MenuState state;
+
     MenuElement elements[16];
     int amount_of_elements;
     int current_selection;
-    int x1;
-    int x2;
-    int y1;
-    int y2;
 };
 typedef struct Menu Menu;
 
 // Prototypes
 void UpdateMenu(Menu* menu);
-void AddMenuElement(Menu* menu, MenuElement element);
 
 // Include these global menu's and menu elements with anything that includes menu.h
 extern Menu main_menu;

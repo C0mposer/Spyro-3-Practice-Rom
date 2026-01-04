@@ -2,25 +2,25 @@
 #define gamestateS_H
 
 typedef enum gamestates {
-    gameplay = 0,
-    interacting = 1,
+    GAMEPLAY = 0,
+    INTERACTING = 1,
     unk2 = 2,
-    dying = 3,
-    paused = 4,
-    loadingCutscene = 5,
-    cutscene = 6,
-    loadingLevel = 7,
+    DYING = 3,
+    PAUSED = 4,
+    LOADING_CUTSCENE = 5,
+    CUTSCENE = 6,
+    LOADING_LEVEL = 7,
     unk8 = 8,
     unk9 = 9,
-    credits = 10,
-    mainMenu = 11,
-    menusparxUnk = 12,
-    loadingSideLevel = 13,
-    frozen = 14,
+    CREDITS = 10,
+    MAIN_MENU = 11,
+    MENU_SPARX_UNK = 12,
+    LOADING_SIDE_LEVEL = 13,
+    FROZEN_UNK = 14,
     unkF = 15,
-    fireworksMatrixCutscene = 16,
+    FROZEN = 16,
     unk11 = 17,
-    triggerCredits = 19
+    TRIGGER_CREDITS = 19
 } gamestates;
 
 #endif /* gamestateS_H */
