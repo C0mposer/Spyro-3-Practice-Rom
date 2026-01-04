@@ -7,6 +7,9 @@ spyroX = 0x80070328;
 spyroY = 0x8007032c;
 spyroZ = 0x80070330;
 spyroAngle = 0x80070334;
+analogEnabled = 0x800740c0;
+leftAnalogX = 0x80073F52;
+leftAnalogY = 0x80073F53;
 
 
 DrawTextbox = 0x8001fd00;
@@ -16,3 +19,4 @@ DrawTextCentered = 0x800202dc;
 PlaySound = 0x8003bb50;
 DrawScreenColour = 0x800200a0;
 DropGem = 0x80036a68;
+DrawTextboxSquare = 0x8001fc90;

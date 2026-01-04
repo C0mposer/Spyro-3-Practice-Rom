@@ -17,6 +17,14 @@ extern int isButtonPressed;
 extern int gamestate;
 extern short musicVolume;
 
+
+extern bool analogEnabled;
+extern byte leftAnalogX;
+extern byte leftAnalogY;
+
+
+
+void DrawTextboxSquare(short x1,short x2,short y1,short y2);
 extern void DrawTextbox(int x1,int x2,int y1,int y2);
 extern void DrawShadedLine(short x1,short y1,short x2,short y2);
 void DrawTextCentered(const char* text, int x, int y, int color);

@@ -3,6 +3,7 @@
 #include <symbols.h>
 #include "menu.h"
 #include "menu_triggers.h"
+#include <controllerviewer.h>
 
 // Update the Off/On logic
 void UpdateMenuTriggers()
@@ -40,9 +41,9 @@ void DerekTrigger()
 
 void WaffleTrigger()
 {
-    if (main_menu.elements[DEREK_TOGGLE].enabled)
+    if (!main_menu.elements[DEREK_TOGGLE].enabled)
     {
-        printf_syscall("My balls itch!\n\n");
+        ControllerViewer();
     }
     else
     {
