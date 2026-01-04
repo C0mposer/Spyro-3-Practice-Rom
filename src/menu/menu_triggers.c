@@ -3,7 +3,7 @@
 #include <symbols.h>
 #include "menu.h"
 #include "menu_triggers.h"
-#include <controllerviewer.h>
+#include "../controllerviewer.h"
 
 // Update the Off/On logic
 void UpdateMenuTriggers()

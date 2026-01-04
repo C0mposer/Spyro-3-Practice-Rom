@@ -31,7 +31,7 @@ void DrawTextCentered(const char* text, int x, int y, int color);
 void DrawScreenColour(int unk, byte R, byte G, byte B);
 
 // \* is star > is square
-extern void DrawText(byte *text,int x,short y,int colour,int *unkptr);
+extern void DrawText(const char *text,int x,short y,int colour,int *unkptr);
 
 int * DropGem(int object,uint param_2,int vec1,int vec2);
 int PlaySound(int soundID, int param_2,byte param_3);

@@ -44,7 +44,8 @@
         {
           "name": "CheatCodes",
           "code_files": [
-            "./src/main.c"
+            "./src/main.c",
+            "./src/controllerviewer.c"
           ],
           "memory_address": "80017b7c",
           "size": "78C",
