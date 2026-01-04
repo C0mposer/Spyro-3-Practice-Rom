@@ -70,6 +70,7 @@ void UpdateMenu(Menu* menu)
 
     if (menu->is_open == true)
     {
+        DrawScreenColour(1, 0xFF, 0, 0);
         DrawTextbox(menu->x1, menu->x2, menu->y1, menu->y2);
 
         int line_x1 = menu->x1 + 10;
