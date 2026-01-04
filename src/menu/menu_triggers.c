@@ -1,7 +1,7 @@
 #include <types.h>
 #include <syscalls.h>
 #include <symbols.h>
-#include <menu.h>
+#include "menu.h"
 #include "menu_triggers.h"
 
 // Update the Off/On logic

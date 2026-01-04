@@ -1,28 +1,8 @@
 #include <types.h>
 #include <symbols.h>
-#include <syscalls.h>
-#include <buttons.h>
-#include <gamestates.h>
-#include <menu_triggers.h>
-#include <menu.h>
+#include "menu/menu.h"
 
-extern Menu main_menu;
-extern MenuElement vibration_toggle;
-extern MenuElement balls_toggle;
-extern MenuElement cheat_toggle;
-extern MenuElement test_toggle;
-extern MenuElement test5_toggle;
 
 void ModMain(void) {
-    ONCE
-    {
-        AddMenuElement(&main_menu, vibration_toggle);
-        AddMenuElement(&main_menu, balls_toggle);
-        AddMenuElement(&main_menu, cheat_toggle);
-        AddMenuElement(&main_menu, test_toggle);
-        AddMenuElement(&main_menu, test5_toggle);
-    }
-
-    UpdateMenu(&main_menu);
-    UpdateMenuTriggers();
+    UpdateAllMenus();
 }

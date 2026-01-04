@@ -20,13 +20,13 @@ extern short musicVolume;
 extern void DrawTextbox(int x1,int x2,int y1,int y2);
 extern void DrawShadedLine(short x1,short y1,short x2,short y2);
 void DrawTextCentered(const char* text, int x, int y, int color);
-void DrawScreenColour(int param_1,byte param_2,byte param_3,byte param_4);
+void DrawScreenColour(int unk, byte R, byte G, byte B);
 
 // \* is star > is square
 extern void DrawText(byte *text,int x,short y,int colour,int *unkptr);
 
 int * DropGem(int object,uint param_2,int vec1,int vec2);
-int PlaySound(int param_1,int param_2,byte param_3);
+int PlaySound(int soundID, int param_2,byte param_3);
 
 
 
