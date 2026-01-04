@@ -10,7 +10,7 @@ Menu main_menu = { .title = "* Waffle Menu v1.0 *", .x1 = 114, .x2 = 400, .y1 = 
 
 MenuElement vibration_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Vibration Off", .text[1] = "Vibration On" };
 MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Rose Toy Off", .text[1] = "Rose Toy On" };
-MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Dereklander Chatmode Off", .text[1] = "Dereklander Chatmode On" };
+MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Dereklander Cheatmode Off", .text[1] = "Dereklander Cheatmode On" };
 MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] = "Squirt machine off", .text[1] = "Squirt machine on!!**" };
 
 
@@ -69,6 +69,7 @@ void UpdateMenu(Menu* menu)
 
     if (menu->is_open == true)
     {
+        DrawScreenColour(1,0xFF,0,0);
         DrawTextbox(menu->x1, menu->x2, menu->y1, menu->y2);
 
         int line_x1 = menu->x1 + 10;

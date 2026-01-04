@@ -2,9 +2,17 @@ isButtonPressed = 0x8006e53c;
 isButtonHeld = 0x8006e538;
 gamestate = 0x8006e344;
 musicVolume = 0x8006E4AC;
+lives = 0x8006c784;
+spyroX = 0x80070328;
+spyroY = 0x8007032c;
+spyroZ = 0x80070330;
+spyroAngle = 0x80070334;
+
 
 DrawTextbox = 0x8001fd00;
 DrawShadedLine = 0x8001fb74;
 DrawText = 0x8002e748;
 DrawTextCentered = 0x800202dc;
 PlaySound = 0x8003bb50;
+DrawScreenColour = 0x800200a0;
+DropGem = 0x80036a68;
