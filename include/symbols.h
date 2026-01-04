@@ -36,7 +36,7 @@ extern void DrawText(byte *text,int x,short y,int colour,int *unkptr);
 int * DropGem(int object,uint param_2,int vec1,int vec2);
 int PlaySound(int param_1,int param_2,byte param_3);
 
-
+void SetPrimitiveDrawMode(int param_1);
 
 
 
