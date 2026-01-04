@@ -22,8 +22,11 @@ enum
 struct MenuElement
 {
     const char* text[16];
-    bool enabled;
-    int selection_option;
+    union
+    {
+        bool enabled;
+        int selection_option;
+    };
     int type;
 };
 typedef struct MenuElement MenuElement;

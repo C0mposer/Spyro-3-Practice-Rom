@@ -11,6 +11,7 @@ extern MenuElement vibration_toggle;
 extern MenuElement balls_toggle;
 extern MenuElement cheat_toggle;
 extern MenuElement test_toggle;
+extern MenuElement test5_toggle;
 
 void ModMain(void) {
     ONCE
@@ -19,6 +20,7 @@ void ModMain(void) {
         AddMenuElement(&main_menu, balls_toggle);
         AddMenuElement(&main_menu, cheat_toggle);
         AddMenuElement(&main_menu, test_toggle);
+        AddMenuElement(&main_menu, test5_toggle);
     }
 
     UpdateMenu(&main_menu);

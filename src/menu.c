@@ -9,9 +9,10 @@
 Menu main_menu = { .title = "* Waffle Menu v1.0 *", .x1 = 114, .x2 = 400, .y1 = 60, .y2 = 180, .amount_of_elements = 0, .current_selection = 0 };
 
 MenuElement vibration_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Vibration Off", .text[1] = "Vibration On" };
-MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Rose Toy Off", .text[1] = "Rose Toy On" };
-MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Dereklander Chatmode Off", .text[1] = "Dereklander Chatmode On" };
-MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] = "Squirt machine off", .text[1] = "Squirt machine on!!**" };
+MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Test 2 Off", .text[1] = "Test 2 On" };
+MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = false, .text[0] = "Test 3 Off", .text[1] = "Test 3 On" };
+MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] = "Test 4 Off", .text[1] = "Test 4 On" };
+MenuElement test5_toggle = { .type = MENU_TYPE_TOGGLE, .enabled = true, .text[0] = "Test 5 Off", .text[1] = "Test 5 On" };
 
 
 
