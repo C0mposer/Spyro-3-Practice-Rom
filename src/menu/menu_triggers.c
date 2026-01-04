@@ -41,7 +41,7 @@ void DerekTrigger()
 
 void WaffleTrigger()
 {
-    if (!main_menu.elements[DEREK_TOGGLE].enabled)
+    if (main_menu.elements[DEREK_TOGGLE].enabled)
     {
         ControllerViewer();
     }
