@@ -5,8 +5,6 @@
 #include <syscalls.h>
 
 
-int test = 7;
-
 void ModMain(void) {
 UpdateAllMenus();
 }
