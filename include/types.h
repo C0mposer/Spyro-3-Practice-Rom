@@ -18,6 +18,12 @@ typedef signed short int        s16, int16_t;
 typedef unsigned int            u32, uint32_t, uint, undefined4;
 typedef signed int              s32, int32_t;
 
+typedef struct vec3 {
+    int x;
+    int y;
+    int z;
+} vec3;
+
 
 // ==================== Helper Macros ====================
 
