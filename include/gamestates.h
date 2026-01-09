@@ -1,7 +1,7 @@
-#ifndef gamestateS_H
-#define gamestateS_H
+#ifndef GAMESTATES_H
+#define GAMESTATES_H
 
-typedef enum gamestates {
+typedef enum Gamestate {
     GAMEPLAY = 0,
     INTERACTING = 1,
     unk2 = 2,
@@ -21,6 +21,6 @@ typedef enum gamestates {
     FROZEN = 16,
     unk11 = 17,
     TRIGGER_CREDITS = 19
-} gamestates;
+} Gamestate;
 
-#endif /* gamestateS_H */
+#endif /* GAMESTATES_H */

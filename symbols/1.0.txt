@@ -1,18 +1,32 @@
 isButtonPressed = 0x8006e53c;
 isButtonHeld = 0x8006e538;
 gamestate = 0x8006e344;
-musicVolume = 0x8006E4AC;
-lives = 0x8006c784;
+
+lowLevelMusicVolume = 0x8006E4AC;
+optionsMusicVolumeSlider = 0x8006C3FC;
+
 spyroX = 0x80070328;
 spyroY = 0x8007032c;
 spyroZ = 0x80070330;
 spyroAngle = 0x80070334;
+
+globalGems = 0x8006C71C;
+globalEggs = 0x8006C660;
+lives = 0x8006C784;
+
+gemsCollectedFlags = 0x80071ab0;
+eggsCollectedFlags = 0x800715bc;
+progressFlags = 0x80071570;
+skillPointFlags = 0x80066bc8;
+
 analogEnabled = 0x800740c0;
 leftAnalogX = 0x80073F52;
 leftAnalogY = 0x80073F53;
 globalTimer = 0x8006B480;
 titleScreenState = 0x8007F12C;
 
+
+memset = 0x8004e790;
 
 DrawTextbox = 0x8001fd00;
 DrawShadedLine = 0x8001fb74;

@@ -8,5 +8,6 @@
 
 void ModMain(void) {
     SkipTitleScreenUpdate();
+    MainUpdates();
     UpdateAllMenus();
 }

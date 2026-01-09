@@ -33,22 +33,22 @@ struct MenuElement
     union
     {
         bool enabled;
-        int selection_option;
+        s32 selection_option;
     };
-    int type;
+    s32 type;
 };
 typedef struct MenuElement MenuElement;
 
 struct Menu
 {
     const char* title;
-    int x1, x2, y1, y2;
+    s32 x1, x2, y1, y2;
 
     MenuState state;
 
     MenuElement elements[16];
-    int amount_of_elements;
-    int current_selection;
+    s32 amount_of_elements;
+    s32 current_selection;
 };
 typedef struct Menu Menu;
 

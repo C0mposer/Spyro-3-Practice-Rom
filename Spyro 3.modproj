@@ -32,7 +32,8 @@
             "./src/menu/menu.c",
             "./src/menu/menu_elements.c",
             "./src/menu/menu_triggers.c",
-            "./src/skip_title_screen.c"
+            "./src/skip_title_screen.c",
+            "./src/main_updates.c"
           ],
           "memory_address": "8000c000",
           "size": "2000",
@@ -83,7 +84,32 @@
           "enabled": true
         }
       ],
-      "binary_patches": [],
+      "binary_patches": [
+        {
+          "name": "the_practice_continues",
+          "code_files": [
+            "./patches/the_practice_continues.bin"
+          ],
+          "memory_address": "8001156c",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x1D6C",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "the_practice_begins",
+          "code_files": [
+            "./patches/the_practice_continues.bin"
+          ],
+          "memory_address": "80011388",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x1B88",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        }
+      ],
       "multi_patches": []
     },
     {

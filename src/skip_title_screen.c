@@ -10,14 +10,18 @@
 // artifacting. See: skip_intro_cutscenes.s for that. 
 void SkipTitleScreenUpdate(void)
 {
-    if (globalTimer > 0x580)
+    const s32 timeToSkip = 0x3F0; // If we try to go to the first cutscene too fast, the game will show a black screen for like 10 seconds. This is just like when you start a run too fast, before waiting for music.
+    const s32 offsetToLoadLevel = 0x7F;
+    const s32 timeToLoadLevel = timeToSkip + offsetToLoadLevel; // Wait for the first cutscene to load in, before loading sunrise
+
+    if (globalTimer > timeToSkip)
     {
         ONCE
         {
             titleScreenState = 0x13;
         }
     }
-    if (globalTimer > 0x5FA)
+    if (globalTimer > timeToLoadLevel)
     {
         ONCE
         {

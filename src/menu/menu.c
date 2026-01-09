@@ -51,12 +51,12 @@ static void DrawMenu(Menu* menu)
     DrawScreenColour(1, 0x20, 0, 0x40);
     DrawTextbox(menu->x1, menu->x2, menu->y1, menu->y2);
 
-    int line_x1 = menu->x1 + 10;
-    int line_y1 = menu->y1 + 20;
-    int line_x2 = menu->x2 - 10;
+    s32 line_x1 = menu->x1 + 10;
+    s32 line_y1 = menu->y1 + 20;
+    s32 line_x2 = menu->x2 - 10;
     DrawShadedLine(line_x1, line_y1, line_x2, line_y1);
 
-    int line_center = (line_x1 + line_x2) / 2;
+    s32 line_center = (line_x1 + line_x2) / 2;
     DrawTextCentered(menu->title, line_center, line_y1 - 13, 0x4);
 }
 
@@ -75,9 +75,9 @@ static void MenuStateOpening(Menu* menu)
     gamestate = FROZEN;
     PlaySound(14, 0, 0);
 
-    if (musicVolume != 0)
+    if (lowLevelMusicVolume != 0)
     {
-        musicVolume /= 4;
+        lowLevelMusicVolume /= 4;
     }
 
     menu->state = MENU_STATE_OPEN;
@@ -101,9 +101,9 @@ static void MenuStateClosing(Menu* menu)
     gamestate = GAMEPLAY;
     PlaySound(7, 0, 0);
 
-    if (musicVolume != 0)
+    if (lowLevelMusicVolume != 0)
     {
-        musicVolume *= 4;
+        lowLevelMusicVolume *= 4;
     }
 
     menu->state = MENU_STATE_CLOSED;

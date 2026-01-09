@@ -8,14 +8,14 @@ void UpdateMenuElements(Menu* menu)
 {
     if (menu->amount_of_elements > 0)
     {
-        int x1 = menu->x1;
-        int x2 = menu->x2;
+        s32 x1 = menu->x1;
+        s32 x2 = menu->x2;
 
-        int textbox_center = (x1 + x2) / 2;
-        for (int i = 0; i < menu->amount_of_elements; i++)
+        s32 textbox_center = (x1 + x2) / 2;
+        for (s32 i = 0; i < menu->amount_of_elements; i++)
         {
-            int y = menu->y1 + 20 + 5 + (14 * i);
-            int color[16];
+            s32 y = menu->y1 + 20 + 5 + (14 * i);
+            s32 color[16];
             color[i] = i == menu->current_selection ? SELECTED_COLOR : UNSELECTED_COLOR;
 
             if (menu->elements[i].type == MENU_TYPE_TOGGLE)
