@@ -1,8 +1,10 @@
 #include <types.h>
 #include <symbols.h>
+#include <buttons.h>
+#include "skip_title_screen.h"
 #include "menu/menu.h"
 
-
 void ModMain(void) {
+    SkipTitleScreenUpdate();
     UpdateAllMenus();
 }

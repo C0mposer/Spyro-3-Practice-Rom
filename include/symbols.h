@@ -22,6 +22,9 @@ extern bool analogEnabled;
 extern byte leftAnalogX;
 extern byte leftAnalogY;
 
+extern byte titleScreenState;
+extern int globalTimer;
+
 
 
 void DrawTextboxSquare(short x1,short x2,short y1,short y2);
@@ -37,6 +40,10 @@ int * DropGem(int object,uint param_2,int vec1,int vec2);
 int PlaySound(int soundID, int param_2,byte param_3);
 
 void SetPrimitiveDrawMode(int param_1);
+
+void LoadLevel(int mo, int cl);
+
+void test();
 
 
 

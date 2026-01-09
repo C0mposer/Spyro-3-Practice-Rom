@@ -31,7 +31,8 @@
             "./asm/syscalls.s",
             "./src/menu/menu.c",
             "./src/menu/menu_elements.c",
-            "./src/menu/menu_triggers.c"
+            "./src/menu/menu_triggers.c",
+            "./src/skip_title_screen.c"
           ],
           "memory_address": "8000c000",
           "size": "2000",
@@ -65,7 +66,19 @@
           "memory_address": "8005A654",
           "size": "0",
           "injection_file": "SCUS_944.67",
-          "injection_file_address": "4AE54",
+          "injection_file_address": "0x4AE54",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "SkipIntroCutscenes",
+          "code_files": [
+            "./asm/skip_intro_cutscenes.s"
+          ],
+          "memory_address": "80077a3c",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x6823C",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }

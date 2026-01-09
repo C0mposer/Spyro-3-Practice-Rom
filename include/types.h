@@ -9,6 +9,13 @@
 #include <stdbool.h>
 #endif
 
+typedef struct
+{
+    int x;
+    int y;
+    int z;
+} Vec3;
+
 // ==================== Type Definitions ====================
 
 typedef unsigned char           u8, uint8_t, byte, uchar, undefined1;
@@ -35,7 +42,7 @@ typedef signed int              s32, int32_t;
 
 // Run code once per function call
 #define ONCE     static bool _has_run = false;     if (!_has_run && (_has_run = true))
-    
+
 // Run code every X frames (function calls)
 #define COOLDOWN(x)     static int _cooldown = 0;     if (_cooldown++ % x == 0)
 
@@ -56,5 +63,5 @@ typedef signed int              s32, int32_t;
 
 #define BL_HOOK(address, ...)
 
-#endif // TYPES_H
+#endif /* TYPES_H */
 

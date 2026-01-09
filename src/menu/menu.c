@@ -14,8 +14,7 @@ Menu main_menu = { .title = "* Waffle Menu v1.0 *",
                    .y1 = 60,
                    .y2 = 180,
                    .amount_of_elements = 0,
-                   .current_selection = 0,
-                   .state = MENU_STATE_CLOSED };
+                   .current_selection = 0, };
 
 MenuElement vibration_toggle = { .type = MENU_TYPE_TOGGLE,
                                 .enabled = false,
@@ -89,7 +88,7 @@ static void MenuStateOpen(Menu* menu)
     DrawMenu(menu);
     UpdateMenuElements(menu);
 
-    // Check for button combo to start closing the menu
+    // Check for button to start closing the menu
     if (isButtonPressed == CIRCLE_BUTTON || isButtonPressed == TRIANGLE_BUTTON)
     {
         menu->state = MENU_STATE_CLOSING;

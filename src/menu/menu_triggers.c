@@ -43,7 +43,7 @@ void WaffleTrigger()
 {
     if (!main_menu.elements[DEREK_TOGGLE].enabled)
     {
-        ControllerViewer();
+        //ControllerViewer();
     }
     else
     {
