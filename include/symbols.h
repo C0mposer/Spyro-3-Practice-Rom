@@ -26,6 +26,16 @@ extern byte titleScreenState;
 extern int globalTimer;
 
 
+extern int * sunriseUpdateParticlePtr;
+char * SunriseUpdateParticles(int param_1,int param_2,vec3 *param_3,vec3 *param_4);
+
+
+
+
+
+
+
+
 
 void DrawTextboxSquare(short x1,short x2,short y1,short y2);
 extern void DrawTextbox(int x1,int x2,int y1,int y2);

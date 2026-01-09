@@ -25,3 +25,5 @@ DrawTextboxSquare = 0x8001fc90;
 SetPrimitiveDrawMode = 0x8001fabc;
 
 LoadLevel = 0x800584bc;
+SunriseUpdateParticles = 0x80086960;
+sunriseUpdateParticlePtr = 0x800742e4;
