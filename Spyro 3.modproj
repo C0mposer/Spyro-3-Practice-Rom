@@ -35,7 +35,7 @@
             "./src/skip_title_screen.c",
             "./src/main_updates.c"
           ],
-          "memory_address": "8000c000",
+          "memory_address": "8000C000",
           "size": "2000",
           "injection_file": "",
           "injection_file_address": "",

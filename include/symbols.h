@@ -9,16 +9,25 @@ extern s32 spyroY;
 extern s32 spyroZ;
 extern s32 spyroAngle;
 
+extern Vec3 respawnPosition; //1.0: 0x8006D0AC
+extern u32 respawnAngle;
+
 extern u32 gamestate;
 
 extern u32 globalGems;
 extern u32 globalEggs;
 extern u32 lives;
 
+extern u32 levelID;
+extern u32 subLevelID;
+
 extern u8 gemsCollectedFlags[0x500];
 extern u8 eggsCollectedFlags[0xF8];
 extern u8 progressFlags[0x4C];
 extern u8 skillPointFlags[0x14];
+extern u8 hasEnteredLevelFlags[0x40]; // Bytes
+
+extern u32 upgradeFlags;
 
 extern u32 isButtonHeld;
 extern u32 isButtonPressed;
@@ -34,7 +43,7 @@ extern s32 globalTimer;
 extern s32 * sunriseUpdateParticlePtr;
 
 
-void* memset(void* dest, u8 value, u32 size);
+void* memset(void* dest, u32 value, u32 size);
 
 void DrawTextboxSquare(s16 x1, s16 x2, s16 y1, s16 y2);
 extern void DrawTextbox(s32 x1, s32 x2, s32 y1, s32 y2);
@@ -55,7 +64,7 @@ void LoadLevel(s32 mo, s32 cl);
 void test();
 char * SunriseUpdateParticles(s32 param_1, s32 param_2, Vec3 *param_3, Vec3 *param_4);
 
-
+void Vec3Copy(Vec3* out, Vec3* in);
 
 #endif //SYMBOLS_H
 

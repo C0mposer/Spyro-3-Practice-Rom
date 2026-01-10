@@ -1,5 +1,6 @@
 isButtonPressed = 0x8006e53c;
 isButtonHeld = 0x8006e538;
+
 gamestate = 0x8006e344;
 
 lowLevelMusicVolume = 0x8006E4AC;
@@ -10,14 +11,23 @@ spyroY = 0x8007032c;
 spyroZ = 0x80070330;
 spyroAngle = 0x80070334;
 
+respawnPosition = 0x8006D0AC;
+respawnAngle = 0x8006D0B8;
+
 globalGems = 0x8006C71C;
 globalEggs = 0x8006C660;
 lives = 0x8006C784;
+
+levelID = 0x8006c7c8;
+subLevelID = 0x8006c5c8;
 
 gemsCollectedFlags = 0x80071ab0;
 eggsCollectedFlags = 0x800715bc;
 progressFlags = 0x80071570;
 skillPointFlags = 0x80066bc8;
+hasEnteredLevelFlags = 0x80071fb0;
+
+upgradeFlags = 0x8006581c;
 
 analogEnabled = 0x800740c0;
 leftAnalogX = 0x80073F52;
@@ -41,3 +51,5 @@ SetPrimitiveDrawMode = 0x8001fabc;
 LoadLevel = 0x800584bc;
 SunriseUpdateParticles = 0x80086960;
 sunriseUpdateParticlePtr = 0x800742e4;
+
+Vec3Copy = 0x8004f178;
