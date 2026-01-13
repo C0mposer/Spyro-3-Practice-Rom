@@ -40,6 +40,11 @@ typedef signed int              s32, int32_t;
 #define OFFSET_VAL(type, ptr, offset) (*(type*)((u8*)(ptr) + (offset))) // Get a value from a pointer at an offset
 #define OFFSET_PTR(type, ptr, offset) ((type*)((u8*)(ptr) + (offset)))  // Get an address of a pointer from an offset
 
+// Read/Write from a memory address without making a symbol. Good for quick tests.
+#define MEM32(addr) (*(u32*)(addr))
+#define MEM16(addr) (*(u16*)(addr))
+#define MEM8(addr)  (*(u8*)(addr))
+
 // Call a function without making a symbol. Good for quick tests
 #define CALL_FUNC(ret, addr, ...) ((ret(*)())addr)(__VA_ARGS__)
 

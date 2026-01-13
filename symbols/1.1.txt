@@ -1,13 +1,55 @@
+isButtonPressed = 0x8006e61c;
+isButtonHeld = 0x8006E618;
+
+gamestate = 0x8006e424;
+
+lowLevelMusicVolume = 0x8006e58c;
+optionsMusicVolumeSlider = 0x8006c4dc;
+
+spyroX = 0x80070408;
+spyroY = 0x8007040c;
+spyroZ = 0x80070410;
+spyroAngle = 0x80070414;
+
+respawnPosition = 0x8006d18c;
+respawnAngle = 0x8006d198;
+
+globalGems = 0x8006c7fc;
+globalEggs = 0x8006c740;
+lives = 0x8006c864;
+
+levelID = 0x8006c8a8;
+subLevelID = 0x8006c6a8;
+
+gemsCollectedFlags = 0x80071b90;
+eggsCollectedFlags = 0x8007169c;
+progressFlags = 0x80071650;
+skillPointFlags = 0x80066CA8;
+hasEnteredLevelFlags = 0x80072090;
+
+upgradeFlags = 0x800658f4;
+
+analogEnabled = 0x800741A0;
+leftAnalogX = 0x80074032;
+leftAnalogY = 0x80074033;
+globalTimer = 0x8006B560;
+titleScreenState = 0x8007F20C;
 
 
-/*  
-isButtonPressed = 0x;
-gamestate = 0x;
+memset = 0x8004e7b4;
 
+DrawTextbox = 0x8001fd24;
+DrawShadedLine = 0x8001fb98;
+DrawText = 0x8002e76c;
+DrawTextCentered = 0x80020300;
+PlaySound = 0x8003bb74;
+DrawScreenColour = 0x800200c4;
+DropGem = 0x80036a8c;
+DrawTextboxSquare = 0x8001fcb4;
+SetPrimitiveDrawMode = 0x8001fae0;
 
-DrawTextbox = 0x;
-DrawShadedLine = 0x;
-DrawText = 0x;
-DrawTextCentered = 0x;
+LoadLevel = 0x8005854c;
+Vec3Copy = 0x8004f19c;
 
-*/
+SunriseUpdateParticles = 0x0;
+sunriseUpdateParticlePtr = 0x0;

@@ -67,10 +67,10 @@ inline static void ClearCollectables(void)
     memset(skillPointFlags, 0x0, 0x14);
 
     // Reverse these eventually. These get reset on boot also, so I'm resetting them, assuming they're important.
-    memset((void*)0x800716ac, 0x0, 0xf0);
-    memset((void*)0x80066eac, 0x0, 0x30);
-    memset((void*)0x8007145c, 0x0, 0x28);
-    memset((void*)0x80070300, 0x0, 0x28);
+    // memset((void*)0x800716ac, 0x0, 0xf0);
+    // memset((void*)0x80066eac, 0x0, 0x30);
+    // memset((void*)0x8007145c, 0x0, 0x28);
+    // memset((void*)0x80070300, 0x0, 0x28);
 }
 
 inline static void UnlockAtlasWarp()

@@ -6,8 +6,9 @@
 #include <buttons.h>
 #include <syscalls.h>
 
-void ModMain(void) {
-    SkipTitleScreenUpdate();
+void ModMain(void)
+{
+    //SkipTitleScreenUpdate();
     MainUpdates();
     UpdateAllMenus();
 }

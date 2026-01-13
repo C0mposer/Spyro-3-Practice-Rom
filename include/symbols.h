@@ -59,7 +59,7 @@ s32 PlaySound(s32 soundID, s32 param_2,u8 param_3);
 
 void SetPrimitiveDrawMode(s32 param_1);
 
-void LoadLevel(s32 mo, s32 cl);
+void LoadLevel(s32 splashScreenIndex, s32 levelID);
 
 void test();
 char * SunriseUpdateParticles(s32 param_1, s32 param_2, Vec3 *param_3, Vec3 *param_4);

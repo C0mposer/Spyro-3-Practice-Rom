@@ -54,6 +54,7 @@ typedef struct Menu Menu;
 
 // Prototypes
 void UpdateMenu(Menu* menu);
+void UpdateAllMenus();
 
 // Include these global menu's and menu elements with anything that includes menu.h
 extern Menu main_menu;

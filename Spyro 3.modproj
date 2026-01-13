@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 0,
+  "currently_selected_build_index": 1,
   "build_versions": [
     {
       "build_name": "VERSION10",
@@ -33,7 +33,8 @@
             "./src/menu/menu_elements.c",
             "./src/menu/menu_triggers.c",
             "./src/skip_title_screen.c",
-            "./src/main_updates.c"
+            "./src/main_updates.c",
+            "./src/test.c"
           ],
           "memory_address": "8000C000",
           "size": "2000",
@@ -139,7 +140,9 @@
             "./asm/syscalls.s",
             "./src/menu/menu.c",
             "./src/menu/menu_elements.c",
-            "./src/menu/menu_triggers.c"
+            "./src/menu/menu_triggers.c",
+            "./src/main_updates.c",
+            "./src/skip_title_screen.c"
           ],
           "memory_address": "8000c000",
           "size": "2000",
@@ -156,8 +159,8 @@
           ],
           "memory_address": "8001174C",
           "size": "2F5",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x1F4C",
+          "injection_file": "",
+          "injection_file_address": "",
           "auto_calculate_injection_file_address": false,
           "injection_type": "existing_file",
           "enabled": true
@@ -169,10 +172,10 @@
           "code_files": [
             "./asm/AutoHook_VERSION11.s"
           ],
-          "memory_address": "8005A654",
+          "memory_address": "8005a6ec",
           "size": "0",
           "injection_file": "SCUS_944.67",
-          "injection_file_address": "4AE54",
+          "injection_file_address": "0x4AEEC",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }

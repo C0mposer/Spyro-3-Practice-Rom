@@ -8,7 +8,7 @@
 #include "menu_triggers.h"
 
 // Menu Data
-Menu main_menu = { .title = "* Waffle Menu v1.0 *",
+Menu main_menu = { .title = "* Practice Menu *",
                    .x1 = 114,
                    .x2 = 400,
                    .y1 = 60,
