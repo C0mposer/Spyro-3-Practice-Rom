@@ -6,6 +6,7 @@
 #include <upgrades.h>
 #include <hotkeys.h>
 #include "menu/menu.h"
+#include <level_ids.h>
 
 extern Vec3 savedStartingPosition;
 extern Vec3 savedStartingPositionSubLevel;
@@ -19,7 +20,7 @@ extern s32 savedSpyroYawAngle;
 extern u32 savedPositionLevelID;
 extern u32 savedPositionSubLevelID;
 
-
+extern u32 reloadSpyroTimer;
 
 inline static void SpeedUpReset(void)
 {
@@ -242,12 +243,13 @@ void ClearCollectables(void)
     memset(savedCheckpointData, 0, 0x850);
 }
 
+
 inline static void UnlockAtlasWarp()
 {
     memset(hasEnteredLevelFlags, 0x11111111, 40); // Unlock all levels in atlas
     upgradeFlags = 2; // Hacky because the overlays are encrypted, and doing the code below changes it at runtime, breaking the CRC. Fix eventually by patching the overlay directly.
 
-//     // Check if the atlas overlay is loaded. If so, nop the sparx breaking basket checks, to force atlas warp to work
+    //     // Check if the atlas overlay is loaded. If so, nop the sparx breaking basket checks, to force atlas warp to work
 //     opcode_as_u32* check_1 = ((opcode_as_u32*)0x800791DC);
 //     opcode_as_u32* check_2 = ((opcode_as_u32*)0x8007755C);
 //     bool is_check_1_loaded = *check_1 == 0x14400021;
@@ -255,17 +257,20 @@ inline static void UnlockAtlasWarp()
 
 //     //printf_syscall("check1: %X, check2: %X\n", *check_1, *check_2);
 //     if (is_check_1_loaded && is_check_2_loaded)
-//     {
-//         *check_1 = 0x0;
-//         *check_2 = 0x0;
-//     }
+//     {    
+    //         *check_1 = 0x0;
+    //         *check_2 = 0x0;
+    //     }
 }
+
+
 
 // Basic checks that should run every frame
 void MainUpdates(void)
 {
     SpeedUpReset();
     FastLoadUpdate();
+    ReloadSpyroTimerTick();
 
     if (gamestate == PAUSED)
     {
@@ -275,7 +280,8 @@ void MainUpdates(void)
     if (gamestate == GAMEPLAY || gamestate == INTERACTING)
     {
         lives = 4;
-        //Can't do this at runtime because of anti-piracy :)
+
+        //Can't do this at runtime because of anti-tamper :)
         //*((u32*)0x80049a50) = 0x0; // NOP the life decrement code during a death. Less annoying than having lives set to 4 over and over, with sfx. 
 
         SaveStartingPositionUpdate();
@@ -294,6 +300,7 @@ void MainUpdates(void)
                 fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
             }
             RespawnSpyro();
+            reloadSpyroTimer = 1; // Used for skipping frozen and fleet npc dialogues (see npc_dialogue_skip.c) 
         }
         // Restart the level from the spawn point
         else if (isButtonHeld == RELOAD_LEVEL_HOTKEY)
@@ -309,5 +316,10 @@ void MainUpdates(void)
             }
             RespawnSpyro();
         }
+    }
+
+    if (HasRecentlyLoadedSpyro())
+    {
+        CancelEntryNpcDialogue();
     }
 }

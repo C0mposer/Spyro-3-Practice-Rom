@@ -16,6 +16,7 @@ typedef signed short int        s16, int16_t;
 typedef unsigned int            u32, uint32_t, uint, undefined4;
 typedef signed int              s32, int32_t;
 typedef int opcode_as_u32;
+typedef char raw_memory_ptr;
 
 // ==================== Helper Macros ====================
 

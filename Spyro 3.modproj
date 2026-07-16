@@ -333,7 +333,8 @@
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
             "./src/disable_portal.c",
-            "./src/difficulty.c"
+            "./src/difficulty.c",
+            "./src/npc_dialogue_skip.c"
           ],
           "memory_address": "80020790",
           "size": "5DC",
@@ -431,7 +432,7 @@
           "code_files": [
             "./asm/life_decrement_patch.s"
           ],
-          "memory_address": "080049a50",
+          "memory_address": "80049a50",
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x3A250",

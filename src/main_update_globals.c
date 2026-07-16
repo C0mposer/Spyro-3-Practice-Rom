@@ -18,3 +18,5 @@ Vec3 savedSpyroPosition = { 0 };
 s32 savedSpyroYawAngle = 0;
 u32 savedPositionLevelID = 0;
 u32 savedPositionSubLevelID = 0;
+
+u32 reloadSpyroTimer = 0;
