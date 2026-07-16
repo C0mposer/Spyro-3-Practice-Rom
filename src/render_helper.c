@@ -7,15 +7,16 @@
 #define JR_RA 0x03E00008
 #define NOP 0x0000000
 
+//Disabling for now because we're changing code at runtime, which is a no-no for anti-piracy :)
 void DisableRendering()
 {
-    *((u32*)RENDER_BASED_ON_FLAGS_ADDR) = JR_RA;
-    *((u32*)RENDER_BASED_ON_FLAGS_ADDR + 1) = NOP;
+    // *((u32*)RENDER_BASED_ON_FLAGS_ADDR) = JR_RA;
+    // *((u32*)RENDER_BASED_ON_FLAGS_ADDR + 1) = NOP;
 }
 
 void EnableRendering()
 {
-    *((u32*)RENDER_BASED_ON_FLAGS_ADDR) = 0x27BDFFD8;
-    *((u32*)RENDER_BASED_ON_FLAGS_ADDR + 1) = 0xAFB3001C;
+    // *((u32*)RENDER_BASED_ON_FLAGS_ADDR) = 0x27BDFFD8;
+    // *((u32*)RENDER_BASED_ON_FLAGS_ADDR + 1) = 0xAFB3001C;
 
 }

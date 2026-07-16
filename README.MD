@@ -1,8 +1,8 @@
 # Spyro 3 Practice Rom
 
-This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supports version 1.0.
+This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supports version Spyro 3 v1.0.
 
-| Supported Consoles |  |
+| Supported Consoles | Y/N |
 |----|:--:|
 | PS1 | ✔️ |
 | PS2 | ✔️ |
@@ -33,7 +33,7 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 
 ## Downloads
 > [!IMPORTANT]
-> Download the right version for your platform
+> Download the right version for your platform, or the game will not boot
 
 Download for PS1 & PS1 Emulator: ---  
   

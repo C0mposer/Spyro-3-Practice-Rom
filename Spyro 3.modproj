@@ -48,16 +48,14 @@
         },
         {
           "name": "ExtraRam",
-          "code_files": [
-            "./src/display_portal_verts.c"
-          ],
+          "code_files": [],
           "memory_address": "80300000",
           "size": "100000",
           "injection_file": "",
           "injection_file_address": "",
           "auto_calculate_injection_file_address": false,
           "injection_type": "memory_only",
-          "enabled": true
+          "enabled": false
         },
         {
           "name": "PrepareHelpScreen",
@@ -66,10 +64,11 @@
             "./src/render_helper.c",
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
-            "./src/disable_portal.c"
+            "./src/disable_portal.c",
+            "./src/difficulty.c"
           ],
           "memory_address": "80020790",
-          "size": "5E0",
+          "size": "5DC",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x10F90",
           "auto_calculate_injection_file_address": true,
@@ -77,9 +76,16 @@
           "enabled": true
         },
         {
-          "name": "MainUpdateCave",
+          "name": "PS1Header",
           "code_files": [
-            "./src/main_updates.c"
+            "./src/main_updates.c",
+            "./src/difficulty_globals.c",
+            "./src/disable_portal_globals.c",
+            "./src/main_update_globals.c",
+            "./src/manual_timer_globals.c",
+            "./src/menu/menu_globals.c",
+            "./src/skip_title_screen_globals.c",
+            "./src/menu/menu_triggers_globals.c"
           ],
           "memory_address": "8000b0b8",
           "size": "800",
@@ -92,15 +98,15 @@
         {
           "name": "GameOverCave",
           "code_files": [
-            "./src/difficulty.c"
+            "./src/display_portal_verts.c"
           ],
           "memory_address": "80054af8",
-          "size": "1DC",
+          "size": "49B",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x452F8",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
-          "enabled": true
+          "enabled": false
         }
       ],
       "hooks": [
@@ -138,7 +144,7 @@
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0xED4C",
           "auto_calculate_injection_file_address": true,
-          "enabled": true
+          "enabled": false
         },
         {
           "name": "DisableOpenAtlasSelect",
@@ -149,6 +155,18 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x41728",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "LifeDecrementPatch",
+          "code_files": [
+            "./asm/life_decrement_patch.s"
+          ],
+          "memory_address": "080049a50",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x3A250",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }
@@ -298,16 +316,14 @@
         },
         {
           "name": "ExtraRam",
-          "code_files": [
-            "./src/display_portal_verts.c"
-          ],
+          "code_files": [],
           "memory_address": "80300000",
           "size": "100000",
           "injection_file": "",
           "injection_file_address": "",
           "auto_calculate_injection_file_address": false,
           "injection_type": "memory_only",
-          "enabled": true
+          "enabled": false
         },
         {
           "name": "PrepareHelpScreen",
@@ -316,10 +332,11 @@
             "./src/render_helper.c",
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
-            "./src/disable_portal.c"
+            "./src/disable_portal.c",
+            "./src/difficulty.c"
           ],
           "memory_address": "80020790",
-          "size": "5E0",
+          "size": "5DC",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x10F90",
           "auto_calculate_injection_file_address": true,
@@ -327,9 +344,16 @@
           "enabled": true
         },
         {
-          "name": "MainUpdateCave",
+          "name": "PS1Header",
           "code_files": [
-            "./src/main_updates.c"
+            "./src/main_updates.c",
+            "./src/difficulty_globals.c",
+            "./src/disable_portal_globals.c",
+            "./src/main_update_globals.c",
+            "./src/manual_timer_globals.c",
+            "./src/menu/menu_globals.c",
+            "./src/skip_title_screen_globals.c",
+            "./src/menu/menu_triggers_globals.c"
           ],
           "memory_address": "8000A918",
           "size": "800",
@@ -342,15 +366,15 @@
         {
           "name": "GameOverCave",
           "code_files": [
-            "./src/difficulty.c"
+            "./src/display_portal_verts.c"
           ],
           "memory_address": "80054af8",
-          "size": "1DC",
+          "size": "49B",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x452F8",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
-          "enabled": true
+          "enabled": false
         }
       ],
       "hooks": [
@@ -388,7 +412,7 @@
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0xED4C",
           "auto_calculate_injection_file_address": true,
-          "enabled": true
+          "enabled": false
         },
         {
           "name": "DisableOpenAtlasSelect",
@@ -399,6 +423,18 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x41728",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "LifeDecrementPatch",
+          "code_files": [
+            "./asm/life_decrement_patch.s"
+          ],
+          "memory_address": "080049a50",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x3A250",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }

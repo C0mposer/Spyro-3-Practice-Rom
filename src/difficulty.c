@@ -5,11 +5,11 @@
 
 char* difficultyStringLUT[3] = { "Easy", "Normal", "Hard" }; // Renamed Medium to Normal for now. Conflicted on what to call it because most people only talk about "easy & hard", but really the difficulty you start at is not easy.
 
-s32 newDifficulty = DIFFICULTY_MEDIUM;
-bool difficultyJustChanged = false;
-u32 displayTimer = 0;
+extern s32 newDifficulty;
+extern bool difficultyJustChanged;
+extern u32 displayTimer;
 
-bool isButtonsCurrentlyHeld = true;
+extern bool isButtonsCurrentlyHeld;
 
 void SetDifficulty(s32 difficulty)
 {

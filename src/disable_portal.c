@@ -8,7 +8,7 @@ extern bool fastLoadInScenario;
 extern bool speedUpResetPending;
 extern TimerState timerState;
 
-bool shouldSaveTimerPortal = false;
+extern bool shouldSaveTimerPortal;
 
 JAL_HOOK(0x80040230) // Hooking the call to BeginLevelLoad in HandleTriggerCollision
 void EnterPortalPatch(void* context)

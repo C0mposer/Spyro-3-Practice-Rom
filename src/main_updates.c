@@ -7,17 +7,17 @@
 #include <hotkeys.h>
 #include "menu/menu.h"
 
-Vec3 savedStartingPosition = { 0 };
-Vec3 savedStartingPositionSubLevel = { 0 };
-u32 savedStartingAngle = 0;
-u32 savedStartingAngleSubLevel = 0;
-bool speedUpResetPending = false;
-static bool hasSavedSpyroPosition = false;
+extern Vec3 savedStartingPosition;
+extern Vec3 savedStartingPositionSubLevel;
+extern u32 savedStartingAngle;
+extern u32 savedStartingAngleSubLevel;
+extern bool speedUpResetPending;
+extern bool hasSavedSpyroPosition;
 
-static Vec3 savedSpyroPosition = { 0 };
-static s32 savedSpyroYawAngle = 0;
-static u32 savedPositionLevelID = 0;
-static u32 savedPositionSubLevelID = 0;
+extern Vec3 savedSpyroPosition;
+extern s32 savedSpyroYawAngle;
+extern u32 savedPositionLevelID;
+extern u32 savedPositionSubLevelID;
 
 
 
@@ -37,24 +37,6 @@ inline static void SpeedUpReset(void)
     }
 }
 
-// Fast Load (toggle-gated): speeds up the death/respawn scenario that both resets
-// ride. That scenario (gamestate DYING, driven by UpdateDuringFadeIn) is a 5-phase
-// menuState machine: 0 fade-out, 1 CD wait, 2 layout load, 3 setup, 4 fade-in.
-// Both modes cut the fade-out (phase 0) and the artificial wait (phase 1), and
-// neither touches the real CD read or the phase-2 moby/layout reload. They differ
-// ONLY on the fade-in, because that's where enemy cycles live:
-//
-//   FAST_LOAD_CUT_BOTH_FADES  -> saved-position teleport (L1+R1+Square, and the
-//       disabled-portal touch respawn). Also cuts the fade-in for the fastest
-//       possible reset. Cutting the fade-in drops ~16 enemy-update frames (mobys
-//       only tick in phases 3-4), so enemy cycles shift -- irrelevant when you're
-//       teleporting to an arbitrary saved spot, not practicing cycles.
-//
-//   FAST_LOAD_KEEP_FADE_IN    -> level-start reset (L1+R1+Triangle). Cuts the
-//       fade-OUT only. Phases 0-1 tick no mobys, so removing the fade-out is
-//       cycle-neutral; keeping the fade-in preserves the ~16 enemy-update frames a
-//       legit reset has, so enemy cycles stay deterministic for practicing a run
-//       from level start.
 typedef enum FastLoadFadeMode
 {
     FAST_LOAD_CUT_BOTH_FADES,
@@ -67,7 +49,7 @@ static FastLoadFadeMode fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
 
 bool FastLoadEnabled(void)
 {
-    printf_syscall("FAST_LOAD_TOGGLE = %d, Enabled = %d\n", FAST_LOAD_TOGGLE, main_menu.elements[FAST_LOAD_TOGGLE].enabled);
+    //printf_syscall("FAST_LOAD_TOGGLE = %d, Enabled = %d\n", FAST_LOAD_TOGGLE, main_menu.elements[FAST_LOAD_TOGGLE].enabled);
     return main_menu.elements[FAST_LOAD_TOGGLE].enabled != 0;
 }
 
@@ -263,19 +245,20 @@ void ClearCollectables(void)
 inline static void UnlockAtlasWarp()
 {
     memset(hasEnteredLevelFlags, 0x11111111, 40); // Unlock all levels in atlas
+    upgradeFlags = 2; // Hacky because the overlays are encrypted, and doing the code below changes it at runtime, breaking the CRC. Fix eventually by patching the overlay directly.
 
-    // Check if the atlas overlay is loaded. If so, nop the sparx breaking basket checks, to force atlas warp to work
-    opcode_as_u32* check_1 = ((opcode_as_u32*)0x800791DC);
-    opcode_as_u32* check_2 = ((opcode_as_u32*)0x8007755C);
-    bool is_check_1_loaded = *check_1 == 0x14400021;
-    bool is_check_2_loaded = *check_2 == 0x14400011;
+//     // Check if the atlas overlay is loaded. If so, nop the sparx breaking basket checks, to force atlas warp to work
+//     opcode_as_u32* check_1 = ((opcode_as_u32*)0x800791DC);
+//     opcode_as_u32* check_2 = ((opcode_as_u32*)0x8007755C);
+//     bool is_check_1_loaded = *check_1 == 0x14400021;
+//     bool is_check_2_loaded = *check_2 == 0x14400011;
 
-    printf_syscall("check1: %X, check2: %X\n", *check_1, *check_2);
-    if (is_check_1_loaded && is_check_2_loaded)
-    {
-        *check_1 = 0x0;
-        *check_2 = 0x0;
-    }
+//     //printf_syscall("check1: %X, check2: %X\n", *check_1, *check_2);
+//     if (is_check_1_loaded && is_check_2_loaded)
+//     {
+//         *check_1 = 0x0;
+//         *check_2 = 0x0;
+//     }
 }
 
 // Basic checks that should run every frame
@@ -291,8 +274,9 @@ void MainUpdates(void)
 
     if (gamestate == GAMEPLAY || gamestate == INTERACTING)
     {
-        //lives = 4;
-        *((u32*)0x80049a50) = 0x0; // NOP the life decrement code during a death. Less annoying than having lives set to 4 over and over, with sfx. 
+        lives = 4;
+        //Can't do this at runtime because of anti-piracy :)
+        //*((u32*)0x80049a50) = 0x0; // NOP the life decrement code during a death. Less annoying than having lives set to 4 over and over, with sfx. 
 
         SaveStartingPositionUpdate();
         ManualSaveSpyroPositionUpdate();

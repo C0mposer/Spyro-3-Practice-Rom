@@ -22,12 +22,11 @@ extern int g_manualTimerMode;
 extern int menu_frames_closed;
 extern bool shouldSaveTimerPortal;
 
-TimerState timerState = TIMER_RUNNING;
-Timer mainTimer;
-int mainTimerAtReset;
-char mainTimerAscii[10];
-
-bool isLoadComboPressed = false;
+extern TimerState timerState;
+extern Timer mainTimer;
+extern int mainTimerAtReset;
+extern char mainTimerAscii[10];
+extern bool isLoadComboPressed;
 
 //Math to approx adjust for 59.82hz
 void FramesToTimer(Timer* ptr_timer)
@@ -49,10 +48,6 @@ void LoadAscii(Timer* ptr_timer, char* ascii) {
 }
 
 //! Every Frame Update
-int x1 = 415;
-int x2 = 508;
-int y1 = 204;
-int y2 = 224;
 void TimerUpdate()
 {
     if (g_manualTimerMode > 0) // Is > 0, aka not off

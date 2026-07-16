@@ -11,52 +11,32 @@
 
 const char* const menu_toggle_options[2] = { "Off", "On" };
 
-static const char* const difficulty_options[] =
+const char* const difficulty_options[] =
 {
     "Easy",
     "Normal",
     "Hard"
 };
 
-static const char* const timer_options[] =
+const char* const timer_options[] =
 {
     "Off",
     "Show Select",
     "Show Always"
 };
 
-static const char* const sparx_range_options[] =
+const char* const sparx_range_options[] =
 {
     "Default",
     "Upgraded"
 };
 
 
-static MenuElement main_menu_elements[] =
-{
-    MENU_MULTI("Timer", timer_options, TIMER_OFF),
-    MENU_MULTI("Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
-    MENU_TOGGLE("Fast Reset", false),
-    MENU_TOGGLE("Disable Portal", false),
-    MENU_TOGGLE("Draw Portals", false),
-    MENU_MULTI("Sparx Range", sparx_range_options, 0),
-    MENU_TOGGLE("Basket Break", false)
-};
+extern MenuElement main_menu_elements[];
 
-Menu main_menu =
-{
-    .title = "* Practice Menu *",
-    .elements = main_menu_elements,
-    .x1 = 114,
-    .x2 = 400,
-    .y1 = 60,
-    .y2 = 190,
-    .amount_of_elements = (u8)ARRAY_SIZE(main_menu_elements),
-    .current_selection = 0,
-    .state = MENU_STATE_CLOSED
-};
+extern Menu main_menu;
 
-int menu_frames_closed = 0;
+extern int menu_frames_closed;
 
 static void DrawMenu(Menu* menu)
 {

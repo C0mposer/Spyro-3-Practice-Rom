@@ -34,33 +34,33 @@ void DifficultyTrigger()
 }
 
 // Simply creating a global to access the menu off/on state
-bool g_shouldDisablePortal;
+extern bool g_shouldDisablePortal;
 void DisablePortalTrigger()
 {
 
     g_shouldDisablePortal = main_menu.elements[DISABLE_PORTAL_TOGGLE].enabled;
 }
 
-int g_manualTimerMode;
+extern int g_manualTimerMode;
 void TimerTrigger()
 {
     g_manualTimerMode = main_menu.elements[TIMER_MULTI].selection_option;
     //DrawText("Updating", 20, 20, 1, 0);
 }
 
-SparxRangeData sparx_range_default = { 0x80E, 0x15E, 0x280 };
-SparxRangeData sparx_range_upgraded = { 0xC00, 0x3C0, 0x20D };
+const SparxRangeData sparx_range_default = { 0x80E, 0x15E, 0x280 };
+const SparxRangeData sparx_range_upgraded = { 0xC00, 0x3C0, 0x20D };
 void SparxRangeTrigger()
 {
     if (!main_menu.elements[SPARX_RANGE_TOGGLE].enabled)
     {
         game_sparx_range_data = sparx_range_default;
-        printf_syscall("Default\n");
+        //printf_syscall("Default\n");
     }
     else
     {
         game_sparx_range_data = sparx_range_upgraded;
-        printf_syscall("Upgraded\n");
+        //printf_syscall("Upgraded\n");
     }
 }
 

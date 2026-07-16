@@ -12,35 +12,19 @@
 #define WORLD_OT_BASE_OFFSET 3
 #define WORLD_OT_BUCKET_COUNT 0x580
 
-// Render-distance cull. Skip trigger triangles whose forward (view-space) depth
-// exceeds this, to cut GPU overdraw when many large trigger polys are visible.
-// Lower this if the game still hitches; raise it if portals you want disappear.
-// The OT can hold roughly up to ~0x2A000 of depth before it stops bucketing.
+// Render-distance cull: skip trigger triangles whose forward (view-space) depth
+// exceeds this, to cut GPU overdraw. Lower if the game hitches.
 #define PORTAL_MAX_RENDER_DEPTH 0x5555
 
 #define PRIMITIVE_BUFFER_MARGIN 0x400
-// TEMP: opaque for testing. 0x20 = flat opaque tri. Transparent was 0x22FF00FF.
-#define PORTAL_POLYGON_COLOR 0x20FF00FF
+#define PORTAL_POLYGON_COLOR 0x20FF00FF // 0x20 = flat opaque tri (0x22 = transparent)
 
-// Camera world position (camera.nextCameraPosCartesian / cameraY / cameraZ).
-// DrawPortalRelated transforms each vertex relative to these.
-#define CAMERA_POS_X (*(volatile s32*)0x8006E020)
-#define CAMERA_POS_Y (*(volatile s32*)0x8006E024)
-#define CAMERA_POS_Z (*(volatile s32*)0x8006E028)
-
-// DrawPortalRelated loads (worldVertex - camera) >> shift into the GTE's 16-bit
-// vertex registers. Keep the shifted magnitude comfortably under 0x7FFF so it
-// never wraps (which makes the portal repeat in world space).
-#define GTE_INPUT_SAFE_LIMIT 0x7000
-#define MAX_TRANSFORM_SHIFT 15
-
-// Semi-transparency rate (ABR) for the portal polygon. For an untextured
-// POLY_F3 the GPU takes the blend rate from the current texture-page register,
-// i.e. leftover global state from the previous OT primitive -> shimmering. We
-// pin it with our own draw-mode packet. 0 = B/2+F/2 (standard translucent),
-// 1 = B+F (additive glow), 2 = B-F, 3 = B+F/4.
-#define PORTAL_BLEND_ABR 0
-#define PORTAL_DRAW_MODE_WORD (0xE1000000u | (((u32)PORTAL_BLEND_ABR & 3u) << 5))
+// Fixed scale-shift for DrawPortalRelated: it loads (worldVertex - camera) >> shift
+// into the GTE's 16-bit vertex registers. 3 matches the game's own far-portal shift
+// and keeps camera-relative coords in range out to ~0x40000 units -- well past the
+// render-distance cull -- so portals don't repeat in world space. Bump to 4 if a
+// very distant under-map trigger ever ghosts.
+#define PORTAL_TRANSFORM_SHIFT 3
 
 typedef struct
 {
@@ -50,13 +34,6 @@ typedef struct
     u32 xy1;
     u32 xy2;
 } PolyF3;
-
-// GP0(E1h) "Draw Mode / Texture Page" packet: 1 tag word + 1 command word.
-typedef struct
-{
-    u32 tag;
-    u32 code;
-} DrawModePrim;
 
 static CollisionHeader* cached_collision;
 static u32 cached_level = (u32)-1;
@@ -75,8 +52,7 @@ static void CachePortalTriangles(void)
     cached_sublevel = subLevelID;
     portal_triangle_count = 0;
 
-    if (collision == 0 || collision->surface_types == 0 ||
-        ptr_levelRelated == 0)
+    if (collision == 0 || collision->surface_types == 0 || ptr_levelRelated == 0)
     {
         return;
     }
@@ -109,75 +85,18 @@ static void CachePortalTriangles(void)
     }
 }
 
-static u32 PackScreenPoint(const Vec3* point)
-{
-    return (u16)point->x | ((u32)(u16)point->y << 16);
-}
-
-// Pick the smallest right-shift that keeps every vertex of the triangle within
-// the GTE's signed 16-bit vertex range once made camera-relative. Screen X/Y
-// are invariant to this shift (perspective divide cancels it); only depth
-// precision changes. This is what stops the portals repeating in world space.
-static u32 PickTransformShift(const Triangle* world)
-{
-    const Vec3* verts = &world->v1; // v1, v2, v3 are contiguous
-    s32 cameraX = CAMERA_POS_X;
-    s32 cameraY = CAMERA_POS_Y;
-    s32 cameraZ = CAMERA_POS_Z;
-    s32 maxComponent = 0;
-    u32 shift = 0;
-    s32 i;
-
-    for (i = 0; i < 3; i++)
-    {
-        s32 dx = verts[i].x - cameraX;
-        s32 dy = verts[i].y - cameraY;
-        s32 dz = verts[i].z - cameraZ;
-
-        if (dx < 0) dx = -dx;
-        if (dy < 0) dy = -dy;
-        if (dz < 0) dz = -dz;
-
-        if (dx > maxComponent) maxComponent = dx;
-        if (dy > maxComponent) maxComponent = dy;
-        if (dz > maxComponent) maxComponent = dz;
-    }
-
-    while ((maxComponent >> shift) > GTE_INPUT_SAFE_LIMIT && shift < MAX_TRANSFORM_SHIFT)
-    {
-        shift++;
-    }
-
-    return shift;
-}
-
-static s32 GetWorldDepthBucket(s32 depth)
-{
-    s32 bucket = depth >> 7;
-
-    if (bucket >= WORLD_OT_SPLIT_DEPTH)
-    {
-        bucket += WORLD_OT_SPLIT_OFFSET;
-    }
-
-    return bucket + WORLD_OT_BASE_OFFSET;
-}
-
 static bool DrawPortalTriangle(s32 triangle_index)
 {
     Triangle world;
     Triangle screen;
-    /* TEMP(transparency disabled): DrawModePrim* draw_mode; */
     PolyF3* primitive;
     s32 depth;
     s32 bucket;
-    u32 shift;
 
     UnpackCollisionTriangle(triangle_index, &world);
-    shift = PickTransformShift(&world);
-    DrawPortalRelated(&screen.v1, &world.v1, shift);
-    DrawPortalRelated(&screen.v2, &world.v2, shift);
-    DrawPortalRelated(&screen.v3, &world.v3, shift);
+    DrawPortalRelated(&screen.v1, &world.v1, PORTAL_TRANSFORM_SHIFT);
+    DrawPortalRelated(&screen.v2, &world.v2, PORTAL_TRANSFORM_SHIFT);
+    DrawPortalRelated(&screen.v3, &world.v3, PORTAL_TRANSFORM_SHIFT);
 
     if (screen.v1.z < NEAR_CLIP_DEPTH ||
         screen.v2.z < NEAR_CLIP_DEPTH ||
@@ -193,16 +112,20 @@ static bool DrawPortalTriangle(s32 triangle_index)
         return true;
     }
 
+    // depth is always >= NEAR_CLIP_DEPTH here, so bucket is always >= 0.
     depth = (screen.v1.z + screen.v2.z + screen.v3.z) / 3;
-
-    // Render-distance cull: drop far triggers to reduce GPU overdraw.
     if (depth > PORTAL_MAX_RENDER_DEPTH)
     {
         return true;
     }
 
-    bucket = GetWorldDepthBucket(depth);
-    if (bucket < 0 || bucket >= WORLD_OT_BUCKET_COUNT)
+    bucket = depth >> 7;
+    if (bucket >= WORLD_OT_SPLIT_DEPTH)
+    {
+        bucket += WORLD_OT_SPLIT_OFFSET;
+    }
+    bucket += WORLD_OT_BASE_OFFSET;
+    if (bucket >= WORLD_OT_BUCKET_COUNT)
     {
         return true;
     }
@@ -213,21 +136,12 @@ static bool DrawPortalTriangle(s32 triangle_index)
         return false;
     }
 
-    // TEMP(transparency disabled): drawing opaque, so the semi-transparency
-    // draw-mode packet is skipped. Re-enable this block (and add draw_mode back
-    // to the reservation above) to restore translucent portals.
-    // draw_mode = (DrawModePrim*)ptr_primitiveStruct;
-    // primitive = (PolyF3*)(draw_mode + 1);
-    // draw_mode->tag = 0x01000000; // 1 word follows
-    // draw_mode->code = PORTAL_DRAW_MODE_WORD;
-
     primitive->tag = 0x04000000;
     primitive->color_and_command = PORTAL_POLYGON_COLOR;
-    primitive->xy0 = PackScreenPoint(&screen.v1);
-    primitive->xy1 = PackScreenPoint(&screen.v2);
-    primitive->xy2 = PackScreenPoint(&screen.v3);
+    primitive->xy0 = (u16)screen.v1.x | ((u32)(u16)screen.v1.y << 16);
+    primitive->xy1 = (u16)screen.v2.x | ((u32)(u16)screen.v2.y << 16);
+    primitive->xy2 = (u16)screen.v3.x | ((u32)(u16)screen.v3.y << 16);
 
-    // TEMP(transparency disabled): AddToWorldTable(draw_mode, bucket);
     AddToWorldTable(primitive, bucket);
     ptr_primitiveStruct = (u32*)(primitive + 1);
     return true;

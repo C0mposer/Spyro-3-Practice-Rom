@@ -9,16 +9,12 @@
 
 void ModMain(int syncArg)
 {
-    ONCE //Init
-    {
-        optionsMusicVolumeSlider = 0;
-    }
-    //SkipTitleScreenUpdate();
-    MainUpdates();
-    //DifficultyUpdate();
+    SkipTitleScreenUpdate();
     UpdateAllMenus();
+    MainUpdates();
     TimerUpdate();
 
+    //DifficultyUpdate();
 
     DrawSync(syncArg);        // Replaced Function Call, we must call it from our hook
 }

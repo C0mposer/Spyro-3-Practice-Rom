@@ -1,6 +1,9 @@
 #include <types.h>
 #include <symbols.h>
 
+extern bool titleScreenSkipStarted;
+extern bool sunriseLoadStarted;
+
 // Once the music begins playing, automatcially set the title screen state to 0x14, which
 // begins the cutscene load. We then have to wait for the first cutscene load to start.
 // ONLY THEN, can we call our own LoadLevel to sunrise. There is probably a way to set
@@ -14,18 +17,14 @@ void SkipTitleScreenUpdate(void)
     const s32 offsetToLoadLevel = 0x7F;
     const s32 timeToLoadLevel = timeToSkip + offsetToLoadLevel; // Wait for the first cutscene to load in, before loading sunrise
 
-    if (globalTimer > timeToSkip)
+    if (globalTimer > timeToSkip && !titleScreenSkipStarted)
     {
-        ONCE
-        {
-            titleScreenState = 0x13;
-        }
+        titleScreenSkipStarted = true;
+        titleScreenState = 0x13;
     }
-    if (globalTimer > timeToLoadLevel)
+    if (globalTimer > timeToLoadLevel && !sunriseLoadStarted)
     {
-        ONCE
-        {
-            LoadLevel(3, 10);
-        }
+        sunriseLoadStarted = true;
+        LoadLevel(3, 10);
     }
 }
