@@ -35,9 +35,9 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 > [!IMPORTANT]
 > Download the right version for your platform, or the game will not boot
 
-Download for PS1 & PS1 Emulator: ---  
+[Download for PS1 & PS1 Emulator  ](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.PS1.zip)
   
-Download for PS2: 
+[Download for PS2](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.PS2.zip)
 
 ## Building from Source
 ~ Todo ~
