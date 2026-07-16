@@ -1,2 +1,6 @@
 .config/
+.modtool/
 .vscode/
+build/*
+tools/*
+notes/*

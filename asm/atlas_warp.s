@@ -1,3 +1,2 @@
 .set noreorder
-jal ModMain
-
+nop

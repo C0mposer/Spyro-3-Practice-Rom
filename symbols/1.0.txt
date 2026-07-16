@@ -10,6 +10,7 @@ spyroX = 0x80070328;
 spyroY = 0x8007032c;
 spyroZ = 0x80070330;
 spyroAngle = 0x80070334;
+spyroYawAngle = 0x8007038C;
 
 respawnPosition = 0x8006D0AC;
 respawnAngle = 0x8006D0B8;
@@ -18,14 +19,43 @@ globalGems = 0x8006C71C;
 globalEggs = 0x8006C660;
 lives = 0x8006C784;
 
+currentLevel = 0x8006c5bc;
+
 levelID = 0x8006c7c8;
 subLevelID = 0x8006c5c8;
 
+gemsCollectedPerLevel = 0x80071a10;
 gemsCollectedFlags = 0x80071ab0;
-eggsCollectedFlags = 0x800715bc;
+eggsCollectedBitmask = 0x80070300;
+eggsCollectedSinceEnteredBitmask = 0x8006C7B4;
+eggDifficultyState = 0x800715bc;
+recordedPerformancePerEgg = 0x800716ac;
 progressFlags = 0x80071570;
+dialogueFlags = 0x8007145c;
 skillPointFlags = 0x80066bc8;
 hasEnteredLevelFlags = 0x80071fb0;
+
+currentCheckpointData = 0x8006c7f8;
+savedCheckpointData = 0x8006d088;
+savedCheckpointUpdated = 0x8006d088;
+
+sparxState = 0x8006580c;
+sparxDefaults = 0x80065834;
+
+adaptiveDifficultyScore = 0x8006C7A8;
+globalDifficulty = 0x8006C7A8;
+baseDifficulty = 0x8006C564;
+currentDifficulty = 0x8006C7C4;
+totalHits = 0x8006c710;
+
+deathsToBuzz = 0x8006C408;
+deathsToSpike = 0x8006C409;
+deathsToScorch = 0x8006C40A;
+deathsToSorceress = 0x8006C40B;
+
+framesInScenario = 0x8006FBC4;
+menuState = 0x8006FBC8;
+drawScreenBlack = 0x8006c598;
 
 upgradeFlags = 0x8006581c;
 
@@ -35,8 +65,24 @@ leftAnalogY = 0x80073F53;
 globalTimer = 0x8006B480;
 titleScreenState = 0x8007F12C;
 
+currentMusicSector = 0x8006E4BC;
+musicEndSector = 0x8006E4C0;
+musicInterleavedTrack = 0x8006E4C4;
+
+levelTimer = 0x8006C644;
+
+difficultyOverride = 0x8006C404;
+
+TerrainCollisionData = 0x8006D070;
+ptr_levelRelated = 0x8006D05C;
+ptr_primitiveStruct = 0x8006C664;
+primitiveBufferEnd = 0x8006C668;
+
+game_sparx_range_data = 0x80065810;
+
 
 memset = 0x8004e790;
+MemCopy = 0x8004e7d4;
 
 DrawTextbox = 0x8001fd00;
 DrawShadedLine = 0x8001fb74;
@@ -53,3 +99,19 @@ SunriseUpdateParticles = 0x80086960;
 sunriseUpdateParticlePtr = 0x800742e4;
 
 Vec3Copy = 0x8004f178;
+
+LoadImage = 0x8005a478;
+
+SetAudioData = 0x8004f984;
+
+SpawnMoby = 0x8008580c;
+
+BeginLevelLoad = 0x80053f50;
+
+MCP_DrawPortals = 0x8001EDEC;
+UnpackCollisionTriangle = 0x8004F5DC;
+DrawPortalRelated = 0x8004F408;
+MCP_CalcScreenClipFlags = 0x8004F4BC;
+AddToWorldTable = 0x8004E71C;
+DrawSync = 0x8005a264;
+sprintf = 0x8005977c;

@@ -1,0 +1,11 @@
+#ifndef HOTKEYS_H
+#define HOTKEYS_H
+
+#include <symbols.h>
+#include <buttons.h>
+
+#define SAVE_SPYRO_HOTKEY (L1_BUTTON + R1_BUTTON + CIRCLE_BUTTON)
+#define LOAD_SPYRO_HOTKEY (L1_BUTTON + R1_BUTTON + SQUARE_BUTTON)
+#define RELOAD_LEVEL_HOTKEY (L1_BUTTON + R1_BUTTON + TRIANGLE_BUTTON)
+
+#endif /* HOTKEYS_H */

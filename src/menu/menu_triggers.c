@@ -1,52 +1,77 @@
 #include <types.h>
 #include <syscalls.h>
 #include <symbols.h>
+#include <upgrades.h>
+#include <difficulty.h>
+#include <gamestates.h>
 #include "menu.h"
 #include "menu_triggers.h"
-#include "../controllerviewer.h"
 
 // Update the Off/On logic
 void UpdateMenuTriggers()
 {
-    WaffleTrigger();
-    VibrationTrigger();
-    DerekTrigger();
+    DifficultyTrigger();
+    DisablePortalTrigger();
+    TimerTrigger();
+    SparxRangeTrigger();
+    BasketBreakTrigger();
 }
 
-
-// Logic for the different Off/On switches in the menu
-void VibrationTrigger()
+void DifficultyTrigger()
 {
-    if (main_menu.elements[VIBRATION_TOGGLE].enabled)
+    if (main_menu.elements[DIFFICULTY_MULTI].selection_option == DIFFICULTY_EASY)
     {
-        printf_syscall("Vibration Mode On\n\n");
+        SetDifficulty(DIFFICULTY_EASY);
+    }
+    else if (main_menu.elements[DIFFICULTY_MULTI].selection_option == DIFFICULTY_MEDIUM)
+    {
+        SetDifficulty(DIFFICULTY_MEDIUM);
     }
     else
     {
-        printf_syscall("Vibration Mode Off\n\n");
+        SetDifficulty(DIFFICULTY_HARD);
     }
 }
 
-void DerekTrigger()
+// Simply creating a global to access the menu off/on state
+bool g_shouldDisablePortal;
+void DisablePortalTrigger()
 {
-    if (main_menu.elements[WAFFLE_TOGGLE].enabled)
+
+    g_shouldDisablePortal = main_menu.elements[DISABLE_PORTAL_TOGGLE].enabled;
+}
+
+int g_manualTimerMode;
+void TimerTrigger()
+{
+    g_manualTimerMode = main_menu.elements[TIMER_MULTI].selection_option;
+    //DrawText("Updating", 20, 20, 1, 0);
+}
+
+SparxRangeData sparx_range_default = { 0x80E, 0x15E, 0x280 };
+SparxRangeData sparx_range_upgraded = { 0xC00, 0x3C0, 0x20D };
+void SparxRangeTrigger()
+{
+    if (!main_menu.elements[SPARX_RANGE_TOGGLE].enabled)
     {
-        printf_syscall("Waffle's server is on. Shocker!\n\n");
+        game_sparx_range_data = sparx_range_default;
+        printf_syscall("Default\n");
     }
     else
     {
-        printf_syscall("Waffle's server is off. No shock there.\n\n");
+        game_sparx_range_data = sparx_range_upgraded;
+        printf_syscall("Upgraded\n");
     }
 }
 
-void WaffleTrigger()
+void BasketBreakTrigger()
 {
-    if (main_menu.elements[DEREK_TOGGLE].enabled)
+    if (!main_menu.elements[BASKET_BREAK_TOGGLE].enabled)
     {
-        //ControllerViewer();
+        upgradeFlags = UPGRADE_FLAGS_NONE;
     }
     else
     {
-        printf_syscall("My balls don't itch somehow\n\n");
+        upgradeFlags = BREAK_BASKETS_FLAG;
     }
 }

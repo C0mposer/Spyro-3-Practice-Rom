@@ -1,65 +1,92 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include <types.h>
+
 #define UNSELECTED_COLOR 0x4
 #define SELECTED_COLOR 0x6
 
-// Enums
-enum MenuTypes
+typedef enum MenuType
 {
     MENU_TYPE_TOGGLE,
     MENU_TYPE_MULTI
-};
+} MenuType;
 
-typedef enum
+typedef enum MenuState
 {
-    MENU_STATE_CLOSED = 0,
-    MENU_STATE_OPENING,
-    MENU_STATE_OPEN,
-    MENU_STATE_CLOSING
+    MENU_STATE_CLOSED,
+    MENU_STATE_OPEN
 } MenuState;
 
-enum
+enum MainMenuElement
 {
-    VIBRATION_TOGGLE,
-    WAFFLE_TOGGLE,
-    DEREK_TOGGLE
+    TIMER_MULTI,
+    DIFFICULTY_MULTI,
+    FAST_LOAD_TOGGLE,
+    DISABLE_PORTAL_TOGGLE,
+    DRAW_PORTAL_POLYGONS_TOGGLE,
+    SPARX_RANGE_TOGGLE,
+    BASKET_BREAK_TOGGLE,
+    MAIN_MENU_ELEMENT_COUNT
 };
 
-// Scructs
-struct MenuElement
+
+typedef struct MenuElement
 {
-    const char* text[16];
+    const char* label;
+    const char* const* options;
+
     union
     {
+        u8 value;
         bool enabled;
-        s32 selection_option;
+        u8 selection_option;
     };
-    s32 type;
-};
-typedef struct MenuElement MenuElement;
 
-struct Menu
+    u8 option_count;
+    u8 type;
+} MenuElement;
+
+
+typedef struct Menu
 {
     const char* title;
-    s32 x1, x2, y1, y2;
+    MenuElement* elements;
 
-    MenuState state;
+    s16 x1;
+    s16 x2;
+    s16 y1;
+    s16 y2;
 
-    MenuElement elements[16];
-    s32 amount_of_elements;
-    s32 current_selection;
-};
-typedef struct Menu Menu;
+    u8 amount_of_elements;
+    u8 current_selection;
+    u8 state;
+} Menu;
 
-// Prototypes
+extern const char* const menu_toggle_options[2];
+
+#define MENU_TOGGLE(label_, initial_) \
+    { \
+        .label = (label_), \
+        .options = menu_toggle_options, \
+        .selection_option = (initial_), \
+        .option_count = 2, \
+        .type = MENU_TYPE_TOGGLE \
+    }
+
+/* must be an array so its option count can be calculated here. */
+#define MENU_MULTI(label_, choices_, initial_) \
+    { \
+        .label = (label_), \
+        .options = (choices_), \
+        .selection_option = (initial_), \
+        .option_count = (u8)ARRAY_SIZE(choices_), \
+        .type = MENU_TYPE_MULTI \
+    }
+
 void UpdateMenu(Menu* menu);
-void UpdateAllMenus();
+void UpdateAllMenus(void);
 
-// Include these global menu's and menu elements with anything that includes menu.h
 extern Menu main_menu;
-extern MenuElement vibration_toggle;
-extern MenuElement balls_toggle;
-extern MenuElement cheat_toggle;
 
 #endif /* MENU_H */

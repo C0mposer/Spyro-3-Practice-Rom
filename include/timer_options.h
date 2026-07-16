@@ -1,0 +1,11 @@
+#ifndef TIMER_OPTIONS_H
+#define TIMER_OPTIONS_H
+
+enum TIMER_OPTIONS
+{
+    TIMER_OFF,
+    TIMER_SHOW_PAUSED,
+    TIMER_SHOW_ALWAYS
+};
+
+#endif /* TIMER_OPTIONS_H */

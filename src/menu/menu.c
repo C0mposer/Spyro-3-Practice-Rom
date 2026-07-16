@@ -1,79 +1,76 @@
 #include <types.h>
 #include <symbols.h>
 #include <buttons.h>
-#include <syscalls.h>
 #include <gamestates.h>
+#include <difficulty.h>
 #include "menu.h"
 #include "menu_elements.h"
 #include "menu_triggers.h"
+#include <render_helper.h>
+#include <timer_options.h>
 
-// Menu Data
-Menu main_menu = { .title = "* Practice Menu *",
-                   .x1 = 114,
-                   .x2 = 400,
-                   .y1 = 60,
-                   .y2 = 180,
-                   .amount_of_elements = 0,
-                   .current_selection = 0, };
+const char* const menu_toggle_options[2] = { "Off", "On" };
 
-MenuElement vibration_toggle = { .type = MENU_TYPE_TOGGLE,
-                                .enabled = false,
-                                .text[0] = "Vibration Off",
-                                .text[1] = "Vibration On" };
+static const char* const difficulty_options[] =
+{
+    "Easy",
+    "Normal",
+    "Hard"
+};
 
-MenuElement balls_toggle = { .type = MENU_TYPE_TOGGLE,
-                             .enabled = false,
-                             .text[0] = "Test 2 Off",
-                             .text[1] = "Test 2 On" };
+static const char* const timer_options[] =
+{
+    "Off",
+    "Show Select",
+    "Show Always"
+};
 
-
-MenuElement cheat_toggle = { .type = MENU_TYPE_TOGGLE,
-                             .enabled = false,
-                             .text[0] = "Test 3 Off",
-                             .text[1] = "Test 3 On" };
-
-
-MenuElement test_toggle = { .type = MENU_TYPE_TOGGLE,
-                            .enabled = false,
-                            .text[0] = "Test 4 Off",
-                            .text[1] = "Test 4 On" };
+static const char* const sparx_range_options[] =
+{
+    "Default",
+    "Upgraded"
+};
 
 
-MenuElement test5_toggle = { .type = MENU_TYPE_TOGGLE,
-                             .enabled = false,
-                             .text[0] = "Test 5 Off",
-                             .text[1] = "Test 5 On" };
+static MenuElement main_menu_elements[] =
+{
+    MENU_MULTI("Timer", timer_options, TIMER_OFF),
+    MENU_MULTI("Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
+    MENU_TOGGLE("Fast Reset", false),
+    MENU_TOGGLE("Disable Portal", false),
+    MENU_TOGGLE("Draw Portals", false),
+    MENU_MULTI("Sparx Range", sparx_range_options, 0),
+    MENU_TOGGLE("Basket Break", false)
+};
 
+Menu main_menu =
+{
+    .title = "* Practice Menu *",
+    .elements = main_menu_elements,
+    .x1 = 114,
+    .x2 = 400,
+    .y1 = 60,
+    .y2 = 190,
+    .amount_of_elements = (u8)ARRAY_SIZE(main_menu_elements),
+    .current_selection = 0,
+    .state = MENU_STATE_CLOSED
+};
 
-// Private Logic
+int menu_frames_closed = 0;
+
 static void DrawMenu(Menu* menu)
 {
-    DrawScreenColour(1, 0x20, 0, 0x40);
+    //DrawScreenColour(1, 0x20, 0, 0x40);
     DrawTextbox(menu->x1, menu->x2, menu->y1, menu->y2);
-
-    s32 line_x1 = menu->x1 + 10;
-    s32 line_y1 = menu->y1 + 20;
-    s32 line_x2 = menu->x2 - 10;
-    DrawShadedLine(line_x1, line_y1, line_x2, line_y1);
-
-    s32 line_center = (line_x1 + line_x2) / 2;
-    DrawTextCentered(menu->title, line_center, line_y1 - 13, 0x4);
+    DrawTextCentered(menu->title, (menu->x1 + menu->x2) / 2,
+        menu->y1 + 7, UNSELECTED_COLOR);
 }
 
-static void MenuStateClosed(Menu* menu)
+static void OpenMenu(Menu* menu)
 {
-    // Check for button combo to start opening menu
-    if (isButtonHeld == L2_BUTTON + R2_BUTTON + TRIANGLE_BUTTON)
-    {
-        menu->state = MENU_STATE_OPENING;
-    }
-}
-
-static void MenuStateOpening(Menu* menu)
-{
-    // Freeze the game, turn down music, and play a sound before opening the menu
     gamestate = FROZEN;
     PlaySound(14, 0, 0);
+    DisableRendering();
 
     if (lowLevelMusicVolume != 0)
     {
@@ -81,23 +78,12 @@ static void MenuStateOpening(Menu* menu)
     }
 
     menu->state = MENU_STATE_OPEN;
+
+    menu_frames_closed = 0;
 }
 
-static void MenuStateOpen(Menu* menu)
+static void CloseMenu(Menu* menu)
 {
-    DrawMenu(menu);
-    UpdateMenuElements(menu);
-
-    // Check for button to start closing the menu
-    if (isButtonPressed == CIRCLE_BUTTON || isButtonPressed == TRIANGLE_BUTTON)
-    {
-        menu->state = MENU_STATE_CLOSING;
-    }
-}
-
-static void MenuStateClosing(Menu* menu)
-{
-    // Unfreeze the game, play a sound, and turn music back up 
     gamestate = GAMEPLAY;
     PlaySound(7, 0, 0);
 
@@ -109,45 +95,40 @@ static void MenuStateClosing(Menu* menu)
     menu->state = MENU_STATE_CLOSED;
 }
 
-// Public API
 void UpdateMenu(Menu* menu)
 {
-    switch (menu->state)
+    if (menu->state == MENU_STATE_CLOSED)
     {
-        case MENU_STATE_CLOSED:
+        if (isButtonHeld == L2_BUTTON + R2_BUTTON + TRIANGLE_BUTTON)
         {
-            MenuStateClosed(menu);
-            break;
+            if (gamestate == GAMEPLAY)
+            {
+                OpenMenu(menu);
+            }
         }
-        case MENU_STATE_OPENING:
+
+        menu_frames_closed++;
+
+        // Must wait a couple frames to re-enable world drawing, so menu fully closes
+        if (menu_frames_closed == 2)
         {
-            MenuStateOpening(menu);
-            break;
+            EnableRendering();
         }
-        case MENU_STATE_OPEN:
-        {
-            MenuStateOpen(menu);
-            break;
-        }
-        case MENU_STATE_CLOSING:
-        {
-            MenuStateClosing(menu);
-            break;
-        }
+
+        return;
+    }
+
+    DrawMenu(menu);
+    UpdateMenuElements(menu);
+
+    if (isButtonPressed == CIRCLE_BUTTON || isButtonPressed == TRIANGLE_BUTTON)
+    {
+        CloseMenu(menu);
     }
 }
 
-void UpdateAllMenus()
+void UpdateAllMenus(void)
 {
-    ONCE
-    {
-        AddMenuElement(&main_menu, vibration_toggle);
-        AddMenuElement(&main_menu, balls_toggle);
-        AddMenuElement(&main_menu, cheat_toggle);
-        AddMenuElement(&main_menu, test_toggle);
-        AddMenuElement(&main_menu, test5_toggle);
-    }
-
     UpdateMenu(&main_menu);
     UpdateMenuTriggers();
 }

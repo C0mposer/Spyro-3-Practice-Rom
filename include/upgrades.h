@@ -3,9 +3,9 @@
 
 enum UpgradeFlags
 {
-    NONE,
-    SPARX_BREAK_BASKETS = 0b1,
-    ATLAS_WARP = 0b10,
+    UPGRADE_FLAGS_NONE = 0,
+    BREAK_BASKETS_FLAG = 2
+
 };
 
 #endif /* UPGRADES_H */

@@ -10,6 +10,7 @@ spyroX = 0x80070408;
 spyroY = 0x8007040c;
 spyroZ = 0x80070410;
 spyroAngle = 0x80070414;
+spyroYawAngle = 0x8007046C;
 
 respawnPosition = 0x8006d18c;
 respawnAngle = 0x8006d198;
@@ -18,14 +19,35 @@ globalGems = 0x8006c7fc;
 globalEggs = 0x8006c740;
 lives = 0x8006c864;
 
+currentLevel = 0x8006c69c;
+
 levelID = 0x8006c8a8;
 subLevelID = 0x8006c6a8;
 
+gemsCollectedPerLevel = 0x80071af0;
 gemsCollectedFlags = 0x80071b90;
-eggsCollectedFlags = 0x8007169c;
+eggsCollectedBitmask = 0x800703e0;
+eggsCollectedSinceEnteredBitmask = 0x8006C894;
+eggDifficultyState = 0x8007169c;
+recordedPerformancePerEgg = 0x8007178c;
 progressFlags = 0x80071650;
+dialogueFlags = 0x8007153c;
 skillPointFlags = 0x80066CA8;
 hasEnteredLevelFlags = 0x80072090;
+
+currentCheckpointData = 0x8006c8d8;
+savedCheckpointData = 0x8006d168;
+savedCheckpointUpdated = 0x8006d168;
+
+sparxState = 0x800658e4;
+sparxDefaults = 0x8006590c;
+
+globalDifficulty = 0x8006c888;
+totalHits = 0x8006c7f0;
+
+framesInScenario = 0x8006FCA4;
+menuState = 0x8006FCA8;
+drawScreenBlack = 0x0; // TODO: real 1.1 address unknown (VERSION11 symbols already out of sync). Fast Load must stay off on 1.1 until filled in.
 
 upgradeFlags = 0x800658f4;
 
@@ -35,8 +57,10 @@ leftAnalogY = 0x80074033;
 globalTimer = 0x8006B560;
 titleScreenState = 0x8007F20C;
 
+levelTimer = 0x8006C724;
 
 memset = 0x8004e7b4;
+MemCopy = 0x8004e7f8;
 
 DrawTextbox = 0x8001fd24;
 DrawShadedLine = 0x8001fb98;

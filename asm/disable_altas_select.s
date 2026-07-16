@@ -1,3 +1,2 @@
 .set noreorder
-jal ModMain
-
+j 0x80050FA4

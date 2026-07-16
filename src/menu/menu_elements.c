@@ -1,74 +1,87 @@
 #include <types.h>
 #include <symbols.h>
 #include <buttons.h>
-#include <gamestates.h>
 #include "menu.h"
 
-void UpdateMenuElements(Menu* menu)
+static void ChangeElementValue(MenuElement* element, bool move_right)
 {
-    if (menu->amount_of_elements > 0)
+    u8 old_value = element->selection_option;
+
+    if (element->type == MENU_TYPE_TOGGLE)
     {
-        s32 x1 = menu->x1;
-        s32 x2 = menu->x2;
+        element->selection_option = move_right ? 1 : 0;
+    }
+    else if (move_right)
+    {
+        element->selection_option++;
 
-        s32 textbox_center = (x1 + x2) / 2;
-        for (s32 i = 0; i < menu->amount_of_elements; i++)
+        if (element->selection_option >= element->option_count)
         {
-            s32 y = menu->y1 + 20 + 5 + (14 * i);
-            s32 color[16];
-            color[i] = i == menu->current_selection ? SELECTED_COLOR : UNSELECTED_COLOR;
+            element->selection_option = element->option_count - 1;
+        }
+    }
+    else if (element->selection_option == 0)
+    {
+        element->selection_option = 0;
+    }
+    else
+    {
+        element->selection_option--;
+    }
 
-            if (menu->elements[i].type == MENU_TYPE_TOGGLE)
-            {
-                if (!menu->elements[i].enabled)
-                {
-                    DrawTextCentered(menu->elements[i].text[0], textbox_center, y, color[i]);
-                }
-                else
-                {
-                    DrawTextCentered(menu->elements[i].text[1], textbox_center, y, color[i]);
-                }
-            }
-        }
-
-        // Update Selection
-        if (isButtonPressed == RIGHT_BUTTON && !menu->elements[menu->current_selection].enabled)
-        {
-            menu->elements[menu->current_selection].enabled = true;
-            PlaySound(11, 0, 0);
-        }
-        else if (isButtonPressed == LEFT_BUTTON && menu->elements[menu->current_selection].enabled)
-        {
-            PlaySound(11, 0, 0);
-            menu->elements[menu->current_selection].enabled = false;
-
-        }
-
-        // Change selection
-        if (isButtonPressed == UP_BUTTON && menu->current_selection > 0)
-        {
-            menu->current_selection--;
-            PlaySound(10, 0, 0);
-            if (menu->current_selection < 0)
-            {
-                menu->current_selection = 0;
-            }
-        }
-        else if (isButtonPressed == DOWN_BUTTON && menu->current_selection < (menu->amount_of_elements - 1))
-        {
-            menu->current_selection++;
-            PlaySound(10, 0, 0);
-            if (menu->current_selection > 15)
-            {
-                menu->current_selection = 16;
-            }
-        }
+    if (element->selection_option != old_value)
+    {
+        PlaySound(11, 0, 0);
     }
 }
 
-void AddMenuElement(Menu* menu, MenuElement element)
+void UpdateMenuElements(Menu* menu)
 {
-    menu->elements[menu->amount_of_elements] = element;
+    s32 textbox_center;
+    s32 column_offset;
+    u8 i;
 
-    menu->amount_of_elements++;
+    if (menu->amount_of_elements == 0)
+    {
+        return;
+    }
+
+    textbox_center = (menu->x1 + menu->x2) / 2;
+    column_offset = (menu->x2 - menu->x1) / 4;
+
+    for (i = 0; i < menu->amount_of_elements; i++)
+    {
+        MenuElement* element = &menu->elements[i];
+        s32 y = menu->y1 + 25 + (14 * i);
+        s32 color = i == menu->current_selection ? SELECTED_COLOR : UNSELECTED_COLOR;
+
+        DrawTextCentered(element->label, textbox_center - column_offset, y, color);
+        DrawTextCentered(
+            element->options[element->selection_option],
+            textbox_center + column_offset,
+            y,
+            color);
+    }
+
+    if (isButtonPressed == RIGHT_BUTTON)
+    {
+        ChangeElementValue(&menu->elements[menu->current_selection], true);
+    }
+    else if (isButtonPressed == LEFT_BUTTON)
+    {
+        ChangeElementValue(&menu->elements[menu->current_selection], false);
+    }
+
+    if (isButtonPressed == UP_BUTTON && menu->current_selection > 0)
+    {
+        menu->current_selection--;
+        PlaySound(10, 0, 0);
+    }
+    else if (isButtonPressed == DOWN_BUTTON &&
+        menu->current_selection + 1 < menu->amount_of_elements)
+    {
+        menu->current_selection++;
+        PlaySound(10, 0, 0);
+    }
+
 }
