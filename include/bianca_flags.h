@@ -1,0 +1,10 @@
+#ifndef BIANCA_FLAGS_H
+#define BIANCA_FLAGS_H
+
+// Bianca Flag offsets in progressFlags:
+#define BIANCA_SUNRISE_FLAG_OFFSET 0x1
+#define BIANCA_MIDDAY_FLAG_OFFSET 0xF
+#define BIANCA_EVENING_FLAG_OFFSET 0x23
+#define BIANCA_MIDNIGHT_FLAG_OFFSET 0x24
+
+#endif /* BIANCA_FLAGS_H */

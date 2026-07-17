@@ -73,6 +73,9 @@ extern u32 upgradeFlags;
 
 extern u32 isButtonHeld;
 extern u32 isButtonPressed;
+extern u32 rawButtonHeld;
+extern u32 rawButtonPressed;
+extern u32 rawButtonReleased;
 
 extern bool analogEnabled;
 extern u8 leftAnalogX;
@@ -92,6 +95,9 @@ extern int musicInterleavedTrack;
 extern u32 levelTimer; // 60fps
 
 extern s32 difficultyOverride;
+
+extern u32 eggsCollectedThisVisit;
+extern u32 eggsCollectedSinceLevelEntry; // Research the difference between this, and the symbol above more. They seem related, but not identical.
 
 extern CollisionHeader* TerrainCollisionData;
 extern TriggerRecord** ptr_levelRelated;
@@ -140,4 +146,9 @@ void DrawPortalRelated(Vec3* screen_position, const Vec3* world_position, u32 sh
 u8 MCP_CalcScreenClipFlags(s32 x, s32 y, s32 depth);
 void AddToWorldTable(void* primitive, s32 depth_bucket);
 void DrawSync(int);
+
+void ReadCdSync(int baseSector, unsigned int* buffer, int numBytes, int offsetByte); // 0x80050578
+
+int ReadCdAsync(int baseSector, unsigned int* buffer, int numBytes, int offsetBytes); // 0x80050680
+
 #endif //SYMBOLS_H

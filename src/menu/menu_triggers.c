@@ -6,6 +6,8 @@
 #include <gamestates.h>
 #include "menu.h"
 #include "menu_triggers.h"
+#include <bianca_flags.h>
+
 
 // Update the Off/On logic
 void UpdateMenuTriggers()
@@ -15,6 +17,7 @@ void UpdateMenuTriggers()
     TimerTrigger();
     SparxRangeTrigger();
     BasketBreakTrigger();
+    DisableBiancaTrigger();
 }
 
 void DifficultyTrigger()
@@ -73,5 +76,23 @@ void BasketBreakTrigger()
     else
     {
         upgradeFlags = BREAK_BASKETS_FLAG;
+    }
+}
+
+void DisableBiancaTrigger()
+{
+    if (!main_menu.elements[DISABLE_BIANCA_TOGGLE].enabled)
+    {
+        progressFlags[BIANCA_SUNRISE_FLAG_OFFSET] = false;
+        progressFlags[BIANCA_MIDDAY_FLAG_OFFSET] = false;
+        progressFlags[BIANCA_EVENING_FLAG_OFFSET] = false;
+        progressFlags[BIANCA_MIDNIGHT_FLAG_OFFSET] = false;
+    }
+    else
+    {
+        progressFlags[BIANCA_SUNRISE_FLAG_OFFSET] = true;
+        progressFlags[BIANCA_MIDDAY_FLAG_OFFSET] = true;
+        progressFlags[BIANCA_EVENING_FLAG_OFFSET] = true;
+        progressFlags[BIANCA_MIDNIGHT_FLAG_OFFSET] = true;
     }
 }

@@ -1,6 +1,10 @@
 isButtonPressed = 0x8006e53c;
 isButtonHeld = 0x8006e538;
 
+rawButtonHeld     = 0x80071500;
+rawButtonPressed  = 0x80071504;
+rawButtonReleased = 0x80071508;
+
 gamestate = 0x8006e344;
 
 lowLevelMusicVolume = 0x8006E4AC;
@@ -70,8 +74,8 @@ musicEndSector = 0x8006E4C0;
 musicInterleavedTrack = 0x8006E4C4;
 
 levelTimer = 0x8006C644;
-
 difficultyOverride = 0x8006C404;
+eggsCollectedThisVisit = 0x8006c62c;
 
 TerrainCollisionData = 0x8006D070;
 ptr_levelRelated = 0x8006D05C;
@@ -115,3 +119,7 @@ MCP_CalcScreenClipFlags = 0x8004F4BC;
 AddToWorldTable = 0x8004E71C;
 DrawSync = 0x8005a264;
 sprintf = 0x8005977c;
+
+ReadCdSync = 0x80050578;
+
+ReadCdAsync = 0x80050680;

@@ -376,6 +376,30 @@
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
           "enabled": false
+        },
+        {
+          "name": "PS1Kernal1",
+          "code_files": [
+            "./src/test.c"
+          ],
+          "memory_address": "8000C000",
+          "size": "1800",
+          "injection_file": "KERN.DAT",
+          "injection_file_address": "",
+          "auto_calculate_injection_file_address": false,
+          "injection_type": "new_file",
+          "enabled": true
+        },
+        {
+          "name": "PS1Kernal2",
+          "code_files": [],
+          "memory_address": "8000EA00",
+          "size": "F38",
+          "injection_file": "KERN2.DAT",
+          "injection_file_address": "",
+          "auto_calculate_injection_file_address": false,
+          "injection_type": "new_file",
+          "enabled": false
         }
       ],
       "hooks": [

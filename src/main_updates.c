@@ -56,8 +56,8 @@ bool FastLoadEnabled(void)
 
 inline static void FastLoadUpdate(void)
 {
-    const u32 fadeFullBlack = 0xFF;    // phase 0: jump straight to black
-    const u32 fadeInFinishStep = 0x10; // phase 4: ROM subtracts 0x10 then completes at < 1
+    const u32 fadeFullBlack = 0xFF;    // Phase 0: jump straight to black
+    const u32 fadeInFinishStep = 0x10; // Phase 4: game subtracts 0x10 then completes at < 1
     const u32 skipArtificialWait = 0x50;
 
     if (!fastLoadActive)
@@ -71,18 +71,16 @@ inline static void FastLoadUpdate(void)
 
         switch (menuState)
         {
-            case 0: // fade-out: force full black so the ROM advances immediately
+            case 0: // Force full black so the game advances immediately
             drawScreenBlack = fadeFullBlack;
             break;
-            case 1: // CD wait: skip the artificial delay (WaitForCd still gates the real read)
+            case 1: // Skip the artificial delay
             if (framesInScenario != 0 && framesInScenario < skipArtificialWait)
             {
                 framesInScenario = skipArtificialWait;
             }
             break;
-            case 4: // fade-in: cut ONLY for the saved-position teleport. The level-start
-                    //          reset keeps it so enemy cycles match a real reset (mobys
-                    //          tick during the fade-in).
+            case 4: // fade-in: Only cut fade in for the saved-position teleport. The level-start reset keeps it so enemy cycles are accurate.
             if (fastLoadFadeMode == FAST_LOAD_CUT_BOTH_FADES &&
                 drawScreenBlack > fadeInFinishStep)
             {
@@ -95,7 +93,7 @@ inline static void FastLoadUpdate(void)
     }
     else if (fastLoadInScenario && gamestate == GAMEPLAY)
     {
-        // Scenario returned to gameplay; disarm and default the mode back for next time.
+        // Returned to gameplay, reset bools
         fastLoadActive = false;
         fastLoadInScenario = false;
         fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
@@ -210,7 +208,7 @@ void RespawnSpyro(void)
 
 void ClearCollectables(void)
 {
-    // Clear GUI counters.
+    // Clear Gem & Egg count
     globalGems = 0;
     globalEggs = 0;
 
@@ -218,11 +216,12 @@ void ClearCollectables(void)
     memset(gemsCollectedPerLevel, 0, 0xA0);
     memset(gemsCollectedFlags, 0, 0x500);
 
-    // Clear egg collection flags and egg difficulty history
+    // Clear egg flags 
     memset(eggsCollectedBitmask, 0, 0x28);
-    eggsCollectedSinceEnteredBitmask = 0;
     memset(eggDifficultyState, 0, 0xF0);
     memset(recordedPerformancePerEgg, 0, 0xF0);
+    eggsCollectedSinceEnteredBitmask = 0;
+    eggsCollectedThisVisit = 0;
 
     // Clear progress flags
     memset(progressFlags, 0, 0x4C);
@@ -235,6 +234,7 @@ void ClearCollectables(void)
     deathsToScorch = 0;
     deathsToSorceress = 0;
 
+    // Reset Sparx data
     totalHits = 0;
     MemCopy(sparxState, sparxDefaults, 0x28);
 
@@ -288,8 +288,9 @@ void MainUpdates(void)
         ManualSaveSpyroPositionUpdate();
 
         // Restart the level from the saved position
-        if (isButtonHeld == LOAD_SPYRO_HOTKEY)
+        if (rawButtonHeld == LOAD_SPYRO_HOTKEY)
         {
+            printf_syscall("Test\n");
             ClearCollectables();
             PrepareSavedSpyroRespawn();
             speedUpResetPending = true;
@@ -303,7 +304,7 @@ void MainUpdates(void)
             reloadSpyroTimer = 1; // Used for skipping frozen and fleet npc dialogues (see npc_dialogue_skip.c) 
         }
         // Restart the level from the spawn point
-        else if (isButtonHeld == RELOAD_LEVEL_HOTKEY)
+        else if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
         {
             ClearCollectables();
             ReloadLevelStartingPosition();
