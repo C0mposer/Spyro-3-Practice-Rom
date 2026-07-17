@@ -279,7 +279,7 @@ void MainUpdates(void)
 
     if (gamestate == GAMEPLAY || gamestate == INTERACTING)
     {
-        lives = 4;
+        //lives = 4;
 
         //Can't do this at runtime because of anti-tamper :)
         //*((u32*)0x80049a50) = 0x0; // NOP the life decrement code during a death. Less annoying than having lives set to 4 over and over, with sfx. 
@@ -290,7 +290,6 @@ void MainUpdates(void)
         // Restart the level from the saved position
         if (rawButtonHeld == LOAD_SPYRO_HOTKEY)
         {
-            printf_syscall("Test\n");
             ClearCollectables();
             PrepareSavedSpyroRespawn();
             speedUpResetPending = true;

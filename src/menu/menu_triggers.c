@@ -18,6 +18,8 @@ void UpdateMenuTriggers()
     SparxRangeTrigger();
     BasketBreakTrigger();
     DisableBiancaTrigger();
+    RhynocTrainerTrigger();
+    FastDialougeTrigger();
 }
 
 void DifficultyTrigger()
@@ -94,5 +96,31 @@ void DisableBiancaTrigger()
         progressFlags[BIANCA_MIDDAY_FLAG_OFFSET] = true;
         progressFlags[BIANCA_EVENING_FLAG_OFFSET] = true;
         progressFlags[BIANCA_MIDNIGHT_FLAG_OFFSET] = true;
+    }
+}
+
+extern bool g_rhynocTrainerEnabled;
+void RhynocTrainerTrigger()
+{
+    if (!main_menu.elements[RHYNOC_TRAINER_TOGGLE].enabled)
+    {
+        g_rhynocTrainerEnabled = false;
+    }
+    else
+    {
+        g_rhynocTrainerEnabled = true;
+    }
+}
+
+extern bool g_fastDialogueEnabled;
+void FastDialougeTrigger()
+{
+    if (!main_menu.elements[FAST_DIALOUGE_TRIGGER].enabled)
+    {
+        g_fastDialogueEnabled = false;
+    }
+    else
+    {
+        g_fastDialogueEnabled = true;
     }
 }

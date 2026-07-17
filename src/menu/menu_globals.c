@@ -19,12 +19,14 @@ MenuElement main_menu_elements[] =
 {
     MENU_MULTI("Timer", timer_options, TIMER_OFF),
     MENU_MULTI("Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
-    MENU_TOGGLE("Fast Reset", false),
-    MENU_TOGGLE("Disable Portal", false),
-    MENU_TOGGLE("Disable Bianca", false),
-    //MENU_TOGGLE("Draw Portals", false),
+    MENU_TOGGLE("Disable Portals", false),
     MENU_MULTI("Sparx Range", sparx_range_options, 0),
-    MENU_TOGGLE("Basket Break", false)
+    MENU_TOGGLE("Basket Break", false),
+    MENU_TOGGLE("Draw Portals", false),
+    MENU_TOGGLE("Fast Reset", false),
+    MENU_TOGGLE("Fast Dialouge", false),
+    MENU_TOGGLE("Disable Bianca", false),
+    MENU_TOGGLE("Rhynoc Trainer", false)
 };
 
 Menu main_menu =
@@ -34,7 +36,7 @@ Menu main_menu =
     .x1 = 114,
     .x2 = 400,
     .y1 = 60,
-    .y2 = 190,
+    .y2 = 225,
     .amount_of_elements = (u8)ARRAY_SIZE(main_menu_elements),
     .current_selection = 0,
     .state = MENU_STATE_CLOSED

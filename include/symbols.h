@@ -106,6 +106,8 @@ extern u32* primitiveBufferEnd;
 
 extern SparxRangeData game_sparx_range_data;
 
+extern u32 fade_effect;
+
 
 int sprintf(char* buffer, char* fmt, ...);
 void* memset(void* dest, u32 value, u32 size);
@@ -150,5 +152,7 @@ void DrawSync(int);
 void ReadCdSync(int baseSector, unsigned int* buffer, int numBytes, int offsetByte); // 0x80050578
 
 int ReadCdAsync(int baseSector, unsigned int* buffer, int numBytes, int offsetBytes); // 0x80050680
+
+void DialogueUpdate(void);
 
 #endif //SYMBOLS_H

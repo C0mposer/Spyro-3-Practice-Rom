@@ -171,8 +171,12 @@ void DrawPortalPolygons(void)
     }
 }
 
-void DrawPortalsAndPortalCollision(void)
-{
-    MCP_DrawPortals();
-    DrawPortalPolygons();
-}
+// extern bool hasLoadedCDCode;
+// void DrawPortalsAndPortalCollision(void)
+// {
+//     MCP_DrawPortals();
+//     if (hasLoadedCDCode)
+//     {
+//         DrawPortalPolygons();
+//     }
+// }

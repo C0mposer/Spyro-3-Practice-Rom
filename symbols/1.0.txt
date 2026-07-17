@@ -84,6 +84,7 @@ primitiveBufferEnd = 0x8006C668;
 
 game_sparx_range_data = 0x80065810;
 
+fade_effect = 0x8006c598;
 
 memset = 0x8004e790;
 MemCopy = 0x8004e7d4;
@@ -123,3 +124,5 @@ sprintf = 0x8005977c;
 ReadCdSync = 0x80050578;
 
 ReadCdAsync = 0x80050680;
+
+DialogueUpdate = 0x80051a60;

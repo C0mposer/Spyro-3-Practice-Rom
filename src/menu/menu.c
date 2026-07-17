@@ -21,7 +21,7 @@ const char* const difficulty_options[] =
 const char* const timer_options[] =
 {
     "Off",
-    "Show Select",
+    "Show On Select",
     "Show Always"
 };
 
