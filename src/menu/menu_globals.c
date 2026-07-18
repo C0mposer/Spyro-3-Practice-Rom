@@ -20,13 +20,13 @@ MenuElement main_menu_elements[] = {
     MENU_MULTI("Timer", timer_options, TIMER_OFF),
     MENU_MULTI("Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
     MENU_TOGGLE("Disable Portals", false),
-    MENU_MULTI("Sparx Range", sparx_range_options, 0),
-    MENU_TOGGLE("Basket Break", false),
     MENU_TOGGLE("Draw Portals", false),
     MENU_TOGGLE("Fast Reset", false),
-    MENU_TOGGLE("Fast Dialouge", false),
+    MENU_TOGGLE("Mash Dialouge", false),
     MENU_TOGGLE("Disable Bianca", false),
     MENU_TOGGLE("Rhynoc Trainer", false),
+    MENU_MULTI("Sparx Range", sparx_range_options, 0),
+    MENU_TOGGLE("Basket Break", false),
     MENU_SET_VALUE("Gem Count", 0, 20000, &globalGems, 0),
     MENU_SET_VALUE("Egg Count", 0, 100, &globalEggs, 0)};
 

@@ -28,6 +28,8 @@ currentLevel = 0x8006c5bc;
 levelID = 0x8006c7c8;
 subLevelID = 0x8006c5c8;
 
+previousLevelIDForVehicleEntry = 0x8006C73C;
+
 gemsCollectedPerLevel = 0x80071a10;
 gemsCollectedFlags = 0x80071ab0;
 eggsCollectedBitmask = 0x80070300;

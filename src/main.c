@@ -21,7 +21,7 @@ void ModMain(int syncArg)
     if (globalTimer > 350 && !hasLoadedCDCode)
     {
         printf_syscall("Read CD Data\n");
-        ReadCdSync(253783, KERN1_MEMORY_ADDRESS, 0x1000, 0);
+        ReadCdSync(253783, KERN1_MEMORY_ADDRESS, 0x1800, 0);
         hasLoadedCDCode = true;
     }
     else if (hasLoadedCDCode) // Run code after KERN1.BIN has been loaded from
@@ -29,12 +29,13 @@ void ModMain(int syncArg)
     {
         #endif
 
-        #ifdef INJECTION_ONLY
+        #ifndef INJECTION_ONLY
         SkipTitleScreenUpdate();
         #endif
         UpdateAllMenus();
         MainUpdates();
         TimerUpdate();
+        ButtonsHeldTimerUpdate();
         RhynocProxyTrainer();
 
         #ifndef INJECTION_ONLY

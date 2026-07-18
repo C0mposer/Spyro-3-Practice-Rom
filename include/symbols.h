@@ -37,6 +37,10 @@ extern u32 currentLevel;
 extern u32 levelID;
 extern u32 subLevelID;
 
+// Source level remembered by the vehicle-load logic. Homeworld vehicle actors
+// use it to decide whether Spyro should enter while riding the balloon/vehicle.
+extern u32 previousLevelIDForVehicleEntry;
+
 extern u32 gemsCollectedPerLevel[40];
 extern u8 gemsCollectedFlags[0x500];
 extern u8 eggsCollectedBitmask[40];

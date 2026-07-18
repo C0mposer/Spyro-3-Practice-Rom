@@ -52,13 +52,13 @@ void RhynocProxyTrainer()
             currentButtonSequence++;
         }
         else if (*rhynocAnimState == RHYNOC_THROWN_ANIM &&
-            isButtonPressed == X_BUTTON && currentButtonSequence == 1)
+            (isButtonPressed & X_BUTTON) && currentButtonSequence == 1)
         {
             input_sequence[GLIDE] = input_timer_during_thrown_anim;
             currentButtonSequence++;
         }
         else if (*rhynocAnimState == RHYNOC_THROWN_ANIM &&
-            isButtonPressed == SQUARE_BUTTON && currentButtonSequence == 2)
+            isButtonPressed & SQUARE_BUTTON && currentButtonSequence == 2)
         {
             input_sequence[CHARGE] = input_timer_during_thrown_anim;
             currentButtonSequence++;

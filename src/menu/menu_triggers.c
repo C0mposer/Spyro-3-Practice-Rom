@@ -8,7 +8,6 @@
 #include "menu_triggers.h"
 #include <bianca_flags.h>
 
-
 // Update the Off/On logic
 void UpdateMenuTriggers()
 {

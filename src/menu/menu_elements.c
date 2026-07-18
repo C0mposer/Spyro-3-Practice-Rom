@@ -2,6 +2,7 @@
 #include <buttons.h>
 #include <symbols.h>
 #include <types.h>
+#include <input_helper.h>
 
 static void ChangeElementValue(MenuElement* element, bool move_right)
 {
@@ -81,28 +82,58 @@ void UpdateMenuElements(Menu* menu)
     // Change Option/Set Value for the Set Value menu type
     if (current_element->type == MENU_TYPE_VALUE_SET)
     {
-        if (isButtonPressed == RIGHT_BUTTON) { current_element->value += 1; }
-        else if (isButtonPressed == LEFT_BUTTON)
+        // There is certainly a better way to do this. But this will suffice for now
+        if (isButtonPressed == LEFT_BUTTON)
         {
             current_element->value -= 1;
         }
+        else if (isButtonPressed == RIGHT_BUTTON)
+        {
+            current_element->value += 1;
+        }
         else if (isButtonPressed == L1_BUTTON)
         {
-            current_element->value -= 100;
+            current_element->value -= 10;
         }
         else if (isButtonPressed == R1_BUTTON)
         {
-            current_element->value += 100;
+            current_element->value += 10;
         }
         else if (isButtonPressed == L2_BUTTON)
         {
-            current_element->value -= 1000;
+            current_element->value -= 100;
         }
         else if (isButtonPressed == R2_BUTTON)
         {
-            current_element->value += 1000;
+            current_element->value += 100;
         }
-        else if (isButtonPressed == X_BUTTON)
+        else if (HasHeldButton(LEFT_BUTTON, 90))
+        {
+            current_element->value -= 200;
+        }
+        else if (HasHeldButton(RIGHT_BUTTON, 90))
+        {
+            current_element->value += 200;
+        }
+        else if (HasHeldButton(LEFT_BUTTON, 10))
+        {
+            current_element->value -= 2;
+        }
+        else if (HasHeldButton(RIGHT_BUTTON, 10))
+        {
+            current_element->value += 2;
+        }
+        else if (HasHeldButton(L2_BUTTON, 10))
+        {
+            current_element->value -= 200;
+        }
+        else if (HasHeldButton(R2_BUTTON, 10))
+        {
+            current_element->value += 200;
+        }
+
+        // Set value when exiting the menu
+        else if (isButtonPressed & (X_BUTTON | TRIANGLE_BUTTON | CIRCLE_BUTTON))
         {
             SetValueFromElement(current_element);
         }

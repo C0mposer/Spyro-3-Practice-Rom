@@ -132,7 +132,7 @@ inline static void SaveStartingPositionUpdate(void)
     }
 }
 
-inline static void ReloadLevelStartingPosition(void)
+inline static void ReloadLevelStartingPosition(bool shouldLoadBalloon)
 {
     if (subLevelID == 0)
     {
@@ -143,6 +143,15 @@ inline static void ReloadLevelStartingPosition(void)
     {
         Vec3Copy(&respawnPosition, &savedStartingPositionSubLevel);
         respawnAngle = savedStartingAngleSubLevel;
+    }
+
+    if (!shouldLoadBalloon)
+    {
+        previousLevelIDForVehicleEntry = 0;
+    }
+    else
+    {
+        previousLevelIDForVehicleEntry = 40;
     }
 }
 
@@ -199,16 +208,36 @@ void PrepareSavedSpyroRespawn(void)
         savedCheckpointUpdated = 1;
         Vec3Copy(&respawnPosition, &savedSpyroPosition);
         respawnAngle = (u32)savedSpyroYawAngle;
+
+        previousLevelIDForVehicleEntry = 0; // Force no balloon for loading saved position
     }
     else
     {
-        ReloadLevelStartingPosition();
+        bool shouldLoadBalloon = false;
+        ReloadLevelStartingPosition(shouldLoadBalloon);
     }
 }
 
 void RespawnSpyro(void)
 {
     spyroZ = 0; // Kill spyro by sending him to the void
+}
+
+void UpdateHomeworldEntryType()
+{
+    if (gamestate == LOADING_CUTSCENE)
+    {
+        if (HasHeldButton(TRIANGLE_BUTTON, 20)) // Load in on balloon
+        {
+            previousLevelIDForVehicleEntry = 10; // Must be any hw ID (x % 10 essentially)
+            printf_syscall("Should be balloon\n");
+        }
+        else // Don't load in on balloon
+        {
+            previousLevelIDForVehicleEntry = 0;
+            printf_syscall("Should be NO balloon\n");
+        }
+    }
 }
 
 void ClearCollectables(void)
@@ -249,6 +278,7 @@ void ClearCollectables(void)
     // Reset checkpoint data
     memset(currentCheckpointData, 0, 0x850);
     memset(savedCheckpointData, 0, 0x850);
+
 }
 
 inline static void UnlockAtlasWarp()
@@ -281,7 +311,15 @@ void MainUpdates(void)
     FastLoadUpdate();
     ReloadSpyroTimerTick();
 
-    if (gamestate == PAUSED) { UnlockAtlasWarp(); }
+    if (gamestate == LOADING_CUTSCENE)
+    {
+        UpdateHomeworldEntryType();
+    }
+
+    if (gamestate == PAUSED)
+    {
+        UnlockAtlasWarp();
+    }
 
     if (gamestate == GAMEPLAY || gamestate == INTERACTING)
     {
@@ -294,6 +332,7 @@ void MainUpdates(void)
 
         SaveStartingPositionUpdate();
         ManualSaveSpyroPositionUpdate();
+
 
         // Restart the level from the saved position
         if (rawButtonHeld == LOAD_SPYRO_HOTKEY)
@@ -312,10 +351,19 @@ void MainUpdates(void)
                                   // dialogues (see npc_dialogue_skip.c)
         }
         // Restart the level from the spawn point
-        else if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
+        else if (rawButtonHeld == RELOAD_LEVEL_HOTKEY || rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY) // Theres probably a better way to do this to save space
         {
+            bool shouldLoadBalloon = false;
+            if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
+            {
+                shouldLoadBalloon = false;
+            }
+            else if (rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY)
+            {
+                shouldLoadBalloon = true;
+            }
+            ReloadLevelStartingPosition(shouldLoadBalloon);
             ClearCollectables();
-            ReloadLevelStartingPosition();
             speedUpResetPending = true;
             if (FastLoadEnabled())
             {
@@ -328,4 +376,6 @@ void MainUpdates(void)
     }
 
     if (HasRecentlyLoadedSpyro()) { CancelEntryNpcDialogue(); }
+
+
 }

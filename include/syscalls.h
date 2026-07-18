@@ -5,4 +5,5 @@
 // Uses syscall 0x3F (std_out_printf) via 0xA0 vector
 s32 printf_syscall(const char* format, ...);
 
+#define LOG(x) printf_syscall(x)
 #endif /* SYSCALLS_H */
