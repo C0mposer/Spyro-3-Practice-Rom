@@ -3,7 +3,7 @@
 #include <difficulty.h>
 #include <gamestates.h>
 
-char* difficultyStringLUT[3] = { "Easy", "Normal", "Hard" }; // Renamed Medium to Normal for now. Conflicted on what to call it because most people only talk about "easy & hard", but really the difficulty you start at is not easy.
+//char* difficultyStringLUT[3] = { "Easy", "Normal", "Hard" }; // Renamed Medium to Normal for now. Conflicted on what to call it because most people only talk about "easy & hard", but really the difficulty you start at is not easy.
 
 extern s32 newDifficulty;
 extern bool difficultyJustChanged;

@@ -10,7 +10,7 @@ extern bool sunriseLoadStarted;
 // everything in memory up in a way to be able to simply call it, but it was easier to
 // essentially put the game into a state where it's acceptable to call LoadLevel.
 // We also change the title card of the first cutscene loading screen to avoid visual
-// artifacting. See: skip_intro_cutscenes.s for that. 
+// artifacting. See: skip_intro_cutscenes.s for that.
 void SkipTitleScreenUpdate(void)
 {
     const s32 timeToSkip = 0x800; // If we try to go to the first cutscene too fast, the game will show a black screen for like 10 seconds. This is just like when you start a run too fast, before waiting for music.

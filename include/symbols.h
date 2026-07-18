@@ -154,8 +154,11 @@ void AddToWorldTable(void* primitive, s32 depth_bucket);
 void DrawSync(int);
 
 void ReadCdSync(int baseSector, unsigned int* buffer, int numBytes, int offsetByte); // 0x80050578
+void FlushCache(void); // 0x800649BC
 
 int ReadCdAsync(int baseSector, unsigned int* buffer, int numBytes, int offsetBytes); // 0x80050680
+
+bool WaitForCd_(void); // 0x800503F8
 
 void DialogueUpdate(void);
 

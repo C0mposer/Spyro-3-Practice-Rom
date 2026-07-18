@@ -20,8 +20,9 @@ void ModMain(int syncArg)
     #ifndef INJECTION_ONLY
     if (globalTimer > 350 && !hasLoadedCDCode)
     {
-        printf_syscall("Read CD Data\n");
-        ReadCdSync(253783, KERN1_MEMORY_ADDRESS, 0x1800, 0);
+        //printf_syscall("Read CD Data\n");
+        ReadCdSync(253783, KERN1_MEMORY_ADDRESS, 0x800, 0);
+        //FlushCache();
         hasLoadedCDCode = true;
     }
     else if (hasLoadedCDCode) // Run code after KERN1.BIN has been loaded from

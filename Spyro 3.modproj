@@ -525,9 +525,9 @@
         {
           "name": "CheatCodes",
           "code_files": [
-            "./src/main.c",
-            "./src/menu/menu.c",
-            "./src/menu/menu_elements.c"
+            "./src/menu/menu_elements.c",
+            "./src/menu/menu_triggers.c",
+            "./src/menu/menu.c"
           ],
           "memory_address": "80017b7c",
           "size": "78C",
@@ -555,9 +555,9 @@
             "./src/render_helper.c",
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
-            "./src/disable_portal.c",
-            "./src/difficulty.c",
-            "./src/npc_dialogue_skip.c"
+            "./src/npc_dialogue_skip.c",
+            "./src/display_portal_verts_wrapper.c",
+            "./src/disable_portal.c"
           ],
           "memory_address": "80020790",
           "size": "5DC",
@@ -570,18 +570,11 @@
         {
           "name": "PS1Header",
           "code_files": [
-            "./src/difficulty_globals.c",
-            "./src/disable_portal_globals.c",
-            "./src/main_update_globals.c",
-            "./src/manual_timer_globals.c",
-            "./src/skip_title_screen_globals.c",
-            "./src/menu/menu_triggers_globals.c",
-            "./src/main_globals.c",
-            "./src/display_portal_verts_wrapper.c",
-            "./src/input_helper.c"
+            "./src/main_updates.c",
+            "./src/main_globals.c"
           ],
-          "memory_address": "8000B0B8",
-          "size": "800",
+          "memory_address": "8000b0b8",
+          "size": "7b8",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x48",
           "auto_calculate_injection_file_address": false,
@@ -591,25 +584,31 @@
         {
           "name": "GameOverCave",
           "code_files": [
-            "./src/display_portal_verts.c"
+            "./src/rhynoc_trainer.c",
+            "./src/main.c",
+            "./src/difficulty.c"
           ],
           "memory_address": "80054af8",
-          "size": "49B",
+          "size": "364",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x452F8",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
-          "enabled": false
+          "enabled": true
         },
         {
           "name": "PS1Kernal1",
           "code_files": [
             "./src/display_portal_verts.c",
             "./src/menu/menu_globals.c",
-            "./src/rhynoc_trainer.c",
             "./src/dialogue_skip.c",
-            "./src/menu/menu_triggers.c",
-            "./src/main_updates.c"
+            "./src/difficulty_globals.c",
+            "./src/disable_portal_globals.c",
+            "./src/input_helper.c",
+            "./src/main_update_globals.c",
+            "./src/manual_timer_globals.c",
+            "./src/menu/menu_triggers_globals.c",
+            "./src/skip_title_screen_globals.c"
           ],
           "memory_address": "8000C000",
           "size": "1800",
@@ -749,9 +748,9 @@
         {
           "name": "CheatCodes",
           "code_files": [
-            "./src/main.c",
-            "./src/menu/menu.c",
-            "./src/menu/menu_elements.c"
+            "./src/menu/menu_elements.c",
+            "./src/menu/menu_triggers.c",
+            "./src/menu/menu.c"
           ],
           "memory_address": "80017b7c",
           "size": "78C",
@@ -779,9 +778,9 @@
             "./src/render_helper.c",
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
-            "./src/disable_portal.c",
-            "./src/difficulty.c",
-            "./src/npc_dialogue_skip.c"
+            "./src/npc_dialogue_skip.c",
+            "./src/display_portal_verts_wrapper.c",
+            "./src/disable_portal.c"
           ],
           "memory_address": "80020790",
           "size": "5DC",
@@ -794,18 +793,11 @@
         {
           "name": "PS1Header",
           "code_files": [
-            "./src/difficulty_globals.c",
-            "./src/disable_portal_globals.c",
-            "./src/main_update_globals.c",
-            "./src/manual_timer_globals.c",
-            "./src/skip_title_screen_globals.c",
-            "./src/menu/menu_triggers_globals.c",
-            "./src/main_globals.c",
-            "./src/display_portal_verts_wrapper.c",
-            "./src/input_helper.c"
+            "./src/main_updates.c",
+            "./src/main_globals.c"
           ],
-          "memory_address": "8000B0B8",
-          "size": "800",
+          "memory_address": "8000A918",
+          "size": "7b8",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x48",
           "auto_calculate_injection_file_address": false,
@@ -815,27 +807,33 @@
         {
           "name": "GameOverCave",
           "code_files": [
-            "./src/display_portal_verts.c"
+            "./src/rhynoc_trainer.c",
+            "./src/main.c",
+            "./src/difficulty.c"
           ],
           "memory_address": "80054af8",
-          "size": "49B",
+          "size": "364",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x452F8",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
-          "enabled": false
+          "enabled": true
         },
         {
           "name": "PS1Kernal1",
           "code_files": [
             "./src/display_portal_verts.c",
             "./src/menu/menu_globals.c",
-            "./src/rhynoc_trainer.c",
             "./src/dialogue_skip.c",
-            "./src/menu/menu_triggers.c",
-            "./src/main_updates.c"
+            "./src/difficulty_globals.c",
+            "./src/disable_portal_globals.c",
+            "./src/input_helper.c",
+            "./src/main_update_globals.c",
+            "./src/manual_timer_globals.c",
+            "./src/menu/menu_triggers_globals.c",
+            "./src/skip_title_screen_globals.c"
           ],
-          "memory_address": "8000C000",
+          "memory_address": "080008EB0",
           "size": "1800",
           "injection_file": "KERN.DAT",
           "injection_file_address": "",

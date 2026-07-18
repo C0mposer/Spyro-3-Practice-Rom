@@ -36,8 +36,8 @@ static SetValueFromElement(MenuElement* element)
 
     PlaySound(11, 0, 0);
     *(element->symbol_to_set) = value_to_set;
-    printf_syscall("Setting pointer: %X with value %d\n",
-                   (element->symbol_to_set), value_to_set);
+    //printf_syscall("Setting pointer: %X with value %d\n",
+    //(element->symbol_to_set), value_to_set);
 }
 
 void UpdateMenuElements(Menu* menu)

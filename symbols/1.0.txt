@@ -124,7 +124,10 @@ DrawSync = 0x8005a264;
 sprintf = 0x8005977c;
 
 ReadCdSync = 0x80050578;
+FlushCache = 0x800649BC;
 
 ReadCdAsync = 0x80050680;
+
+WaitForCd_ = 0x800503F8;
 
 DialogueUpdate = 0x80051a60;

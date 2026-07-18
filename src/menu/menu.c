@@ -21,7 +21,7 @@ const char* const difficulty_options[] =
 const char* const timer_options[] =
 {
     "Off",
-    "Show On Select",
+    "Show Stopped",
     "Show Always"
 };
 
@@ -52,10 +52,10 @@ static void OpenMenu(Menu* menu)
     PlaySound(14, 0, 0);
     DisableRendering();
 
-    if (lowLevelMusicVolume != 0)
-    {
-        lowLevelMusicVolume /= 4;
-    }
+    // if (lowLevelMusicVolume != 0)
+    // {
+    //     lowLevelMusicVolume /= 4;
+    // }
 
     menu->state = MENU_STATE_OPEN;
 

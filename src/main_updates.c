@@ -230,12 +230,12 @@ void UpdateHomeworldEntryType()
         if (HasHeldButton(TRIANGLE_BUTTON, 20)) // Load in on balloon
         {
             previousLevelIDForVehicleEntry = 10; // Must be any hw ID (x % 10 essentially)
-            printf_syscall("Should be balloon\n");
+            //printf_syscall("Should be balloon\n");
         }
         else // Don't load in on balloon
         {
             previousLevelIDForVehicleEntry = 0;
-            printf_syscall("Should be NO balloon\n");
+            //printf_syscall("Should be NO balloon\n");
         }
     }
 }
