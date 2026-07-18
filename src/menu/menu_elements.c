@@ -1,7 +1,7 @@
-#include <types.h>
-#include <symbols.h>
-#include <buttons.h>
 #include "menu.h"
+#include <buttons.h>
+#include <symbols.h>
+#include <types.h>
 
 static void ChangeElementValue(MenuElement* element, bool move_right)
 {
@@ -20,19 +20,23 @@ static void ChangeElementValue(MenuElement* element, bool move_right)
             element->selection_option = element->option_count - 1;
         }
     }
-    else if (element->selection_option == 0)
-    {
-        element->selection_option = 0;
-    }
+    else if (element->selection_option == 0) { element->selection_option = 0; }
     else
     {
         element->selection_option--;
     }
 
-    if (element->selection_option != old_value)
-    {
-        PlaySound(11, 0, 0);
-    }
+    if (element->selection_option != old_value) { PlaySound(11, 0, 0); }
+}
+
+static SetValueFromElement(MenuElement* element)
+{
+    u32 value_to_set = element->value;
+
+    PlaySound(11, 0, 0);
+    *(element->symbol_to_set) = value_to_set;
+    printf_syscall("Setting pointer: %X with value %d\n",
+                   (element->symbol_to_set), value_to_set);
 }
 
 void UpdateMenuElements(Menu* menu)
@@ -41,10 +45,7 @@ void UpdateMenuElements(Menu* menu)
     s32 column_offset;
     u8 i;
 
-    if (menu->amount_of_elements == 0)
-    {
-        return;
-    }
+    if (menu->amount_of_elements == 0) { return; }
 
     textbox_center = (menu->x1 + menu->x2) / 2;
     column_offset = (menu->x2 - menu->x1) / 4;
@@ -53,35 +54,94 @@ void UpdateMenuElements(Menu* menu)
     {
         MenuElement* element = &menu->elements[i];
         s32 y = menu->y1 + 25 + (14 * i);
-        s32 color = i == menu->current_selection ? SELECTED_COLOR : UNSELECTED_COLOR;
+        s32 color =
+            i == menu->current_selection ? SELECTED_COLOR : UNSELECTED_COLOR;
 
-        DrawTextCentered(element->label, textbox_center - column_offset, y, color);
-        DrawTextCentered(
-            element->options[element->selection_option],
-            textbox_center + column_offset,
-            y,
-            color);
+        DrawTextCentered(element->label, textbox_center - column_offset, y,
+                         color);
+
+        // Draw actual value int as string if Value Set type
+        if (element->type == MENU_TYPE_VALUE_SET)
+        {
+            char* buffer[6];
+            sprintf(buffer, "%d", element->value);
+            DrawTextCentered(buffer, textbox_center + column_offset, y, color);
+        }
+
+        // Draw String from selection array otherwise
+        else
+        {
+            DrawTextCentered(element->options[element->selection_option],
+                             textbox_center + column_offset, y, color);
+        }
     }
 
-    if (isButtonPressed == RIGHT_BUTTON)
+    MenuElement* current_element = &menu->elements[menu->current_selection];
+
+    // Change Option/Set Value for the Set Value menu type
+    if (current_element->type == MENU_TYPE_VALUE_SET)
     {
-        ChangeElementValue(&menu->elements[menu->current_selection], true);
-    }
-    else if (isButtonPressed == LEFT_BUTTON)
-    {
-        ChangeElementValue(&menu->elements[menu->current_selection], false);
+        if (isButtonPressed == RIGHT_BUTTON) { current_element->value += 1; }
+        else if (isButtonPressed == LEFT_BUTTON)
+        {
+            current_element->value -= 1;
+        }
+        else if (isButtonPressed == L1_BUTTON)
+        {
+            current_element->value -= 100;
+        }
+        else if (isButtonPressed == R1_BUTTON)
+        {
+            current_element->value += 100;
+        }
+        else if (isButtonPressed == L2_BUTTON)
+        {
+            current_element->value -= 1000;
+        }
+        else if (isButtonPressed == R2_BUTTON)
+        {
+            current_element->value += 1000;
+        }
+        else if (isButtonPressed == X_BUTTON)
+        {
+            SetValueFromElement(current_element);
+        }
     }
 
-    if (isButtonPressed == UP_BUTTON && menu->current_selection > 0)
+    // Change option for toggle/multi
+    else
     {
-        menu->current_selection--;
+        if (isButtonPressed == RIGHT_BUTTON)
+        {
+            ChangeElementValue(&menu->elements[menu->current_selection], true);
+        }
+        else if (isButtonPressed == LEFT_BUTTON)
+        {
+            ChangeElementValue(&menu->elements[menu->current_selection], false);
+        }
+    }
+
+    // Scroll Menu
+    if (isButtonPressed == UP_BUTTON)
+    {
+        // Don't underflow
+        if (menu->current_selection > 0) { menu->current_selection--; }
+        else // Wrap around
+        {
+            menu->current_selection = menu->amount_of_elements - 1;
+        }
         PlaySound(10, 0, 0);
     }
-    else if (isButtonPressed == DOWN_BUTTON &&
-        menu->current_selection + 1 < menu->amount_of_elements)
+    else if (isButtonPressed == DOWN_BUTTON)
     {
-        menu->current_selection++;
+        if (menu->current_selection + 1 < menu->amount_of_elements)
+        {
+            menu->current_selection++;
+        }
+        else
+        {
+            menu->current_selection = 0;
+        }
         PlaySound(10, 0, 0);
     }
-
 }

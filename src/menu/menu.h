@@ -6,20 +6,15 @@
 #define UNSELECTED_COLOR 0x4
 #define SELECTED_COLOR 0x6
 
-typedef enum MenuType
-{
+typedef enum MenuType {
     MENU_TYPE_TOGGLE,
-    MENU_TYPE_MULTI
+    MENU_TYPE_MULTI,
+    MENU_TYPE_VALUE_SET
 } MenuType;
 
-typedef enum MenuState
-{
-    MENU_STATE_CLOSED,
-    MENU_STATE_OPEN
-} MenuState;
+typedef enum MenuState { MENU_STATE_CLOSED, MENU_STATE_OPEN } MenuState;
 
-enum MainMenuElement
-{
+enum MainMenuElement {
     TIMER_MULTI,
     DIFFICULTY_MULTI,
     DISABLE_PORTAL_TOGGLE,
@@ -30,9 +25,10 @@ enum MainMenuElement
     FAST_DIALOUGE_TRIGGER,
     DISABLE_BIANCA_TOGGLE,
     RHYNOC_TRAINER_TOGGLE,
+    SET_GEM_COUNT_TOGGLE,
+    SET_EGG_COUNT_TOGGLE,
     MAIN_MENU_ELEMENT_COUNT
 };
-
 
 typedef struct MenuElement
 {
@@ -41,15 +37,15 @@ typedef struct MenuElement
 
     union
     {
-        u8 value;
         bool enabled;
-        u8 selection_option;
+        u32 selection_option;
+        u32 value;
     };
+    u32* symbol_to_set;
 
     u8 option_count;
     u8 type;
 } MenuElement;
-
 
 typedef struct Menu
 {
@@ -68,24 +64,27 @@ typedef struct Menu
 
 extern const char* const menu_toggle_options[2];
 
-#define MENU_TOGGLE(label_, initial_) \
-    { \
-        .label = (label_), \
-        .options = menu_toggle_options, \
-        .selection_option = (initial_), \
-        .option_count = 2, \
-        .type = MENU_TYPE_TOGGLE \
-    }
+#define MENU_TOGGLE(label_, initial_)                                          \
+    {.label = (label_),                                                        \
+     .options = menu_toggle_options,                                           \
+     .selection_option = (initial_),                                           \
+     .option_count = 2,                                                        \
+     .type = MENU_TYPE_TOGGLE}
 
 /* must be an array so its option count can be calculated here. */
-#define MENU_MULTI(label_, choices_, initial_) \
-    { \
-        .label = (label_), \
-        .options = (choices_), \
-        .selection_option = (initial_), \
-        .option_count = (u8)ARRAY_SIZE(choices_), \
-        .type = MENU_TYPE_MULTI \
-    }
+#define MENU_MULTI(label_, choices_, initial_)                                 \
+    {.label = (label_),                                                        \
+     .options = (choices_),                                                    \
+     .selection_option = (initial_),                                           \
+     .option_count = (u8)ARRAY_SIZE(choices_),                                 \
+     .type = MENU_TYPE_MULTI}
+
+#define MENU_SET_VALUE(label_, min_, max_, symbol_to_set_, initial_)           \
+    {.label = (label_),                                                        \
+     .value = (initial_),                                                      \
+     .option_count = sizeof(u16),                                              \
+     .type = MENU_TYPE_VALUE_SET,                                              \
+     .symbol_to_set = symbol_to_set_}
 
 void UpdateMenu(Menu* menu);
 void UpdateAllMenus(void);

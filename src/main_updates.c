@@ -1,12 +1,12 @@
-#include <types.h>
-#include <syscalls.h>
-#include <symbols.h>
+#include "menu/menu.h"
 #include <buttons.h>
 #include <gamestates.h>
-#include <upgrades.h>
 #include <hotkeys.h>
-#include "menu/menu.h"
 #include <level_ids.h>
+#include <symbols.h>
+#include <syscalls.h>
+#include <types.h>
+#include <upgrades.h>
 
 extern Vec3 savedStartingPosition;
 extern Vec3 savedStartingPositionSubLevel;
@@ -22,15 +22,16 @@ extern u32 savedPositionSubLevelID;
 
 extern u32 reloadSpyroTimer;
 
+extern Menu main_menu;
+
 inline static void SpeedUpReset(void)
 {
     const u32 minimumLayoutWait = 6;
     const u32 normalDeathLayoutWait = 0x50;
 
-    // Skip the artificial death delay. It still waits until the CD read completes.
-    if (speedUpResetPending &&
-        gamestate == DYING &&
-        menuState == 1 &&
+    // Skip the artificial death delay. It still waits until the CD read
+    // completes.
+    if (speedUpResetPending && gamestate == DYING && menuState == 1 &&
         framesInScenario >= minimumLayoutWait)
     {
         framesInScenario = normalDeathLayoutWait;
@@ -38,8 +39,7 @@ inline static void SpeedUpReset(void)
     }
 }
 
-typedef enum FastLoadFadeMode
-{
+typedef enum FastLoadFadeMode {
     FAST_LOAD_CUT_BOTH_FADES,
     FAST_LOAD_KEEP_FADE_IN
 } FastLoadFadeMode;
@@ -50,20 +50,19 @@ static FastLoadFadeMode fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
 
 bool FastLoadEnabled(void)
 {
-    //printf_syscall("FAST_LOAD_TOGGLE = %d, Enabled = %d\n", FAST_LOAD_TOGGLE, main_menu.elements[FAST_LOAD_TOGGLE].enabled);
+    // printf_syscall("FAST_LOAD_TOGGLE = %d, Enabled = %d\n", FAST_LOAD_TOGGLE,
+    // main_menu.elements[FAST_LOAD_TOGGLE].enabled);
     return main_menu.elements[FAST_LOAD_TOGGLE].enabled != 0;
 }
 
 inline static void FastLoadUpdate(void)
 {
-    const u32 fadeFullBlack = 0xFF;    // Phase 0: jump straight to black
-    const u32 fadeInFinishStep = 0x10; // Phase 4: game subtracts 0x10 then completes at < 1
+    const u32 fadeFullBlack = 0xFF; // Phase 0: jump straight to black
+    const u32 fadeInFinishStep =
+        0x10; // Phase 4: game subtracts 0x10 then completes at < 1
     const u32 skipArtificialWait = 0x50;
 
-    if (!fastLoadActive)
-    {
-        return;
-    }
+    if (!fastLoadActive) { return; }
 
     if (gamestate == DYING)
     {
@@ -71,23 +70,24 @@ inline static void FastLoadUpdate(void)
 
         switch (menuState)
         {
-            case 0: // Force full black so the game advances immediately
+        case 0: // Force full black so the game advances immediately
             drawScreenBlack = fadeFullBlack;
             break;
-            case 1: // Skip the artificial delay
+        case 1: // Skip the artificial delay
             if (framesInScenario != 0 && framesInScenario < skipArtificialWait)
             {
                 framesInScenario = skipArtificialWait;
             }
             break;
-            case 4: // fade-in: Only cut fade in for the saved-position teleport. The level-start reset keeps it so enemy cycles are accurate.
+        case 4: // fade-in: Only cut fade in for the saved-position teleport.
+                // The level-start reset keeps it so enemy cycles are accurate.
             if (fastLoadFadeMode == FAST_LOAD_CUT_BOTH_FADES &&
                 drawScreenBlack > fadeInFinishStep)
             {
                 drawScreenBlack = fadeInFinishStep;
             }
             break;
-            default:
+        default:
             break;
         }
     }
@@ -110,26 +110,32 @@ inline static void SaveStartingPositionUpdate(void)
         if (currentLevelID != levelID)
         {
 
-            Vec3Copy(&savedStartingPosition, &respawnPosition); // Save the respawn position for the current level/sub level
-            savedStartingAngle = respawnAngle; // Save the respawn position for the current level/sub level
+            Vec3Copy(&savedStartingPosition,
+                     &respawnPosition); // Save the respawn position for the
+                                        // current level/sub level
+            savedStartingAngle = respawnAngle; // Save the respawn position for
+                                               // the current level/sub level
 
             currentLevelID = levelID;
-
         }
         if (currentSubLevelID != subLevelID)
         {
-            Vec3Copy(&savedStartingPositionSubLevel, &respawnPosition); // Save the respawn position for the current level/sub level
-            savedStartingAngleSubLevel = respawnAngle; // Save the respawn position for the current level/sub level
+            Vec3Copy(&savedStartingPositionSubLevel,
+                     &respawnPosition); // Save the respawn position for the
+                                        // current level/sub level
+            savedStartingAngleSubLevel =
+                respawnAngle; // Save the respawn position for the current
+                              // level/sub level
 
             currentSubLevelID = subLevelID;
-
         }
     }
 }
 
 inline static void ReloadLevelStartingPosition(void)
 {
-    if (subLevelID == 0) {
+    if (subLevelID == 0)
+    {
         Vec3Copy(&respawnPosition, &savedStartingPosition);
         respawnAngle = savedStartingAngle;
     }
@@ -142,9 +148,8 @@ inline static void ReloadLevelStartingPosition(void)
 
 inline static bool HasSavedSpyroPositionForCurrentLevel(void)
 {
-    return hasSavedSpyroPosition &&
-        savedPositionLevelID == levelID &&
-        savedPositionSubLevelID == subLevelID;
+    return hasSavedSpyroPosition && savedPositionLevelID == levelID &&
+           savedPositionSubLevelID == subLevelID;
 }
 
 // Manually save spyro's position
@@ -208,15 +213,17 @@ void RespawnSpyro(void)
 
 void ClearCollectables(void)
 {
+    u32 gem_reset_value = main_menu.elements[SET_GEM_COUNT_TOGGLE].value;
+    u32 egg_reset_value = main_menu.elements[SET_EGG_COUNT_TOGGLE].value;
     // Clear Gem & Egg count
-    globalGems = 0;
-    globalEggs = 0;
+    globalGems = gem_reset_value;
+    globalEggs = egg_reset_value;
 
     // Clear gem flags
     memset(gemsCollectedPerLevel, 0, 0xA0);
     memset(gemsCollectedFlags, 0, 0x500);
 
-    // Clear egg flags 
+    // Clear egg flags
     memset(eggsCollectedBitmask, 0, 0x28);
     memset(eggDifficultyState, 0, 0xF0);
     memset(recordedPerformancePerEgg, 0, 0xF0);
@@ -228,7 +235,8 @@ void ClearCollectables(void)
     memset(dialogueFlags, 0, 0x28);
     memset(skillPointFlags, 0, 0x14);
 
-    // Reset boss death counters (they can override adaptive difficulty sometimes)
+    // Reset boss death counters (they can override adaptive difficulty
+    // sometimes)
     deathsToBuzz = 0;
     deathsToSpike = 0;
     deathsToScorch = 0;
@@ -243,27 +251,28 @@ void ClearCollectables(void)
     memset(savedCheckpointData, 0, 0x850);
 }
 
-
 inline static void UnlockAtlasWarp()
 {
     memset(hasEnteredLevelFlags, 0x11111111, 40); // Unlock all levels in atlas
-    upgradeFlags = 2; // Hacky because the overlays are encrypted, and doing the code below changes it at runtime, breaking the CRC. Fix eventually by patching the overlay directly.
+    upgradeFlags = 2; // Hacky because the overlays are encrypted, and doing the
+                      // code below changes it at runtime, breaking the CRC. Fix
+                      // eventually by patching the overlay directly.
 
-    //     // Check if the atlas overlay is loaded. If so, nop the sparx breaking basket checks, to force atlas warp to work
-//     opcode_as_u32* check_1 = ((opcode_as_u32*)0x800791DC);
-//     opcode_as_u32* check_2 = ((opcode_as_u32*)0x8007755C);
-//     bool is_check_1_loaded = *check_1 == 0x14400021;
-//     bool is_check_2_loaded = *check_2 == 0x14400011;
+    // Can't do this at runtime because of anti-tamper :)
+    //     // Check if the atlas overlay is loaded. If so, nop the sparx
+    //     breaking basket checks, to force atlas warp to work
+    //     opcode_as_u32* check_1 = ((opcode_as_u32*)0x800791DC);
+    //     opcode_as_u32* check_2 = ((opcode_as_u32*)0x8007755C);
+    //     bool is_check_1_loaded = *check_1 == 0x14400021;
+    //     bool is_check_2_loaded = *check_2 == 0x14400011;
 
-//     //printf_syscall("check1: %X, check2: %X\n", *check_1, *check_2);
-//     if (is_check_1_loaded && is_check_2_loaded)
-//     {    
+    //     //printf_syscall("check1: %X, check2: %X\n", *check_1, *check_2);
+    //     if (is_check_1_loaded && is_check_2_loaded)
+    //     {
     //         *check_1 = 0x0;
     //         *check_2 = 0x0;
     //     }
 }
-
-
 
 // Basic checks that should run every frame
 void MainUpdates(void)
@@ -272,17 +281,16 @@ void MainUpdates(void)
     FastLoadUpdate();
     ReloadSpyroTimerTick();
 
-    if (gamestate == PAUSED)
-    {
-        UnlockAtlasWarp();
-    }
+    if (gamestate == PAUSED) { UnlockAtlasWarp(); }
 
     if (gamestate == GAMEPLAY || gamestate == INTERACTING)
     {
-        //lives = 4;
+        // lives = 4;
 
-        //Can't do this at runtime because of anti-tamper :)
-        //*((u32*)0x80049a50) = 0x0; // NOP the life decrement code during a death. Less annoying than having lives set to 4 over and over, with sfx. 
+        // Can't do this at runtime because of anti-tamper :)
+        //*((u32*)0x80049a50) = 0x0; // NOP the life decrement code during a
+        // death. Less annoying than having lives set to 4 over and over, with
+        // sfx.
 
         SaveStartingPositionUpdate();
         ManualSaveSpyroPositionUpdate();
@@ -300,7 +308,8 @@ void MainUpdates(void)
                 fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
             }
             RespawnSpyro();
-            reloadSpyroTimer = 1; // Used for skipping frozen and fleet npc dialogues (see npc_dialogue_skip.c) 
+            reloadSpyroTimer = 1; // Used for skipping frozen and fleet npc
+                                  // dialogues (see npc_dialogue_skip.c)
         }
         // Restart the level from the spawn point
         else if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
@@ -318,8 +327,5 @@ void MainUpdates(void)
         }
     }
 
-    if (HasRecentlyLoadedSpyro())
-    {
-        CancelEntryNpcDialogue();
-    }
+    if (HasRecentlyLoadedSpyro()) { CancelEntryNpcDialogue(); }
 }

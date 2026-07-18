@@ -1,11 +1,10 @@
-#include <types.h>
-#include <symbols.h>
-#include <buttons.h>
-#include "skip_title_screen.h"
 #include "menu/menu.h"
+#include "skip_title_screen.h"
 #include <buttons.h>
-#include <syscalls.h>
 #include <difficulty.h>
+#include <symbols.h>
+#include <syscalls.h>
+#include <types.h>
 
 extern bool hasLoadedCDCode;
 #define KERN1_FILE_SECTOR 253783
@@ -18,22 +17,29 @@ extern bool hasLoadedCDCode;
 
 void ModMain(int syncArg)
 {
-    // if (globalTimer > 350 && !hasLoadedCDCode)
-    // {
-    //     printf_syscall("Read CD Data\n");
-    //     ReadCdSync(253783, KERN1_MEMORY_ADDRESS, 0x1000, 0);
-    //     hasLoadedCDCode = true;
-    // }
-    // else if (hasLoadedCDCode) // Run code after KERN1.BIN has been loaded from the CD
-    // {
-    SkipTitleScreenUpdate();
-    UpdateAllMenus();
-    MainUpdates();
-    TimerUpdate();
-    RhynocProxyTrainer();
-// }
+    #ifndef INJECTION_ONLY
+    if (globalTimer > 350 && !hasLoadedCDCode)
+    {
+        printf_syscall("Read CD Data\n");
+        ReadCdSync(253783, KERN1_MEMORY_ADDRESS, 0x1000, 0);
+        hasLoadedCDCode = true;
+    }
+    else if (hasLoadedCDCode) // Run code after KERN1.BIN has been loaded from
+                              // the CD
+    {
+        #endif
 
-//DifficultyUpdate();
+        #ifdef INJECTION_ONLY
+        SkipTitleScreenUpdate();
+        #endif
+        UpdateAllMenus();
+        MainUpdates();
+        TimerUpdate();
+        RhynocProxyTrainer();
 
-    DrawSync(syncArg);        // Replaced Function Call, we must call it from our hook
+        #ifndef INJECTION_ONLY
+    }
+    #endif
+
+    DrawSync(syncArg); // Replaced Function Call, we must call it from our hook
 }
