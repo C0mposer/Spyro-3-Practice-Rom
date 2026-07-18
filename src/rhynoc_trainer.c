@@ -14,7 +14,7 @@ u32 input_timer_during_thrown_anim = 0;
 
 u32 currentButtonSequence = 0;
 
-u16 input_sequence[3] = {0};
+u16 input_sequence[3] = { 0 };
 #define INPUT_SEQUENCE_FINISHED 3
 
 u32 wait_to_show = 0;
@@ -52,13 +52,13 @@ void RhynocProxyTrainer()
             currentButtonSequence++;
         }
         else if (*rhynocAnimState == RHYNOC_THROWN_ANIM &&
-                 isButtonPressed == X_BUTTON && currentButtonSequence == 1)
+            isButtonPressed == X_BUTTON && currentButtonSequence == 1)
         {
             input_sequence[GLIDE] = input_timer_during_thrown_anim;
             currentButtonSequence++;
         }
         else if (*rhynocAnimState == RHYNOC_THROWN_ANIM &&
-                 isButtonPressed == SQUARE_BUTTON && currentButtonSequence == 2)
+            isButtonPressed == SQUARE_BUTTON && currentButtonSequence == 2)
         {
             input_sequence[CHARGE] = input_timer_during_thrown_anim;
             currentButtonSequence++;

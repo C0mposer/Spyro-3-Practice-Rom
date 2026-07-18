@@ -1,5 +1,5 @@
 # Auto-generated hook for QuickAdvanceDialogue()
-# Source: dialogue_skip.c:9
+# Source: dialogue_skip.c:8
 # Type: JAL_HOOK
 # Memory: 0x80055460
 
