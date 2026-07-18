@@ -16,6 +16,7 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 |---------|:----:|
 | Open Practice Menu | L2 + R2 + Triangle |
 | Reset Level | L1 + R1 + Triangle |
+| Reset Level (Enter on Balloon) | L1 + R1 + Down + Triangle |
 | Save Spyro Position | L1 + R1 + Circle |
 | Load Spyro Position | L1 + R1 + Square |
 | Stop Timer | Select |
@@ -27,9 +28,14 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 - Save & Load Spyro's position
 - Set adaptive difficulty manually  
 - Toggle Sparx upgrades  
+- Set gem & egg counts manually
 - Disable portal entries to quickly practice tough portal entries
+- View portal polygons underneath the map with "Draw Portals", to easily visualize where to aim for OOB portal entries
 - View portal polygons when invisible under the map
 - Toggle a quick reset mode, to remove the fade effect when reloading
+- Automatically mash through text boxes with "Mash Dialogue" mode, to avoid hand & controller strain while practicing
+- Disable Bianca toggle, to avoid talking to her repeatedly during practice
+- Rhynoc Proxy trainer. Display the frame data for your attempts at the rhynoc animation proxy in fireworks factory. This is a very specific feature, that assumes you're using one of the pause buffer setups to line up the actual position of the trick.  
 
 ## Downloads
 > [!IMPORTANT]
