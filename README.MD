@@ -7,9 +7,9 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 | PS1 | ✔️ |
 | PS2 | ✔️ |
 | PS1 Emulator | ✔️ |
-| PSTV | Untested |
-| PS Vita | Untested |
-| PSP | Untested |
+| PSTV | ✔️ (Partially) |
+| PS Vita | ✔️ (Partially) |
+| PSP | ✔️ (Partially) |
 
 ## Hotkeys
 | Feature | Hotkey |
@@ -44,6 +44,11 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 [Download for PS1 & PS1 Emulator  ](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.PS1.zip)
   
 [Download for PS2](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.PS2.zip)
+
+[Download for PSTV/PSVita](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.Vita.zip)
+> [!NOTE]
+> The PSTV/Vita version is missing a few features, including manually setting gem/egg counts, and drawing portals under the map.
+> I am working on ensuring future builds have feature parity. Most useful features are still identical.
 
 ## Building from Source
 ~ Todo ~
