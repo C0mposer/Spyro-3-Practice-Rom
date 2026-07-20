@@ -171,7 +171,7 @@ void ILTimerUpdate(void)
         {
             IL_isLoadComboPressed = false;
         }
-        if (IL_preparingToStartTimer && gamestate == GAMEPLAY)
+        if (IL_preparingToStartTimer && (gamestate == GAMEPLAY || gamestate == INTERACTING) )
         {
             IL_mainTimerAtReset = globalTimer;
             IL_timerState = TIMER_RUNNING;

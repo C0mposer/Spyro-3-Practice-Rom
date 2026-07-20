@@ -179,4 +179,6 @@ bool WaitForCd_(void); // 0x800503F8
 
 void DialogueUpdate(void);
 
+void SaveCheckpointMemoryPatch(u8* targetAddress, u8 valueSize, u8 *checkpoint); // valueSize is actually an enum for 0 = 1byte, 1 = 2byte, 2 = 4byte
+
 #endif //SYMBOLS_H

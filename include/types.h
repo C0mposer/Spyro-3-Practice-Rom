@@ -6,7 +6,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-
 // ==================== Type Definitions ====================
 
 typedef unsigned char           u8, uint8_t, byte, uchar, undefined1;
@@ -94,4 +93,3 @@ typedef char raw_memory_ptr;
 #define BL_HOOK(address, ...)
 
 #endif /* TYPES_H */
-

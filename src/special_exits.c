@@ -28,6 +28,10 @@ void SunnyExit(void)
 // For practicing the Sheila pause buffer SiA
 void SheilaExit()
 {
+    if (currentLevel != SUNRISE_SPRING_ID)
+    {
+        return;
+    }
     savedCheckpointUpdated = 1;
 
     // The data loaded from the game, when respawning out of Sheila after the cutscene

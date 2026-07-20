@@ -101,6 +101,9 @@ game_sparx_range_data = 0x80065810;
 
 fade_effect = 0x8006c598;
 
+controlledMobyActive = 0x8007056C;
+controlledMoby = 0x80070578;
+
 memset = 0x8004e790;
 MemCopy = 0x8004e7d4;
 
@@ -150,3 +153,5 @@ WaitForCd_ = 0x800503F8;
 DialogueUpdate = 0x80051a60;
 
 BeginLevelLoad = 0x80053f50;
+
+SaveCheckpointMemoryPatch = 0x8003b7b4;
