@@ -118,7 +118,7 @@ inline static void SaveStartingPositionUpdate(void)
     {
         if (localPreviousLevelID != currentLevel)
         {
-            printf_syscall("Saved Level ID\n");
+            //printf_syscall("Saved Level ID\n");
 
             Vec3Copy(&savedStartingPosition, &respawnPosition); // Save the respawn position for the current level/sub level
             savedStartingAngle = respawnAngle; // Save the respawn position for the current level/sub level
@@ -128,7 +128,7 @@ inline static void SaveStartingPositionUpdate(void)
         }
         if (currentSubLevelID != subLevelID)
         {
-            printf_syscall("Saved Sublevel ID\n");
+            //printf_syscall("Saved Sublevel ID\n");
             Vec3Copy(&savedStartingPositionSubLevel, &respawnPosition); // Save the respawn position for the current level/sub level
             savedStartingAngleSubLevel = respawnAngle; // Save the respawn position for the current level/sub level
             startingSpyroSwimStateSubLevel = savedCheckpointSwimState;
