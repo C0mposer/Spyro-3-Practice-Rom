@@ -1,0 +1,278 @@
+#include <types.h>
+#include <syscalls.h>
+#include <symbols.h>
+#include <buttons.h>
+#include <hotkeys.h>
+#include <gamestates.h>
+#include <timer_options.h>
+#include <timer.h>
+#include <common.h>
+
+extern int g_ILTimerMode;
+extern int menu_frames_closed;
+extern bool shouldSaveTimerPortal;
+
+extern TimerState IL_timerState;
+extern Timer IL_mainTimer;
+extern int IL_mainTimerAtReset;
+extern char IL_mainTimerAscii[10];
+extern bool IL_isLoadComboPressed;
+extern bool IL_preparingToStartTimer;
+
+extern ILExitState IL_exitState;
+extern ILExitType IL_exitType;
+extern s32 IL_exitContext;
+extern u32 IL_exitResumeGamestate;
+extern bool IL_retrySelected;
+extern u32 IL_previousGamestate;
+extern u32 IL_sourceLevelID;
+extern u32 IL_sourceSubLevelID;
+
+void RestartLevelFromBeginning(void);
+void FramesToTimer(Timer* ptr_timer);
+void LoadAscii(Timer* ptr_timer, char* ascii);
+void ILTimerFinishedUpdate(void);
+bool UpdateILExitFade(void);
+void EndILPortalTransition(bool resumeLoad);
+
+static void DetectILPortalTransition(void)
+{
+    bool enteredMainLoad = gamestate == LOADING_LEVEL && IL_previousGamestate != LOADING_LEVEL;
+
+    // IL timing does it's own level exits while it is enabled
+    if (IL_exitState == IL_EXIT_NONE && (IL_previousGamestate == GAMEPLAY || IL_previousGamestate == INTERACTING) && (enteredMainLoad) && (!wasInHomeworld))
+    {
+        // BeginLevelLoad only prepares the loading state
+        IL_exitResumeGamestate = gamestate;
+        IL_exitType = IL_EXIT_PORTAL;
+        IL_exitState = IL_EXIT_FADING;
+        IL_retrySelected = true;
+    }
+
+    if (IL_exitState == IL_EXIT_NONE && (gamestate == GAMEPLAY || gamestate == INTERACTING))
+    {
+        IL_sourceLevelID = levelID;
+        IL_sourceSubLevelID = subLevelID;
+    }
+
+    IL_previousGamestate = gamestate;
+}
+
+static void SaveILTimerAtCurrentFrame(void)
+{
+    IL_mainTimer.timer = globalTimer - IL_mainTimerAtReset;
+    FramesToTimer(&IL_mainTimer);
+    LoadAscii(&IL_mainTimer, IL_mainTimerAscii);
+}
+
+static void FinishILExitFade(void)
+{
+    drawScreenBlack = 0xFF;
+    SaveILTimerAtCurrentFrame();
+
+    IL_exitState = IL_EXIT_PROMPT;
+    IL_timerState = TIMER_DISPLAYING;
+    IL_retrySelected = true;
+    shouldSaveTimerPortal = false;
+
+    // Freezing here holds the game after it rendered the fully-black frame but before that next update can issue a CD read for the levl load
+    gamestate = FROZEN;
+}
+
+static void RetryILLevel(void)
+{
+    ILExitType exitType = IL_exitType;
+
+    IL_exitState = IL_EXIT_NONE;
+    IL_timerState = TIMER_RUNNING;
+    IL_preparingToStartTimer = true;
+    shouldSaveTimerPortal = false;
+
+    if (exitType == IL_EXIT_PORTAL)
+    {
+        // Restore the levelid to fly to
+        levelID = IL_sourceLevelID;
+        subLevelID = IL_sourceSubLevelID;
+        EndILPortalTransition(false);
+    }
+
+    gamestate = GAMEPLAY;
+    RestartLevelFromBeginning();
+}
+
+static void ContinueILExit(void)
+{
+    ILExitType exitType = IL_exitType;
+    s32 exitContext = IL_exitContext;
+
+    IL_exitState = IL_EXIT_NONE;
+    IL_timerState = TIMER_RUNNING;
+    IL_preparingToStartTimer = false;
+    shouldSaveTimerPortal = false;
+
+    if (exitType == IL_EXIT_PORTAL)
+    {
+        // Resume the regular load out of the portal
+        EndILPortalTransition(true);
+    }
+    else // Resume the regular load out of the pause menu
+    {
+        BeginLevelLoad(exitContext);
+        if (gamestate == LOADING_LEVEL)
+        {
+            framesInScenario = 0x20;
+            drawScreenBlack = 0xFF;
+        }
+    }
+}
+
+static void UpdateILExitPrompt(void)
+{
+    if ((isButtonPressed & (LEFT_BUTTON | RIGHT_BUTTON)) != 0)
+    {
+        IL_retrySelected = !IL_retrySelected;
+        PlaySound(10, 0, 0);
+    }
+
+    if ((isButtonPressed & CIRCLE_BUTTON) != 0)
+    {
+        ContinueILExit();
+        PlaySound(7, 0, 0);
+    }
+    else if ((isButtonPressed & X_BUTTON) != 0)
+    {
+        if (IL_retrySelected)
+        {
+            RetryILLevel();
+            PlaySound(7, 0, 0);
+        }
+        else
+        {
+            ContinueILExit();
+            PlaySound(7, 0, 0);
+        }
+    }
+}
+
+//! Every Frame Update
+void ILTimerUpdate(void)
+{
+    if (g_ILTimerMode > 0) // Is > 0, aka on, and only when in a level, not hw
+    {
+        DetectILPortalTransition();
+
+        // Button checks used to arm a new IL after a manual level reset.
+        if ((isButtonHeld == RELOAD_LEVEL_HOTKEY) && !IL_isLoadComboPressed)
+        {
+            IL_preparingToStartTimer = true;
+            IL_isLoadComboPressed = true;
+        }
+        if (isButtonHeld != RELOAD_LEVEL_HOTKEY && IL_isLoadComboPressed)
+        {
+            IL_isLoadComboPressed = false;
+        }
+        if (IL_preparingToStartTimer && gamestate == GAMEPLAY)
+        {
+            IL_mainTimerAtReset = globalTimer;
+            IL_timerState = TIMER_RUNNING;
+            IL_preparingToStartTimer = false;
+        }
+
+        // if (gamestate == LOADING_LEVEL && IL_exitState == IL_EXIT_NONE)
+        // {
+        //     IL_mainTimerAtReset = globalTimer;
+        //     IL_timerState = TIMER_RUNNING;
+        // }
+
+        if (IL_exitState == IL_EXIT_FADING)
+        {
+            if (UpdateILExitFade())
+            {
+                FinishILExitFade();
+            }
+        }
+        else if (IL_exitState == IL_EXIT_PROMPT)
+        {
+            UpdateILExitPrompt();
+        }
+
+        // Calculate the current time while paused, during an exit fade, or on every frame with TIMER_SHOW_ALWAYS
+        if (IL_timerState == TIMER_RUNNING)
+        {
+            if (IL_exitState == IL_EXIT_FADING ||
+                g_ILTimerMode == TIMER_SHOW_ALWAYS)
+            {
+                SaveILTimerAtCurrentFrame();
+            }
+        }
+
+        // Display the timer
+        if ((g_ILTimerMode == TIMER_SHOW_ALWAYS || IL_timerState == TIMER_DISPLAYING) && (gamestate == GAMEPLAY || gamestate == PAUSED) && menu_frames_closed > 2)
+        {
+            int x1 = 415;
+            int x2 = 504;
+            int y1 = 204;
+            int y2 = 224;
+            int text_x_pos_adjust;
+
+            if (IL_mainTimer.minutes == 0)
+            {
+                text_x_pos_adjust = 476;
+                x1 = 442;
+                x2 = 508;
+            }
+            else
+            {
+                x1 = 413;
+                x2 = 504;
+                text_x_pos_adjust = 460;
+            }
+
+            DrawTextbox(x1, x2, y1, y2);
+            DrawTextCentered(IL_mainTimerAscii, text_x_pos_adjust, 210, 2);
+        }
+    }
+
+    if (IL_exitState == IL_EXIT_PROMPT)
+    {
+        ILTimerFinishedUpdate();
+    }
+}
+
+
+u32 xx1 = 110;
+u32 xx2 = 400;
+u32 yy1 = 70;
+u32 yy2 = 170;
+// Draw Finished Screen
+void ILTimerFinishedUpdate(void)
+{
+    #define YELLOW 2
+    #define HIGHLIGHTED_YELLOW 6
+    static u32 blink_timer = 0;
+    blink_timer = ((blink_timer + 1) % 20);
+
+    // Highlight selected option
+    u32 yes_color = IL_retrySelected ? HIGHLIGHTED_YELLOW : YELLOW;
+    u32 no_color = IL_retrySelected ? YELLOW : HIGHLIGHTED_YELLOW;
+
+    // Blink highlighted option
+    if (yes_color == HIGHLIGHTED_YELLOW)
+    {
+        yes_color = (blink_timer < 10) ? HIGHLIGHTED_YELLOW : YELLOW;
+    }
+    else if (no_color == HIGHLIGHTED_YELLOW)
+    {
+        no_color = (blink_timer < 10) ? HIGHLIGHTED_YELLOW : YELLOW;
+    }
+
+    DrawTextbox(xx1, xx2, yy1, yy2);
+
+    DrawTextCentered("New Best Time!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, 2);
+
+    DrawTextCentered(IL_mainTimerAscii, ((xx2 + xx1) / 2),((yy1 + yy2) / 2) - 5, 4);
+
+    DrawTextCentered("Try Again?", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) + 25, 2);
+    DrawTextCentered("Yes", ((xx2 + xx1) / 2) - 50, ((yy1 + yy2) / 2) + 40, yes_color);
+    DrawTextCentered("No",((xx2 + xx1) / 2) + 50, ((yy1 + yy2) / 2) + 40, no_color);
+}

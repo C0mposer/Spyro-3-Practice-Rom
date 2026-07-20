@@ -15,6 +15,7 @@ typedef enum MenuType {
 typedef enum MenuState { MENU_STATE_CLOSED, MENU_STATE_OPEN } MenuState;
 
 enum MainMenuElement {
+    IL_TIMER_MULTI,
     TIMER_MULTI,
     DIFFICULTY_MULTI,
     DISABLE_PORTAL_TOGGLE,

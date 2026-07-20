@@ -105,9 +105,9 @@ static bool DrawPortalTriangle(s32 triangle_index)
         return true;
     }
 
-    if ((MCP_CalcScreenClipFlags(screen.v1.x, screen.v1.y, screen.v1.z) &
-        MCP_CalcScreenClipFlags(screen.v2.x, screen.v2.y, screen.v2.z) &
-        MCP_CalcScreenClipFlags(screen.v3.x, screen.v3.y, screen.v3.z)) != 0)
+    if ((CalcScreenClipFlags(screen.v1.x, screen.v1.y, screen.v1.z) &
+        CalcScreenClipFlags(screen.v2.x, screen.v2.y, screen.v2.z) &
+        CalcScreenClipFlags(screen.v3.x, screen.v3.y, screen.v3.z)) != 0)
     {
         return true;
     }
@@ -174,7 +174,7 @@ void DrawPortalPolygons(void)
 // extern bool hasLoadedCDCode;
 // void DrawPortalsAndPortalCollision(void)
 // {
-//     MCP_DrawPortals();
+//     DrawPortals();
 //     if (hasLoadedCDCode)
 //     {
 //         DrawPortalPolygons();

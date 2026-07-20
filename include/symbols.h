@@ -19,6 +19,7 @@ extern s32 spyroY;
 extern s32 spyroZ;
 extern s32 spyroAngle;
 extern s32 spyroYawAngle;
+extern u32 spyroState;
 
 extern Vec3 respawnPosition; //1.0: 0x8006D0AC
 extern u32 respawnAngle;
@@ -26,7 +27,11 @@ extern u32 respawnAngle;
 extern u32 gamestate;
 extern u32 framesInScenario;
 extern u32 menuState;
+extern u32 currentMenu;
 extern u32 drawScreenBlack; // death/respawn fade level: 0 = clear, 0xFF = full black
+
+extern Vec3 portalGlideTarget;
+extern Vec3 portalGlideDirection;
 
 extern u32 globalGems;
 extern u32 globalEggs;
@@ -37,9 +42,13 @@ extern u32 currentLevel;
 extern u32 levelID;
 extern u32 subLevelID;
 
-// Source level remembered by the vehicle-load logic. Homeworld vehicle actors
-// use it to decide whether Spyro should enter while riding the balloon/vehicle.
+extern u32 levelIndex;
+extern u32 isHomeworldLevel;
+
+// Source level remembered by the balloon entry code
 extern u32 previousLevelIDForVehicleEntry;
+
+extern u32 previousLevelID; // Same as above, just simpler name to use for other purposes
 
 extern u32 gemsCollectedPerLevel[40];
 extern u8 gemsCollectedFlags[0x500];
@@ -55,6 +64,8 @@ extern u8 hasEnteredLevelFlags[40];
 extern u8 currentCheckpointData[0x850];
 extern u8 savedCheckpointData[0x850];
 extern u32 savedCheckpointUpdated;
+extern u32 savedCheckpointSwimState;
+extern u32 checkpointCameraMode;
 
 extern u8 sparxState[0x28];
 extern u8 sparxDefaults[0x28];
@@ -89,6 +100,8 @@ extern u32 optionsMusicVolumeSlider;
 extern s16 lowLevelMusicVolume;
 
 extern u8 titleScreenState;
+extern u8 titleScreenPreviousState;
+extern u8 titleScreenSubstate;
 extern s32 globalTimer;
 extern s32* sunriseUpdateParticlePtr;
 
@@ -144,12 +157,16 @@ void SetAudioData(int startSector, int endSector, int interleavedTrack);
 
 void SpawnMoby(int id, Vec3* position);
 
-void BeginLevelLoad(); // Technically has a parameter, but ignoring because we're only using this as a patch (a0 will already have the parameter in our patch)
+void BeginLevelLoad(s32 context);
+void LoadLevelRelated(void);
+void UpdateDuringLoadingGlide(void);
+s32 MoveSpyroTowardPoint(Vec3* target);
+void UpdateSpyroAnimation(void);
 
-void MCP_DrawPortals(void);
+void DrawPortals(void);
 void UnpackCollisionTriangle(s32 triangle_index, Triangle* triangle);
 void DrawPortalRelated(Vec3* screen_position, const Vec3* world_position, u32 shift);
-u8 MCP_CalcScreenClipFlags(s32 x, s32 y, s32 depth);
+u8 CalcScreenClipFlags(s32 x, s32 y, s32 depth);
 void AddToWorldTable(void* primitive, s32 depth_bucket);
 void DrawSync(int);
 

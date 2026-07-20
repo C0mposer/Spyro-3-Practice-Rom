@@ -2,203 +2,9 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 4,
+  "currently_selected_build_index": 1,
   "symbol_input_mode": "manual",
   "build_versions": [
-    {
-      "build_name": "VERSION10",
-      "shared_game_files": "VERSION10",
-      "platform": "PS1",
-      "symbols_file": "1.0.txt",
-      "symbol_inputs": [
-        "symbols/1.0.txt"
-      ],
-      "injection_files": [
-        "SCUS_944.67"
-      ],
-      "injection_file_offsets": {
-        "SCUS_944.67": "F800"
-      },
-      "injection_file_types": {
-        "SCUS_944.67": "disk"
-      },
-      "extracted_game_folder": "./.config/game_files/VERSION10",
-      "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
-      "compiler_flags": "-Os",
-      "is_single_file_mode": false,
-      "single_file_path": null,
-      "section_maps": {},
-      "code_caves": [
-        {
-          "name": "CheatCodes",
-          "code_files": [
-            "./src/main.c",
-            "./src/menu/menu.c",
-            "./src/menu/menu_elements.c",
-            "./src/menu/menu_triggers.c"
-          ],
-          "memory_address": "80017b7c",
-          "size": "78C",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x837C",
-          "auto_calculate_injection_file_address": true,
-          "injection_type": "existing_file",
-          "enabled": true
-        },
-        {
-          "name": "ExtraRam",
-          "code_files": [],
-          "memory_address": "80300000",
-          "size": "100000",
-          "injection_file": "",
-          "injection_file_address": "",
-          "auto_calculate_injection_file_address": false,
-          "injection_type": "memory_only",
-          "enabled": false
-        },
-        {
-          "name": "PrepareHelpScreen",
-          "code_files": [
-            "./src/manual_timer.c",
-            "./src/render_helper.c",
-            "./src/skip_title_screen.c",
-            "./asm/syscalls.s",
-            "./src/disable_portal.c",
-            "./src/difficulty.c"
-          ],
-          "memory_address": "80020790",
-          "size": "5DC",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x10F90",
-          "auto_calculate_injection_file_address": true,
-          "injection_type": "existing_file",
-          "enabled": true
-        },
-        {
-          "name": "PS1Header",
-          "code_files": [
-            "./src/main_updates.c",
-            "./src/difficulty_globals.c",
-            "./src/disable_portal_globals.c",
-            "./src/main_update_globals.c",
-            "./src/manual_timer_globals.c",
-            "./src/menu/menu_globals.c",
-            "./src/skip_title_screen_globals.c",
-            "./src/menu/menu_triggers_globals.c"
-          ],
-          "memory_address": "8000b0b8",
-          "size": "800",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x48",
-          "auto_calculate_injection_file_address": false,
-          "injection_type": "existing_file",
-          "enabled": true
-        },
-        {
-          "name": "GameOverCave",
-          "code_files": [
-            "./src/display_portal_verts.c"
-          ],
-          "memory_address": "80054af8",
-          "size": "49B",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x452F8",
-          "auto_calculate_injection_file_address": true,
-          "injection_type": "existing_file",
-          "enabled": false
-        }
-      ],
-      "hooks": [
-        {
-          "name": "EveryFrameHook",
-          "code_files": [
-            "./asm/AutoHook_Main.s"
-          ],
-          "memory_address": "8001e85c",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0xF05C",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        },
-        {
-          "name": "SkipIntroCutscenes",
-          "code_files": [
-            "./asm/skip_intro_cutscenes.s"
-          ],
-          "memory_address": "80077a3c",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x6823C",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        },
-        {
-          "name": "DrawPortalPolygons",
-          "code_files": [
-            "./asm/draw_portal_polygons_hook.s"
-          ],
-          "memory_address": "8001E54C",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0xED4C",
-          "auto_calculate_injection_file_address": true,
-          "enabled": false
-        },
-        {
-          "name": "DisableOpenAtlasSelect",
-          "code_files": [
-            "./asm/disable_altas_select.s"
-          ],
-          "memory_address": "80050f28",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x41728",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        },
-        {
-          "name": "LifeDecrementPatch",
-          "code_files": [
-            "./asm/life_decrement_patch.s"
-          ],
-          "memory_address": "080049a50",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x3A250",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        }
-      ],
-      "binary_patches": [
-        {
-          "name": "the_practice_continues",
-          "code_files": [
-            "./patches/the_practice_continues.bin"
-          ],
-          "memory_address": "8001156c",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x1D6C",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        },
-        {
-          "name": "the_practice_begins",
-          "code_files": [
-            "./patches/the_practice_continues.bin"
-          ],
-          "memory_address": "80011388",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x1B88",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        }
-      ],
-      "multi_patches": []
-    },
     {
       "build_name": "VERSION11",
       "shared_game_files": null,
@@ -331,7 +137,6 @@
             "./src/render_helper.c",
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
-            "./src/disable_portal.c",
             "./src/difficulty.c",
             "./src/npc_dialogue_skip.c"
           ],
@@ -354,7 +159,12 @@
             "./src/menu/menu_triggers_globals.c",
             "./src/main_globals.c",
             "./src/display_portal_verts_wrapper.c",
-            "./src/input_helper.c"
+            "./src/input_helper.c",
+            "./src/disable_portal.c",
+            "./src/menu/menu_triggers.c",
+            "./src/il_timer_globals.c",
+            "./src/dialogue_skip.c",
+            "./src/special_exits.c"
           ],
           "memory_address": "8000B0B8",
           "size": "800",
@@ -383,9 +193,9 @@
             "./src/display_portal_verts.c",
             "./src/menu/menu_globals.c",
             "./src/rhynoc_trainer.c",
-            "./src/dialogue_skip.c",
-            "./src/menu/menu_triggers.c",
-            "./src/main_updates.c"
+            "./src/main_updates.c",
+            "./src/il_timer.c",
+            "./src/exit_level_patch.c"
           ],
           "memory_address": "8000C000",
           "size": "1800",
@@ -525,9 +335,9 @@
         {
           "name": "CheatCodes",
           "code_files": [
-            "./src/menu/menu_elements.c",
-            "./src/menu/menu_triggers.c",
-            "./src/menu/menu.c"
+            "./src/main.c",
+            "./src/menu/menu.c",
+            "./src/menu/menu_elements.c"
           ],
           "memory_address": "80017b7c",
           "size": "78C",
@@ -555,9 +365,9 @@
             "./src/render_helper.c",
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
+            "./src/difficulty.c",
             "./src/npc_dialogue_skip.c",
-            "./src/display_portal_verts_wrapper.c",
-            "./src/disable_portal.c"
+            "./src/boot.c"
           ],
           "memory_address": "80020790",
           "size": "5DC",
@@ -570,8 +380,19 @@
         {
           "name": "PS1Header",
           "code_files": [
-            "./src/main_updates.c",
-            "./src/main_globals.c"
+            "./src/difficulty_globals.c",
+            "./src/disable_portal_globals.c",
+            "./src/main_update_globals.c",
+            "./src/manual_timer_globals.c",
+            "./src/skip_title_screen_globals.c",
+            "./src/menu/menu_triggers_globals.c",
+            "./src/main_globals.c",
+            "./src/display_portal_verts_wrapper.c",
+            "./src/input_helper.c",
+            "./src/disable_portal.c",
+            "./src/menu/menu_triggers.c",
+            "./src/il_timer_globals.c",
+            "./src/dialogue_skip.c"
           ],
           "memory_address": "8000b0b8",
           "size": "7b8",
@@ -584,9 +405,7 @@
         {
           "name": "GameOverCave",
           "code_files": [
-            "./src/rhynoc_trainer.c",
-            "./src/main.c",
-            "./src/difficulty.c"
+            "./src/display_portal_verts.c"
           ],
           "memory_address": "80054af8",
           "size": "364",
@@ -594,21 +413,17 @@
           "injection_file_address": "0x452F8",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
-          "enabled": true
+          "enabled": false
         },
         {
           "name": "PS1Kernal1",
           "code_files": [
             "./src/display_portal_verts.c",
             "./src/menu/menu_globals.c",
-            "./src/dialogue_skip.c",
-            "./src/difficulty_globals.c",
-            "./src/disable_portal_globals.c",
-            "./src/input_helper.c",
-            "./src/main_update_globals.c",
-            "./src/manual_timer_globals.c",
-            "./src/menu/menu_triggers_globals.c",
-            "./src/skip_title_screen_globals.c"
+            "./src/rhynoc_trainer.c",
+            "./src/main_updates.c",
+            "./src/il_timer.c",
+            "./src/exit_level_patch.c"
           ],
           "memory_address": "8000C000",
           "size": "1800",
@@ -640,18 +455,6 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0xF05C",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        },
-        {
-          "name": "SkipIntroCutscenes",
-          "code_files": [
-            "./asm/skip_intro_cutscenes.s"
-          ],
-          "memory_address": "80077a3c",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x6823C",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         },
@@ -748,9 +551,9 @@
         {
           "name": "CheatCodes",
           "code_files": [
-            "./src/menu/menu_elements.c",
-            "./src/menu/menu_triggers.c",
-            "./src/menu/menu.c"
+            "./src/main.c",
+            "./src/menu/menu.c",
+            "./src/menu/menu_elements.c"
           ],
           "memory_address": "80017b7c",
           "size": "78C",
@@ -778,9 +581,9 @@
             "./src/render_helper.c",
             "./src/skip_title_screen.c",
             "./asm/syscalls.s",
+            "./src/difficulty.c",
             "./src/npc_dialogue_skip.c",
-            "./src/display_portal_verts_wrapper.c",
-            "./src/disable_portal.c"
+            "./src/boot.c"
           ],
           "memory_address": "80020790",
           "size": "5DC",
@@ -793,8 +596,19 @@
         {
           "name": "PS1Header",
           "code_files": [
-            "./src/main_updates.c",
-            "./src/main_globals.c"
+            "./src/difficulty_globals.c",
+            "./src/disable_portal_globals.c",
+            "./src/main_update_globals.c",
+            "./src/manual_timer_globals.c",
+            "./src/skip_title_screen_globals.c",
+            "./src/menu/menu_triggers_globals.c",
+            "./src/main_globals.c",
+            "./src/display_portal_verts_wrapper.c",
+            "./src/input_helper.c",
+            "./src/disable_portal.c",
+            "./src/menu/menu_triggers.c",
+            "./src/il_timer_globals.c",
+            "./src/dialogue_skip.c"
           ],
           "memory_address": "8000A918",
           "size": "7b8",
@@ -807,9 +621,7 @@
         {
           "name": "GameOverCave",
           "code_files": [
-            "./src/rhynoc_trainer.c",
-            "./src/main.c",
-            "./src/difficulty.c"
+            "./src/display_portal_verts.c"
           ],
           "memory_address": "80054af8",
           "size": "364",
@@ -817,21 +629,17 @@
           "injection_file_address": "0x452F8",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
-          "enabled": true
+          "enabled": false
         },
         {
           "name": "PS1Kernal1",
           "code_files": [
             "./src/display_portal_verts.c",
             "./src/menu/menu_globals.c",
-            "./src/dialogue_skip.c",
-            "./src/difficulty_globals.c",
-            "./src/disable_portal_globals.c",
-            "./src/input_helper.c",
-            "./src/main_update_globals.c",
-            "./src/manual_timer_globals.c",
-            "./src/menu/menu_triggers_globals.c",
-            "./src/skip_title_screen_globals.c"
+            "./src/rhynoc_trainer.c",
+            "./src/main_updates.c",
+            "./src/il_timer.c",
+            "./src/exit_level_patch.c"
           ],
           "memory_address": "080008EB0",
           "size": "1800",
@@ -863,18 +671,6 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0xF05C",
-          "auto_calculate_injection_file_address": true,
-          "enabled": true
-        },
-        {
-          "name": "SkipIntroCutscenes",
-          "code_files": [
-            "./asm/skip_intro_cutscenes.s"
-          ],
-          "memory_address": "80077a3c",
-          "size": "0",
-          "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x6823C",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         },

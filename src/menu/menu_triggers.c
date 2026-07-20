@@ -14,6 +14,7 @@ void UpdateMenuTriggers()
     DifficultyTrigger();
     DisablePortalTrigger();
     TimerTrigger();
+    ILTimerTrigger();
     SparxRangeTrigger();
     BasketBreakTrigger();
     DisableBiancaTrigger();
@@ -43,6 +44,13 @@ void DisablePortalTrigger()
 {
 
     g_shouldDisablePortal = main_menu.elements[DISABLE_PORTAL_TOGGLE].enabled;
+}
+
+extern int g_ILTimerMode;
+void ILTimerTrigger()
+{
+    g_ILTimerMode = main_menu.elements[IL_TIMER_MULTI].selection_option;
+    //DrawText("Updating", 20, 20, 1, 0);
 }
 
 extern int g_manualTimerMode;
@@ -82,14 +90,7 @@ void BasketBreakTrigger()
 
 void DisableBiancaTrigger()
 {
-    if (!main_menu.elements[DISABLE_BIANCA_TOGGLE].enabled)
-    {
-        progressFlags[BIANCA_SUNRISE_FLAG_OFFSET] = false;
-        progressFlags[BIANCA_MIDDAY_FLAG_OFFSET] = false;
-        progressFlags[BIANCA_EVENING_FLAG_OFFSET] = false;
-        progressFlags[BIANCA_MIDNIGHT_FLAG_OFFSET] = false;
-    }
-    else
+    if (main_menu.elements[DISABLE_BIANCA_TOGGLE].enabled)
     {
         progressFlags[BIANCA_SUNRISE_FLAG_OFFSET] = true;
         progressFlags[BIANCA_MIDDAY_FLAG_OFFSET] = true;

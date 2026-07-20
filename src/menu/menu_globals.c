@@ -17,12 +17,13 @@ extern const char* const timer_options[3];
 extern const char* const sparx_range_options[2];
 
 MenuElement main_menu_elements[] = {
-    MENU_MULTI("Timer", timer_options, TIMER_OFF),
+    MENU_MULTI("IL Timer", timer_options, TIMER_OFF),
+    MENU_MULTI("Manual Timer", timer_options, TIMER_OFF),
     MENU_MULTI("Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
     MENU_TOGGLE("Disable Portals", false),
     MENU_TOGGLE("Draw Portals", false),
     MENU_TOGGLE("Fast Reset", false),
-    MENU_TOGGLE("Mash Dialouge", false),
+    MENU_TOGGLE("Mash Dialogue", false),
     MENU_TOGGLE("Disable Bianca", false),
     MENU_TOGGLE("Rhynoc Trainer", false),
     MENU_MULTI("Sparx Range", sparx_range_options, 0),
@@ -35,7 +36,7 @@ Menu main_menu = {.title = "* Practice Menu *",
                   .x1 = 110,
                   .x2 = 400,
                   .y1 = 20,
-                  .y2 = 220,
+                  .y2 = 227,
                   .amount_of_elements = (u8)ARRAY_SIZE(main_menu_elements),
                   .current_selection = 0,
                   .state = MENU_STATE_CLOSED};

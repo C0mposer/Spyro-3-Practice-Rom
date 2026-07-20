@@ -15,6 +15,7 @@ spyroY = 0x8007032c;
 spyroZ = 0x80070330;
 spyroAngle = 0x80070334;
 spyroYawAngle = 0x8007038C;
+spyroState = 0x80070378;
 
 respawnPosition = 0x8006D0AC;
 respawnAngle = 0x8006D0B8;
@@ -28,7 +29,11 @@ currentLevel = 0x8006c5bc;
 levelID = 0x8006c7c8;
 subLevelID = 0x8006c5c8;
 
+levelIndex = 0x8006C58C;
+isHomeworldLevel = 0x8006C508;
+
 previousLevelIDForVehicleEntry = 0x8006C73C;
+previousLevelID = 0x8006C73C;
 
 gemsCollectedPerLevel = 0x80071a10;
 gemsCollectedFlags = 0x80071ab0;
@@ -44,6 +49,8 @@ hasEnteredLevelFlags = 0x80071fb0;
 currentCheckpointData = 0x8006c7f8;
 savedCheckpointData = 0x8006d088;
 savedCheckpointUpdated = 0x8006d088;
+savedCheckpointSwimState = 0x8006d8d0;
+checkpointCameraMode = 0x8006D8D4;
 
 sparxState = 0x8006580c;
 sparxDefaults = 0x80065834;
@@ -61,7 +68,11 @@ deathsToSorceress = 0x8006C40B;
 
 framesInScenario = 0x8006FBC4;
 menuState = 0x8006FBC8;
+currentMenu = 0x8006FBD0;
 drawScreenBlack = 0x8006c598;
+
+portalGlideTarget = 0x800722EC;
+portalGlideDirection = 0x800722F8;
 
 upgradeFlags = 0x8006581c;
 
@@ -70,6 +81,8 @@ leftAnalogX = 0x80073F52;
 leftAnalogY = 0x80073F53;
 globalTimer = 0x8006B480;
 titleScreenState = 0x8007F12C;
+titleScreenPreviousState = 0x8007F12D;
+titleScreenSubstate = 0x8007F12E;
 
 currentMusicSector = 0x8006E4BC;
 musicEndSector = 0x8006E4C0;
@@ -114,11 +127,15 @@ SetAudioData = 0x8004f984;
 SpawnMoby = 0x8008580c;
 
 BeginLevelLoad = 0x80053f50;
+LoadLevelRelated = 0x8002ca50;
+UpdateDuringLoadingGlide = 0x80054450;
+MoveSpyroTowardPoint = 0x80048444;
+UpdateSpyroAnimation = 0x80044240;
 
-MCP_DrawPortals = 0x8001EDEC;
+DrawPortals = 0x8001EDEC;
 UnpackCollisionTriangle = 0x8004F5DC;
 DrawPortalRelated = 0x8004F408;
-MCP_CalcScreenClipFlags = 0x8004F4BC;
+CalcScreenClipFlags = 0x8004F4BC;
 AddToWorldTable = 0x8004E71C;
 DrawSync = 0x8005a264;
 sprintf = 0x8005977c;
@@ -131,3 +148,5 @@ ReadCdAsync = 0x80050680;
 WaitForCd_ = 0x800503F8;
 
 DialogueUpdate = 0x80051a60;
+
+BeginLevelLoad = 0x80053f50;

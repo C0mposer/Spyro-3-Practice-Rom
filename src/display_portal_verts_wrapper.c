@@ -7,7 +7,7 @@
 extern bool hasLoadedCDCode;
 void DrawPortalsAndPortalCollision(void)
 {
-    MCP_DrawPortals();
+    DrawPortals();
     #ifndef INJECTION_ONLY
     if (hasLoadedCDCode)
     {

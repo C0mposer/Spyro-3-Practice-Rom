@@ -7,17 +7,6 @@
 #include <timer_options.h>
 #include <timer.h>
 
-typedef struct Timer
-{
-    int timer;
-    int secondsOnesPlace;
-    int secondsTensPlace;
-    int milisecondsTenthsPlace;
-    int milisecondsHundrethsPlace;
-    int minutes;
-
-}Timer;
-
 extern int g_manualTimerMode;
 extern int menu_frames_closed;
 extern bool shouldSaveTimerPortal;
@@ -27,6 +16,7 @@ extern Timer mainTimer;
 extern int mainTimerAtReset;
 extern char mainTimerAscii[10];
 extern bool isLoadComboPressed;
+extern bool preparingToStartTimer;
 
 //Math to approx adjust for 59.82hz
 void FramesToTimer(Timer* ptr_timer)
@@ -57,13 +47,23 @@ void TimerUpdate()
         //Button Checks
         if ((isButtonHeld == LOAD_SPYRO_HOTKEY || isButtonHeld == RELOAD_LEVEL_HOTKEY) && isLoadComboPressed == false)
         {
-            mainTimerAtReset = globalTimer;
-            timerState = TIMER_RUNNING;
+            //mainTimerAtReset = globalTimer;
+            //timerState = TIMER_RUNNING;
+            preparingToStartTimer = true;
             isLoadComboPressed = true;
         }
         if (isButtonHeld != LOAD_SPYRO_HOTKEY && isLoadComboPressed == true)
         {
             isLoadComboPressed = false;
+        }
+        if (preparingToStartTimer)
+        {
+            if (gamestate == GAMEPLAY)
+            {
+                mainTimerAtReset = globalTimer;
+                timerState = TIMER_RUNNING;
+                preparingToStartTimer = false;
+            }
         }
         // If you pause exited a level, put timer back in running state to not show it after the exit/loop
         if (gamestate == LOADING_LEVEL)

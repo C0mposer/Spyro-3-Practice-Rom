@@ -8,6 +8,13 @@
 #include <types.h>
 #include <upgrades.h>
 
+enum ReloadLevelType
+{
+    RELOAD_FULL,
+    RELOAD_CHECKPOINT,
+    RELOAD_BALLOON
+};
+
 extern Vec3 savedStartingPosition;
 extern Vec3 savedStartingPositionSubLevel;
 extern u32 savedStartingAngle;
@@ -19,6 +26,9 @@ extern Vec3 savedSpyroPosition;
 extern s32 savedSpyroYawAngle;
 extern u32 savedPositionLevelID;
 extern u32 savedPositionSubLevelID;
+extern u8 savedSpyroSwimState; // For saved pos
+extern u8 startingSpyroSwimState; // For level entry
+extern u8 startingSpyroSwimStateSubLevel; // For sub level entry
 
 extern u32 reloadSpyroTimer;
 
@@ -29,8 +39,7 @@ inline static void SpeedUpReset(void)
     const u32 minimumLayoutWait = 6;
     const u32 normalDeathLayoutWait = 0x50;
 
-    // Skip the artificial death delay. It still waits until the CD read
-    // completes.
+    // Skip the artificial death delay
     if (speedUpResetPending && gamestate == DYING && menuState == 1 &&
         framesInScenario >= minimumLayoutWait)
     {
@@ -102,56 +111,60 @@ inline static void FastLoadUpdate(void)
 
 inline static void SaveStartingPositionUpdate(void)
 {
-    static u32 currentLevelID = 0;
+    static u32 localPreviousLevelID = 0;
     static u32 currentSubLevelID = 0;
 
     if (gamestate == GAMEPLAY)
     {
-        if (currentLevelID != levelID)
+        if (localPreviousLevelID != currentLevel)
         {
+            printf_syscall("Saved Level ID\n");
 
-            Vec3Copy(&savedStartingPosition,
-                     &respawnPosition); // Save the respawn position for the
-                                        // current level/sub level
-            savedStartingAngle = respawnAngle; // Save the respawn position for
-                                               // the current level/sub level
+            Vec3Copy(&savedStartingPosition, &respawnPosition); // Save the respawn position for the current level/sub level
+            savedStartingAngle = respawnAngle; // Save the respawn position for the current level/sub level
+            startingSpyroSwimState = savedCheckpointSwimState;
 
-            currentLevelID = levelID;
+            localPreviousLevelID = currentLevel;
         }
         if (currentSubLevelID != subLevelID)
         {
-            Vec3Copy(&savedStartingPositionSubLevel,
-                     &respawnPosition); // Save the respawn position for the
-                                        // current level/sub level
-            savedStartingAngleSubLevel =
-                respawnAngle; // Save the respawn position for the current
-                              // level/sub level
+            printf_syscall("Saved Sublevel ID\n");
+            Vec3Copy(&savedStartingPositionSubLevel, &respawnPosition); // Save the respawn position for the current level/sub level
+            savedStartingAngleSubLevel = respawnAngle; // Save the respawn position for the current level/sub level
+            startingSpyroSwimStateSubLevel = savedCheckpointSwimState;
 
             currentSubLevelID = subLevelID;
         }
     }
 }
 
-inline static void ReloadLevelStartingPosition(bool shouldLoadBalloon)
+inline static void ReloadLevelStartingPosition(u32 reloadLevelType)
 {
     if (subLevelID == 0)
     {
         Vec3Copy(&respawnPosition, &savedStartingPosition);
         respawnAngle = savedStartingAngle;
+        savedCheckpointSwimState = startingSpyroSwimState;
     }
     else
     {
         Vec3Copy(&respawnPosition, &savedStartingPositionSubLevel);
         respawnAngle = savedStartingAngleSubLevel;
+        savedCheckpointSwimState = startingSpyroSwimStateSubLevel;
     }
 
-    if (!shouldLoadBalloon)
+    if (reloadLevelType == RELOAD_CHECKPOINT)
+    {
+        previousLevelIDForVehicleEntry = 0;
+        savedCheckpointUpdated = 1;
+    }
+    if (reloadLevelType == RELOAD_FULL)
     {
         previousLevelIDForVehicleEntry = 0;
     }
-    else
+    else if (reloadLevelType == RELOAD_BALLOON)
     {
-        previousLevelIDForVehicleEntry = 40;
+        previousLevelIDForVehicleEntry = 40; // Is a valid HW id (% 10), but not a real HW
     }
 }
 
@@ -180,6 +193,20 @@ inline static void ManualSaveSpyroPositionUpdate(void)
 
         savedPositionLevelID = levelID;
         savedPositionSubLevelID = subLevelID;
+
+        if (spyroState == 10) // Over water swim
+        {
+            savedSpyroSwimState = 1;
+        }
+        else if (spyroState == 11 || spyroState == 12) // Under water swim
+        {
+            savedSpyroSwimState = 2;
+        }
+        else
+        {
+            savedSpyroSwimState = 0;
+        }
+
         hasSavedSpyroPosition = true;
         savedMessageStartTime = levelTimer;
         showSavedMessage = true;
@@ -205,9 +232,10 @@ void PrepareSavedSpyroRespawn(void)
     if (HasSavedSpyroPositionForCurrentLevel())
     {
         // Set spyro's respawn position, to the saved position
-        savedCheckpointUpdated = 1;
+        savedCheckpointUpdated = true;
         Vec3Copy(&respawnPosition, &savedSpyroPosition);
         respawnAngle = (u32)savedSpyroYawAngle;
+        savedCheckpointSwimState = savedSpyroSwimState;
 
         previousLevelIDForVehicleEntry = 0; // Force no balloon for loading saved position
     }
@@ -221,6 +249,22 @@ void PrepareSavedSpyroRespawn(void)
 void RespawnSpyro(void)
 {
     spyroZ = 0; // Kill spyro by sending him to the void
+}
+
+void RestartLevelFromBeginning(u32 reloadLevelType)
+{
+    ClearCollectables();
+    ReloadLevelStartingPosition(reloadLevelType);
+
+    speedUpResetPending = true;
+    if (FastLoadEnabled())
+    {
+        fastLoadActive = true;
+        fastLoadInScenario = false;
+        fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
+    }
+
+    RespawnSpyro();
 }
 
 void UpdateHomeworldEntryType()
@@ -351,19 +395,26 @@ void MainUpdates(void)
                                   // dialogues (see npc_dialogue_skip.c)
         }
         // Restart the level from the spawn point
-        else if (rawButtonHeld == RELOAD_LEVEL_HOTKEY || rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY) // Theres probably a better way to do this to save space
+        else if (rawButtonHeld == RELOAD_LEVEL_HOTKEY || rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY || rawButtonHeld == RELOAD_LEVEL_CHECKPOINT_HOTKEY) // Theres probably a better way to do this to save space
         {
-            bool shouldLoadBalloon = false;
+            u32 reloadLevelType;
             if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
             {
-                shouldLoadBalloon = false;
+                reloadLevelType = RELOAD_FULL;
+            }
+            else if (rawButtonHeld == RELOAD_LEVEL_CHECKPOINT_HOTKEY)
+            {
+                reloadLevelType = RELOAD_CHECKPOINT;
             }
             else if (rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY)
             {
-                shouldLoadBalloon = true;
+                reloadLevelType = RELOAD_BALLOON;
             }
-            ReloadLevelStartingPosition(shouldLoadBalloon);
-            ClearCollectables();
+
+            RestartLevelFromBeginning(reloadLevelType);
+        }
+        else if (rawButtonHeld == RELOAD_SHEILA_EXIT_HOTKEY)
+        {
             speedUpResetPending = true;
             if (FastLoadEnabled())
             {
@@ -371,7 +422,21 @@ void MainUpdates(void)
                 fastLoadInScenario = false;
                 fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
             }
-            RespawnSpyro();
+
+            SheilaExit();
+        }
+
+        else if (rawButtonHeld == L1_BUTTON + R1_BUTTON + X_BUTTON + DOWN_BUTTON)
+        {
+            speedUpResetPending = true;
+            if (FastLoadEnabled())
+            {
+                fastLoadActive = true;
+                fastLoadInScenario = false;
+                fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
+            }
+
+            SunnyExit();
         }
     }
 

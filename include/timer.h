@@ -15,4 +15,30 @@ typedef enum TimerDisplayMode
 
 }TimerDisplayMode;
 
+typedef enum ILExitState
+{
+    IL_EXIT_NONE,
+    IL_EXIT_FADING,
+    IL_EXIT_PROMPT
+
+} ILExitState;
+
+typedef enum ILExitType
+{
+    IL_EXIT_MENU,
+    IL_EXIT_PORTAL
+
+} ILExitType;
+
+typedef struct Timer
+{
+    int timer;
+    int secondsOnesPlace;
+    int secondsTensPlace;
+    int milisecondsTenthsPlace;
+    int milisecondsHundrethsPlace;
+    int minutes;
+
+}Timer;
+
 #endif /* TIMER_H */
