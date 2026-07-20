@@ -5,8 +5,8 @@
 // This function keeps track of a single timer for how long the current input have been held for, and resets anytime it changes.
 // I realized I consistently create specific timers for checking held buttons for different purposes, but a generic system could be useful here.
 
-u32 framesCurrentButtonsHeld = 0;
-u32 buttonsHeldLastFrame = 0;
+extern u32 framesCurrentButtonsHeld;
+extern u32 buttonsHeldLastFrame;
 
 void ButtonsHeldTimerUpdate()
 {
