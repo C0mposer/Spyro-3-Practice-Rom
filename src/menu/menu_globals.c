@@ -28,6 +28,7 @@ MenuElement main_menu_elements[] = {
     MENU_TOGGLE("Rhynoc Trainer", false),
     MENU_MULTI("Sparx Range", sparx_range_options, 0),
     MENU_TOGGLE("Basket Break", false),
+    MENU_TOGGLE("Zombie Mode", false),
     MENU_SET_VALUE("Gem Count", 0, 20000, &globalGems, 0),
     MENU_SET_VALUE("Egg Count", 0, 100, &globalEggs, 0)};
 

@@ -1,0 +1,17 @@
+#ifndef TEXT_COLORS
+#define TEXT_COLORS
+
+typedef enum TextColor
+{
+    COLOR_BROWN,
+    COLOR_YELLOW,
+    COLOR_GOLD_AGAIN,
+    COLOR_WHITE,
+    COLOR_GREEN,
+    COLOR_CREAM,
+    COLOR_BRIGHT_YELLOW,
+    COLOR_BRONZE,
+    COLOR_ORANGE
+}TextColor;
+
+#endif // TEXT_COLORS

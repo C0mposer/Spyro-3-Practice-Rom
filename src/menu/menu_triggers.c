@@ -20,6 +20,7 @@ void UpdateMenuTriggers()
     DisableBiancaTrigger();
     RhynocTrainerTrigger();
     FastDialougeTrigger();
+    ZombieModeToggle();
 }
 
 void DifficultyTrigger()
@@ -122,5 +123,17 @@ void FastDialougeTrigger()
     else
     {
         g_fastDialogueEnabled = true;
+    }
+}
+
+void ZombieModeToggle()
+{
+    if (!main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled)
+    {
+        spyroHealth = 3;
+    }
+    else
+    {
+        spyroHealth = -1;
     }
 }

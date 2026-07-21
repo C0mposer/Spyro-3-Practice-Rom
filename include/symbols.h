@@ -20,6 +20,7 @@ extern s32 spyroZ;
 extern s32 spyroAngle;
 extern s32 spyroYawAngle;
 extern u32 spyroState;
+extern u32 spyroHealth;
 
 extern Vec3 respawnPosition; //1.0: 0x8006D0AC
 extern u32 respawnAngle;

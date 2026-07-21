@@ -16,6 +16,7 @@ spyroZ = 0x80070330;
 spyroAngle = 0x80070334;
 spyroYawAngle = 0x8007038C;
 spyroState = 0x80070378;
+spyroHealth = 0x800705a8;
 
 respawnPosition = 0x8006D0AC;
 respawnAngle = 0x8006D0B8;

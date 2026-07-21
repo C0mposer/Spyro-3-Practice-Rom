@@ -24,3 +24,6 @@ u32 IL_previousGamestate = GAMEPLAY;
 u32 IL_sourceLevelID = 0;
 u32 IL_sourceSubLevelID = 0;
 bool IL_portalFadeActive = false;
+
+Timer currentBestTimeInLevel = {0};
+char currentBestTimeInLevelAscii[10];

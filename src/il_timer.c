@@ -7,10 +7,14 @@
 #include <timer_options.h>
 #include <timer.h>
 #include <common.h>
+#include <text_colors.h>
 
 extern int g_ILTimerMode;
 extern int menu_frames_closed;
 extern bool shouldSaveTimerPortal;
+
+extern Timer currentBestTimeInLevel;
+extern char currentBestTimeInLevelAscii[10];
 
 extern TimerState IL_timerState;
 extern Timer IL_mainTimer;
@@ -65,10 +69,22 @@ static void SaveILTimerAtCurrentFrame(void)
     LoadAscii(&IL_mainTimer, IL_mainTimerAscii);
 }
 
+static void SaveBestTimeAtCurrentFrame(void)
+{
+    // Save your best level time so far, if you beat it, or it doesn't yet exist
+    if (IL_mainTimer.timer < currentBestTimeInLevel.timer || currentBestTimeInLevel.timer == 0)
+    {
+        currentBestTimeInLevel.timer = IL_mainTimer.timer;
+        FramesToTimer(&currentBestTimeInLevel);
+        LoadAscii(&currentBestTimeInLevel, currentBestTimeInLevelAscii);
+    }
+}
+
 static void FinishILExitFade(void)
 {
     drawScreenBlack = 0xFF;
     SaveILTimerAtCurrentFrame();
+    SaveBestTimeAtCurrentFrame();
 
     IL_exitState = IL_EXIT_PROMPT;
     IL_timerState = TIMER_DISPLAYING;
@@ -186,11 +202,15 @@ void ILTimerUpdate(void)
         {
             IL_preparingToStartTimer = true;
             IL_isLoadComboPressed = true;
+            if (subLevelID != 0)
+            {
+                LoadLevel(3, currentLevel);
+            }
         }
         // Start the IL timer when entering gameplay
         if (IL_preparingToStartTimer && (gamestate == GAMEPLAY || gamestate == INTERACTING))
         {
-            printf_syscall("Resetting timer!\n");
+            //printf_syscall("Resetting timer!\n");
             IL_mainTimerAtReset = globalTimer;
             IL_timerState = TIMER_RUNNING;
             IL_preparingToStartTimer = false;
@@ -212,6 +232,12 @@ void ILTimerUpdate(void)
         //     IL_mainTimerAtReset = globalTimer;
         //     IL_timerState = TIMER_RUNNING;
         // }
+
+        // If has entered loading screen, reset best time
+        if (gamestate == LOADING_CUTSCENE || gamestate == LOADING_LEVEL)
+        {
+            currentBestTimeInLevel.timer = 0;
+        }
 
         if (IL_exitState == IL_EXIT_FADING)
         {
@@ -275,32 +301,46 @@ u32 xx2 = 400;
 u32 yy1 = 70;
 u32 yy2 = 175;
 // Draw Finished Screen
+
+u32 test_color = 0;
 void ILTimerFinishedUpdate(void)
 {
-    #define YELLOW 2
-    #define HIGHLIGHTED_YELLOW 6
     static u32 blink_timer = 0;
     blink_timer = ((blink_timer + 1) % 20);
 
     // Highlight selected option
-    u32 yes_color = IL_retrySelected ? HIGHLIGHTED_YELLOW : YELLOW;
-    u32 no_color = IL_retrySelected ? YELLOW : HIGHLIGHTED_YELLOW;
+    u32 yes_color = IL_retrySelected ? COLOR_BRIGHT_YELLOW : COLOR_YELLOW;
+    u32 no_color = IL_retrySelected ? COLOR_YELLOW : COLOR_BRIGHT_YELLOW;
 
     // Blink highlighted option
-    if (yes_color == HIGHLIGHTED_YELLOW)
+    if (yes_color == COLOR_BRIGHT_YELLOW)
     {
-        yes_color = (blink_timer < 10) ? HIGHLIGHTED_YELLOW : YELLOW;
+        yes_color = (blink_timer < 10) ? COLOR_BRIGHT_YELLOW : COLOR_YELLOW;
     }
-    else if (no_color == HIGHLIGHTED_YELLOW)
+    else if (no_color == COLOR_BRIGHT_YELLOW)
     {
-        no_color = (blink_timer < 10) ? HIGHLIGHTED_YELLOW : YELLOW;
+        no_color = (blink_timer < 10) ? COLOR_BRIGHT_YELLOW : COLOR_YELLOW;
     }
 
     DrawTextbox(xx1, xx2, yy1, yy2);
 
-    DrawTextCentered("New Best Time!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, 2);
+    // Change header text if is best time
+    if (currentBestTimeInLevel.timer == IL_mainTimer.timer)
+    {
+        DrawTextCentered("New Best Time!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, COLOR_YELLOW);
+    }
+    else
+    {
+        DrawTextCentered("IL Complete!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, COLOR_YELLOW);
+    }
 
-    DrawTextCentered(IL_mainTimerAscii, ((xx2 + xx1) / 2),((yy1 + yy2) / 2) - 5, 4);
+
+    DrawTextCentered("Your Time:", ((xx2 + xx1) / 2) - 90, ((yy1 + yy2) / 2) - 20, COLOR_YELLOW);
+    DrawTextCentered("Best Time:", ((xx2 + xx1) / 2) + 90, ((yy1 + yy2) / 2) - 20, COLOR_YELLOW);
+
+    // Show current, and best time
+    DrawTextCentered(IL_mainTimerAscii, ((xx2 + xx1) / 2) - 90, ((yy1 + yy2) / 2) - 5, COLOR_GREEN);
+    DrawTextCentered(currentBestTimeInLevelAscii, ((xx2 + xx1) / 2) + 90, ((yy1 + yy2) / 2) - 5, COLOR_GREEN);
 
     DrawTextCentered("Try Again?", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) + 25, 2);
     DrawTextCentered("Yes", ((xx2 + xx1) / 2) - 50, ((yy1 + yy2) / 2) + 40, yes_color);
