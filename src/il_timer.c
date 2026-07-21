@@ -110,7 +110,17 @@ static void ContinueILExit(void)
     IL_preparingToStartTimer = false;
     shouldSaveTimerPortal = false;
 
-    if (exitType == IL_EXIT_PORTAL)
+    // If in a boss level, do a cutscene load to the next homeworld
+    if (isInBossLevel)
+    {
+        u32 level_to_warp_to = currentLevel + 3; // A boss is always X7, so the next homeworld would be X7 + 3
+        level_to_warp_to = level_to_warp_to > 40 ? 40 : level_to_warp_to; // Clamp to a 40, so sorc doesn't take us to 50
+
+        u32 splash_screen = (level_to_warp_to / 10) - 1; // hw splash screens are 0, 1, 2, 3. (If i'm really tight on code space, this isn't fully required, just nice to show the right splash screen. Remove if desperate for space!)
+
+        LoadLevel(splash_screen, level_to_warp_to);
+    }
+    else if (exitType == IL_EXIT_PORTAL)
     {
         // Resume the regular load out of the portal
         EndILPortalTransition(true);
@@ -159,23 +169,42 @@ void ILTimerUpdate(void)
 {
     if (g_ILTimerMode > 0) // Is > 0, aka on, and only when in a level, not hw
     {
+
         DetectILPortalTransition();
 
-        // Button checks used to arm a new IL after a manual level reset.
+        // When entering a new level, prepare the IL timer to start when you enter gameplay
+        if (!IL_isLoadComboPressed)
+        {
+            if (gamestate == LOADING_CUTSCENE || gamestate == LOADING_LEVEL)
+            {
+                IL_preparingToStartTimer = true;
+                IL_isLoadComboPressed = true;
+            }
+        }
+        // When reload level hotkey is pressed, prepare the IL timer to start when you enter gameplay
         if ((isButtonHeld == RELOAD_LEVEL_HOTKEY) && !IL_isLoadComboPressed)
         {
             IL_preparingToStartTimer = true;
             IL_isLoadComboPressed = true;
         }
-        if (isButtonHeld != RELOAD_LEVEL_HOTKEY && IL_isLoadComboPressed)
+        // Start the IL timer when entering gameplay
+        if (IL_preparingToStartTimer && (gamestate == GAMEPLAY || gamestate == INTERACTING))
         {
-            IL_isLoadComboPressed = false;
-        }
-        if (IL_preparingToStartTimer && (gamestate == GAMEPLAY || gamestate == INTERACTING) )
-        {
+            printf_syscall("Resetting timer!\n");
             IL_mainTimerAtReset = globalTimer;
             IL_timerState = TIMER_RUNNING;
             IL_preparingToStartTimer = false;
+
+        }
+        // Allow the hotkey to be pressed again if buttons released, or fully reset
+        if ((isButtonHeld != RELOAD_LEVEL_HOTKEY || gamestate == GAMEPLAY) && IL_isLoadComboPressed)
+        {
+            IL_isLoadComboPressed = false;
+        }
+
+        if (HasBossFinished())
+        {
+            FinishILExitFade();
         }
 
         // if (gamestate == LOADING_LEVEL && IL_exitState == IL_EXIT_NONE)
@@ -240,10 +269,11 @@ void ILTimerUpdate(void)
 }
 
 
+
 u32 xx1 = 110;
 u32 xx2 = 400;
 u32 yy1 = 70;
-u32 yy2 = 170;
+u32 yy2 = 175;
 // Draw Finished Screen
 void ILTimerFinishedUpdate(void)
 {

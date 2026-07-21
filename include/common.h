@@ -12,3 +12,4 @@
 
 #define isInHomeworld (currentLevel % 10 == 0)
 #define wasInHomeworld (previousLevelID % 10 == 0)
+#define isInBossLevel ((currentLevel % 10) % 7 == 0)

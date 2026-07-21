@@ -127,6 +127,12 @@ extern SparxRangeData game_sparx_range_data;
 
 extern u32 fade_effect;
 
+extern u32 buzz_health;
+extern u32 spike_health;
+extern u32 scorch_health;
+extern u32 sorc_health;
+extern u32 final_sorc_health;
+
 
 int sprintf(char* buffer, char* fmt, ...);
 void* memset(void* dest, u32 value, u32 size);

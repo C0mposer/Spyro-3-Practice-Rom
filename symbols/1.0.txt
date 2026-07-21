@@ -106,6 +106,12 @@ fade_effect = 0x8006c598;
 controlledMobyActive = 0x8007056C;
 controlledMoby = 0x80070578;
 
+buzz_health = 0x8010f4f0;
+spike_health = 0x8015324c;
+scorch_health = 0x8015BE60;
+sorc_health = 0x80151874;
+final_sorc_health = 0x80169d90;
+
 memset = 0x8004e790;
 MemCopy = 0x8004e7d4;
 

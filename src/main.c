@@ -4,13 +4,14 @@
 #include <symbols.h>
 #include <syscalls.h>
 #include <types.h>
+#include <gamestates.h>
 
 extern bool hasLoadedCDCode;
 
 void ModMain(int syncArg)
 {
 #ifndef INJECTION_ONLY
-#if defined(VERSION10_PS1) || defined(VERSION10_PS2)
+#if defined(VERSION10_PS1) || defined(VERSION10_PS2) || defined(VERSION10_VITA)
     if (!hasLoadedCDCode)
     {
         drawScreenBlack = 0xFF;
@@ -28,6 +29,7 @@ void ModMain(int syncArg)
     TimerUpdate();
     ButtonsHeldTimerUpdate();
     RhynocProxyTrainer();
+    MoonJumpUpdate();
 
     DrawSync(syncArg); // Replaced Function Call, we must call it from our hook
 }
