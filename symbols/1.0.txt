@@ -68,8 +68,10 @@ deathsToSorceress = 0x8006C40B;
 
 framesInScenario = 0x8006FBC4;
 menuState = 0x8006FBC8;
+menuOption = 0x8006FBCC;
 currentMenu = 0x8006FBD0;
 drawScreenBlack = 0x8006c598;
+pauseMusic = 0x8006E49C;
 
 portalGlideTarget = 0x800722EC;
 portalGlideDirection = 0x800722F8;

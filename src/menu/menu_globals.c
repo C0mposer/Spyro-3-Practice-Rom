@@ -22,7 +22,7 @@ MenuElement main_menu_elements[] = {
     MENU_MULTI("Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
     MENU_TOGGLE("Disable Portals", false),
     MENU_TOGGLE("Draw Portals", false),
-    MENU_TOGGLE("Fast Reset", false),
+    MENU_TOGGLE("Fast Reset", true),
     MENU_TOGGLE("Mash Dialogue", false),
     MENU_TOGGLE("Disable Bianca", false),
     MENU_TOGGLE("Rhynoc Trainer", false),

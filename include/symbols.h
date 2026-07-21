@@ -27,8 +27,10 @@ extern u32 respawnAngle;
 extern u32 gamestate;
 extern u32 framesInScenario;
 extern u32 menuState;
+extern u32 menuOption;
 extern u32 currentMenu;
 extern u32 drawScreenBlack; // death/respawn fade level: 0 = clear, 0xFF = full black
+extern u32 pauseMusic;
 
 extern Vec3 portalGlideTarget;
 extern Vec3 portalGlideDirection;

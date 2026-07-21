@@ -34,7 +34,7 @@ void SheilaExit()
     }
     savedCheckpointUpdated = 1;
 
-    // The data loaded from the game, when respawning out of Sheila after the cutscene
+    // The exact coords from the game, when respawning out of Sheila after the cutscene
     respawnPosition.x = 0x8F70;
     respawnPosition.y = 0xF250;
     respawnPosition.z = 0x5368;

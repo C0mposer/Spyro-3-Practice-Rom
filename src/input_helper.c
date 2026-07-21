@@ -29,11 +29,6 @@ void ButtonsHeldTimerUpdate()
     buttonsHeldLastFrame = isButtonHeld; // <- isButtonHeld is just the current buttons.
 }
 
-u32 HeldButtonsFrameTimer()
-{
-    return framesCurrentButtonsHeld;
-}
-
 // Example: HasHeldButton(TRIANGLE, 5) // Has held triangle for 5 frames? Returns true if so
 bool HasHeldButton(u32 button, u32 timeInFrames)
 {
