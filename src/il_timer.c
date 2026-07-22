@@ -324,14 +324,17 @@ void ILTimerFinishedUpdate(void)
 
     DrawTextbox(xx1, xx2, yy1, yy2);
 
-    // Change header text if is best time
+    // Change header text and your time color if is best time
+    u32 your_time_color = COLOR_ORANGE;
     if (currentBestTimeInLevel.timer == IL_mainTimer.timer)
     {
         DrawTextCentered("New Best Time!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, COLOR_YELLOW);
+        your_time_color = COLOR_GREEN;
     }
     else
     {
         DrawTextCentered("IL Complete!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, COLOR_YELLOW);
+        your_time_color = COLOR_BROWN;
     }
 
 
@@ -339,7 +342,7 @@ void ILTimerFinishedUpdate(void)
     DrawTextCentered("Best Time:", ((xx2 + xx1) / 2) + 90, ((yy1 + yy2) / 2) - 20, COLOR_YELLOW);
 
     // Show current, and best time
-    DrawTextCentered(IL_mainTimerAscii, ((xx2 + xx1) / 2) - 90, ((yy1 + yy2) / 2) - 5, COLOR_GREEN);
+    DrawTextCentered(IL_mainTimerAscii, ((xx2 + xx1) / 2) - 90, ((yy1 + yy2) / 2) - 5, your_time_color);
     DrawTextCentered(currentBestTimeInLevelAscii, ((xx2 + xx1) / 2) + 90, ((yy1 + yy2) / 2) - 5, COLOR_GREEN);
 
     DrawTextCentered("Try Again?", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) + 25, 2);
