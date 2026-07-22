@@ -160,6 +160,7 @@ inline static void ReloadLevelStartingPosition(u32 reloadLevelType)
     }
     if (reloadLevelType == RELOAD_FULL)
     {
+        savedCheckpointUpdated = 1;
         previousLevelIDForVehicleEntry = 0;
     }
     else if (reloadLevelType == RELOAD_BALLOON)
@@ -170,8 +171,7 @@ inline static void ReloadLevelStartingPosition(u32 reloadLevelType)
 
 inline static bool HasSavedSpyroPositionForCurrentLevel(void)
 {
-    return hasSavedSpyroPosition && savedPositionLevelID == levelID &&
-           savedPositionSubLevelID == subLevelID;
+    return hasSavedSpyroPosition && savedPositionLevelID == currentLevel && savedPositionSubLevelID == subLevelID;
 }
 
 // Manually save spyro's position
@@ -191,7 +191,7 @@ inline static void ManualSaveSpyroPositionUpdate(void)
         savedSpyroPosition.z = spyroZ;
         savedSpyroYawAngle = spyroYawAngle;
 
-        savedPositionLevelID = levelID;
+        savedPositionLevelID = currentLevel;
         savedPositionSubLevelID = subLevelID;
 
         if (spyroState == 10) // Over water swim
@@ -238,11 +238,14 @@ void PrepareSavedSpyroRespawn(void)
         savedCheckpointSwimState = savedSpyroSwimState;
 
         previousLevelIDForVehicleEntry = 0; // Force no balloon for loading saved position
+
+        PreserveSideCharacterForRespawn();
     }
     else
     {
         bool shouldLoadBalloon = false;
         ReloadLevelStartingPosition(shouldLoadBalloon);
+        PreserveSideCharacterForRespawn();
     }
 }
 
@@ -255,6 +258,7 @@ void RestartLevelFromBeginning(u32 reloadLevelType)
 {
     ClearCollectables();
     ReloadLevelStartingPosition(reloadLevelType);
+    PreserveSideCharacterForRespawn();
 
     speedUpResetPending = true;
     if (FastLoadEnabled())
@@ -426,7 +430,7 @@ void MainUpdates(void)
             SheilaExit();
         }
 
-        else if (rawButtonHeld == L1_BUTTON + R1_BUTTON + X_BUTTON + DOWN_BUTTON)
+        else if (rawButtonHeld == RELOAD_SUNNY_EXIT_HOTKEY)
         {
             speedUpResetPending = true;
             if (FastLoadEnabled())
@@ -439,6 +443,15 @@ void MainUpdates(void)
             SunnyExit();
         }
     }
+
+    // if (rawButtonHeld == (L2_BUTTON + R2_BUTTON + CIRCLE_BUTTON))
+    // {
+    //     FullSaveState();
+    // }
+    // else if (rawButtonHeld & SELECT_BUTTON)
+    // {
+    //     FullLoadState();
+    // }
 
     if (HasRecentlyLoadedSpyro()) { CancelEntryNpcDialogue(); }
 
