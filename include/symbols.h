@@ -5,6 +5,7 @@
 #include <vector.h>
 #include <collision.h>
 #include <sparx_upgrades.h>
+#include <memory_patch.h>
 
 typedef struct RECT
 {
@@ -69,6 +70,7 @@ extern u8 savedCheckpointData[0x850];
 extern u32 savedCheckpointUpdated;
 extern u32 savedCheckpointSwimState;
 extern u32 checkpointCameraMode;
+extern u32 savedCheckpointMemoryPatch;
 
 extern u8 sparxState[0x28];
 extern u8 sparxDefaults[0x28];

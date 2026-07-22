@@ -5,3 +5,4 @@ build/*
 tools/*
 notes/*
 asm/.auto_hooks/*
+platform/*
