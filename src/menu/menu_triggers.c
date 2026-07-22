@@ -130,7 +130,7 @@ void ZombieModeToggle()
 {
     if (!main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled)
     {
-        spyroHealth = 3;
+        return;
     }
     else
     {
