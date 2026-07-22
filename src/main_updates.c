@@ -138,6 +138,7 @@ inline static void SaveStartingPositionUpdate(void)
     }
 }
 
+extern u32 g_ILTimerMode;
 inline static void ReloadLevelStartingPosition(u32 reloadLevelType)
 {
     if (subLevelID == 0)
@@ -162,6 +163,11 @@ inline static void ReloadLevelStartingPosition(u32 reloadLevelType)
     {
         savedCheckpointUpdated = 1;
         previousLevelIDForVehicleEntry = 0;
+
+        if (currentLevel == BUZZS_DUNGEON && g_ILTimerMode > 0) // Always enter on balloon in buzz when IL mode is on
+        {
+            previousLevelIDForVehicleEntry = 40;
+        }
     }
     else if (reloadLevelType == RELOAD_BALLOON)
     {
