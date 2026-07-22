@@ -52,6 +52,7 @@ savedCheckpointData = 0x8006d088;
 savedCheckpointUpdated = 0x8006d088;
 savedCheckpointSwimState = 0x8006d8d0;
 checkpointCameraMode = 0x8006D8D4;
+savedCheckpointMemoryPatch = 0x8006d0c0;
 
 sparxState = 0x8006580c;
 sparxDefaults = 0x80065834;

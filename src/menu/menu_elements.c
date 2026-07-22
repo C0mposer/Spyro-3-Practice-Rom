@@ -30,7 +30,7 @@ static void ChangeElementValue(MenuElement* element, bool move_right)
     if (element->selection_option != old_value) { PlaySound(11, 0, 0); }
 }
 
-static SetValueFromElement(MenuElement* element)
+static void SetValueFromElement(MenuElement* element)
 {
     u32 value_to_set = element->value;
 
@@ -44,16 +44,19 @@ void UpdateMenuElements(Menu* menu)
 {
     s32 textbox_center;
     s32 column_offset;
+    u8 page_element_count;
     u8 i;
 
-    if (menu->amount_of_elements == 0) { return; }
+    page_element_count = GetMenuPageElementCount(menu);
+
+    if (page_element_count == 0) { return; }
 
     textbox_center = (menu->x1 + menu->x2) / 2;
     column_offset = (menu->x2 - menu->x1) / 4;
 
-    for (i = 0; i < menu->amount_of_elements; i++)
+    for (i = 0; i < page_element_count; i++)
     {
-        MenuElement* element = &menu->elements[i];
+        MenuElement* element = GetMenuPageElement(menu, i);
         s32 y = menu->y1 + 25 + (14 * i);
         s32 color =
             i == menu->current_selection ? SELECTED_COLOR : UNSELECTED_COLOR;
@@ -64,7 +67,7 @@ void UpdateMenuElements(Menu* menu)
         // Draw actual value int as string if Value Set type
         if (element->type == MENU_TYPE_VALUE_SET)
         {
-            char* buffer[6];
+            char buffer[12];
             sprintf(buffer, "%d", element->value);
             DrawTextCentered(buffer, textbox_center + column_offset, y, color);
         }
@@ -77,7 +80,8 @@ void UpdateMenuElements(Menu* menu)
         }
     }
 
-    MenuElement* current_element = &menu->elements[menu->current_selection];
+    MenuElement* current_element =
+        GetMenuPageElement(menu, menu->current_selection);
 
     // Change Option/Set Value for the Set Value menu type
     if (current_element->type == MENU_TYPE_VALUE_SET)
@@ -90,14 +94,6 @@ void UpdateMenuElements(Menu* menu)
         else if (isButtonPressed == RIGHT_BUTTON)
         {
             current_element->value += 1;
-        }
-        else if (isButtonPressed == L1_BUTTON)
-        {
-            current_element->value -= 10;
-        }
-        else if (isButtonPressed == R1_BUTTON)
-        {
-            current_element->value += 10;
         }
         else if (isButtonPressed == L2_BUTTON)
         {
@@ -144,11 +140,11 @@ void UpdateMenuElements(Menu* menu)
     {
         if (isButtonPressed == RIGHT_BUTTON)
         {
-            ChangeElementValue(&menu->elements[menu->current_selection], true);
+            ChangeElementValue(current_element, true);
         }
         else if (isButtonPressed == LEFT_BUTTON)
         {
-            ChangeElementValue(&menu->elements[menu->current_selection], false);
+            ChangeElementValue(current_element, false);
         }
     }
 
@@ -159,13 +155,13 @@ void UpdateMenuElements(Menu* menu)
         if (menu->current_selection > 0) { menu->current_selection--; }
         else // Wrap around
         {
-            menu->current_selection = menu->amount_of_elements - 1;
+            menu->current_selection = page_element_count - 1;
         }
         PlaySound(10, 0, 0);
     }
     else if (isButtonPressed == DOWN_BUTTON)
     {
-        if (menu->current_selection + 1 < menu->amount_of_elements)
+        if (menu->current_selection + 1 < page_element_count)
         {
             menu->current_selection++;
         }

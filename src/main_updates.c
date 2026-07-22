@@ -453,7 +453,10 @@ void MainUpdates(void)
     //     FullLoadState();
     // }
 
-    if (HasRecentlyLoadedSpyro()) { CancelEntryNpcDialogue(); }
+    if (HasRecentlyLoadedSpyro() || gamestate == DYING)
+    {
+        CancelEntryNpcDialogue();
+    }
 
 
 }

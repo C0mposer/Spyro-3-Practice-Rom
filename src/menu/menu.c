@@ -42,8 +42,10 @@ static void DrawMenu(Menu* menu)
 {
     //DrawScreenColour(1, 0x20, 0, 0x40);
     DrawTextbox(menu->x1, menu->x2, menu->y1, menu->y2);
-    DrawTextCentered(menu->title, (menu->x1 + menu->x2) / 2,
+    DrawTextCentered(menu->page_titles[menu->current_page],
+        (menu->x1 + menu->x2) / 2,
         menu->y1 + 7, UNSELECTED_COLOR);
+    DrawMenuPageControls(menu);
 }
 
 static void OpenMenu(Menu* menu)
@@ -98,6 +100,7 @@ void UpdateMenu(Menu* menu)
         return;
     }
 
+    UpdateMenuPage(menu);
     DrawMenu(menu);
     UpdateMenuElements(menu);
 
