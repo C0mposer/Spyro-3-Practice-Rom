@@ -15,8 +15,10 @@
 extern const char* const difficulty_options[3];
 extern const char* const timer_options[3];
 extern const char* const sparx_range_options[2];
+extern const char* const category_options[3];
 
 MenuElement main_menu_elements[] = {
+    MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Category", category_options, 0),
     MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "IL Timer", timer_options, TIMER_OFF),
     MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Manual Timer", timer_options, TIMER_OFF),
     MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Difficulty", difficulty_options,

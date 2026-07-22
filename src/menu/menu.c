@@ -31,6 +31,13 @@ const char* const sparx_range_options[] =
     "Upgraded"
 };
 
+const char* const category_options[] =
+{
+    "Any%",
+    "100 Egg",
+    "117%"
+};
+
 
 extern MenuElement main_menu_elements[];
 

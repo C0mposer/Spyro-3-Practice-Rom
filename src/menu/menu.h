@@ -24,6 +24,7 @@ enum MainMenuPage
 };
 
 enum MainMenuElement {
+    CATEGORY_MULTI,
     IL_TIMER_MULTI,
     TIMER_MULTI,
     DIFFICULTY_MULTI,

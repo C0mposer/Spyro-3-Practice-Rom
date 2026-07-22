@@ -31,6 +31,7 @@ void ModMain(int syncArg)
     RhynocProxyTrainer();
     MoonJumpUpdate();
     SetCorrectVehicleInBossUpdate();
+    CategoryDefaultsUpdate();
 
     DrawSync(syncArg); // Replaced Function Call, we must call it from our hook
 }

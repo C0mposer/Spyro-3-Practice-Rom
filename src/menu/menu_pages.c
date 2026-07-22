@@ -75,5 +75,5 @@ void UpdateMenuPage(Menu* menu)
 
     menu->current_page = new_page;
     menu->current_selection = 0;
-    PlaySound(10, 0, 0);
+    PlaySound(14, 0, 0);
 }
