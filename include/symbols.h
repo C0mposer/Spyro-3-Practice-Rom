@@ -161,6 +161,8 @@ void test();
 char* SunriseUpdateParticles(s32 param_1, s32 param_2, Vec3* param_3, Vec3* param_4);
 
 void Vec3Copy(Vec3* out, Vec3* in);
+s32 SinLerp(s32 angle);
+s32 CosLerp(s32 angle);
 
 void LoadImage(RECT* r, u8* texture_in_mainram);
 

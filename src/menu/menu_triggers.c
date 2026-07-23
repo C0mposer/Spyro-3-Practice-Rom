@@ -127,6 +127,7 @@ void FastDialougeTrigger()
 }
 
 extern bool shouldDisableZombieOnce;
+extern bool shouldEnableZombieOnce;
 void ZombieModeToggle()
 {
     if (!main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled)
@@ -134,13 +135,19 @@ void ZombieModeToggle()
         if (shouldDisableZombieOnce == true)
         {
             spyroHealth = 3;
+
+            shouldEnableZombieOnce = true;
             shouldDisableZombieOnce = false;
         }
     }
     else
     {
-        spyroHealth = -1;
+        if (shouldEnableZombieOnce == true)
+        {
+            spyroHealth = -1;
 
-        shouldDisableZombieOnce = true;
+            shouldEnableZombieOnce = false;
+            shouldDisableZombieOnce = true;
+        }
     }
 }

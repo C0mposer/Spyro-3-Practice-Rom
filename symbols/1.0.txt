@@ -132,6 +132,8 @@ SunriseUpdateParticles = 0x80086960;
 sunriseUpdateParticlePtr = 0x800742e4;
 
 Vec3Copy = 0x8004f178;
+SinLerp = 0x8004e9e4;
+CosLerp = 0x8004ea2c;
 
 LoadImage = 0x8005a478;
 

@@ -29,6 +29,7 @@ extern u32 savedPositionSubLevelID;
 extern u8 savedSpyroSwimState; // For saved pos
 extern u8 startingSpyroSwimState; // For level entry
 extern u8 startingSpyroSwimStateSubLevel; // For sub level entry
+extern bool shouldEnableZombieOnce;
 
 extern u32 reloadSpyroTimer;
 
@@ -422,6 +423,7 @@ void MainUpdates(void)
             }
 
             RestartLevelFromBeginning(reloadLevelType);
+            shouldEnableZombieOnce = true;
         }
         else if (rawButtonHeld == RELOAD_SHEILA_EXIT_HOTKEY)
         {
@@ -459,10 +461,10 @@ void MainUpdates(void)
     //     FullLoadState();
     // }
 
-    if (HasRecentlyLoadedSpyro() || gamestate == DYING)
-    {
-        CancelEntryNpcDialogue();
-    }
+    // if (HasRecentlyLoadedSpyro() || gamestate == DYING)
+    // {
+    //     CancelEntryNpcDialogue();
+    // }
 
 
 }
