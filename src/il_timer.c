@@ -8,6 +8,7 @@
 #include <timer.h>
 #include <common.h>
 #include <text_colors.h>
+#include <level_ids.h>
 
 extern int g_ILTimerMode;
 extern int menu_frames_closed;
@@ -104,6 +105,15 @@ static void RetryILLevel(void)
     IL_preparingToStartTimer = true;
     shouldSaveTimerPortal = false;
 
+    // Reset the entire level if SBR, because it ends in a sub level, it must reload to main level
+    if (currentLevel == SUPER_BONUS_ROUND)
+    {
+        printf_syscall("test\n");
+        LoadLevel(3, SUPER_BONUS_ROUND);
+        ClearCollectables();
+        return;
+    }
+
     if (exitType == IL_EXIT_PORTAL)
     {
         // Restore the levelid to fly to
@@ -127,23 +137,34 @@ static void ContinueILExit(void)
     shouldSaveTimerPortal = false;
 
     // If in a boss level, do a cutscene load to the next homeworld
-    if (isInBossLevel)
+    // If in SBR final sorc, load back to SBR main level
+    if (currentLevel == SUPER_BONUS_ROUND)
     {
+        //printf_syscall("B\n");
+        LoadLevel(3, SUPER_BONUS_ROUND);
+        ClearCollectables();
+    }
+    else if (isInBossLevel)
+    {
+        //printf_syscall("A\n");
         u32 level_to_warp_to = currentLevel + 3; // A boss is always X7, so the next homeworld would be X7 + 3
         level_to_warp_to = level_to_warp_to > 40 ? 40 : level_to_warp_to; // Clamp to a 40, so sorc doesn't take us to 50
 
         u32 splash_screen = (level_to_warp_to / 10) - 1; // hw splash screens are 0, 1, 2, 3. (If i'm really tight on code space, this isn't fully required, just nice to show the right splash screen. Remove if desperate for space!)
 
         LoadLevel(splash_screen, level_to_warp_to);
+        ClearCollectables();
     }
     else if (exitType == IL_EXIT_PORTAL)
     {
         // Resume the regular load out of the portal
         EndILPortalTransition(true);
+        ClearCollectables();
     }
     else // Resume the regular load out of the pause menu
     {
         BeginLevelLoad(exitContext);
+        ClearCollectables();
         if (gamestate == LOADING_LEVEL)
         {
             framesInScenario = 0x20;
