@@ -6,6 +6,7 @@
 #include <gamestates.h>
 #include <timer_options.h>
 #include <timer.h>
+#include <text_colors.h>
 
 extern int g_manualTimerMode;
 extern int menu_frames_closed;
@@ -17,6 +18,8 @@ extern int mainTimerAtReset;
 extern char mainTimerAscii[10];
 extern bool isLoadComboPressed;
 extern bool preparingToStartTimer;
+
+extern u32 g_ILTimerMode;
 
 //Math to approx adjust for 59.82hz
 void FramesToTimer(Timer* ptr_timer)
@@ -99,6 +102,20 @@ void TimerUpdate()
             int x2 = 504;
             int y1 = 204;
             int y2 = 224;
+            int text_y = 210;
+
+            if (g_ILTimerMode == 0)
+            {
+                y1 = 204;
+                y2 = 224;
+                text_y = 210;
+            }
+            else // Raise the manual timer if in IL mode
+            {
+                y1 = 204 - 22;
+                y2 = 224 - 22;
+                text_y = 210 - 22;
+            }
 
             //Text X adjust
             int text_x_pos_adjust;
@@ -115,7 +132,7 @@ void TimerUpdate()
                 text_x_pos_adjust = 460;
             }
             DrawTextbox(x1, x2, y1, y2);
-            DrawTextCentered(mainTimerAscii, text_x_pos_adjust, 210, 2);
+            DrawTextCentered(mainTimerAscii, text_x_pos_adjust, text_y, COLOR_BRONZE);
             //printf_syscall("Should Be Drawing");
         }
     }
