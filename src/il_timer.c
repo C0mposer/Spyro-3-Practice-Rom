@@ -108,7 +108,6 @@ static void RetryILLevel(void)
     // Reset the entire level if SBR, because it ends in a sub level, it must reload to main level
     if (currentLevel == SUPER_BONUS_ROUND)
     {
-        printf_syscall("test\n");
         LoadLevel(3, SUPER_BONUS_ROUND);
         ClearCollectables();
         return;
@@ -136,17 +135,15 @@ static void ContinueILExit(void)
     IL_preparingToStartTimer = false;
     shouldSaveTimerPortal = false;
 
-    // If in a boss level, do a cutscene load to the next homeworld
     // If in SBR final sorc, load back to SBR main level
     if (currentLevel == SUPER_BONUS_ROUND)
     {
-        //printf_syscall("B\n");
         LoadLevel(3, SUPER_BONUS_ROUND);
         ClearCollectables();
     }
+    // If in a boss level, do a cutscene load to the next homeworld
     else if (isInBossLevel)
     {
-        //printf_syscall("A\n");
         u32 level_to_warp_to = currentLevel + 3; // A boss is always X7, so the next homeworld would be X7 + 3
         level_to_warp_to = level_to_warp_to > 40 ? 40 : level_to_warp_to; // Clamp to a 40, so sorc doesn't take us to 50
 
@@ -163,7 +160,7 @@ static void ContinueILExit(void)
     }
     else // Resume the regular load out of the pause menu
     {
-        BeginLevelLoad(exitContext);
+        BeginLevelLoad(exitContext); // Should always be -1, but just saving context to be sure
         ClearCollectables();
         if (gamestate == LOADING_LEVEL)
         {

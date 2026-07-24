@@ -14,11 +14,11 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 ## Hotkeys
 | Feature | Hotkey |
 |---------|:----:|
-| Open Practice Menu | L2 + R2 + Triangle |
-| Reset Level | L1 + R1 + Triangle |
-| Reset Level (Enter on Balloon) | L1 + R1 + Down + Triangle |
-| Save Spyro Position | L1 + R1 + Circle |
-| Load Spyro Position | L1 + R1 + Square |
+| Open Practice Menu | L2 + R2 + L1 + R1 + Triangle |
+| Reset Level | L2 + R2 + Triangle |
+| Reset Level (Enter on Balloon) | L2 + R2 + Down + Triangle |
+| Save Spyro Position | L2 + R2 + Circle |
+| Load Spyro Position | L2 + R2 + Square |
 | Stop Timer | Select |
 
 ## Features
