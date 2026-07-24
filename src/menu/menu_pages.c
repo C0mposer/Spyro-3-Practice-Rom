@@ -5,9 +5,10 @@
 
 const char* const main_menu_page_titles[MAIN_MENU_PAGE_COUNT] = {
     "* Practice Menu *",
+    "* Timer Menu *",
     "* Savestate Menu *",
     "* Quality of Life *",
-    "* Specific Menu *"
+    "* Trainer Menu *"
 };
 
 void DrawMenuPageControls(const Menu* menu)

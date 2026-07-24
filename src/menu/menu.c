@@ -22,7 +22,7 @@ const char* const difficulty_options[] =
 const char* const timer_options[] =
 {
     "Off",
-    "Show Stopped",
+    "Show Finished",
     "Show Always"
 };
 
