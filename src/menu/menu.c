@@ -8,6 +8,7 @@
 #include "menu_triggers.h"
 #include <render_helper.h>
 #include <timer_options.h>
+#include <hotkeys.h>
 
 const char* const menu_toggle_options[2] = { "Off", "On" };
 
@@ -88,7 +89,7 @@ void UpdateMenu(Menu* menu)
 {
     if (menu->state == MENU_STATE_CLOSED)
     {
-        if (isButtonHeld == L2_BUTTON + R2_BUTTON + TRIANGLE_BUTTON)
+        if (isButtonHeld == OPEN_MENU_HOTKEY)
         {
             if (gamestate == GAMEPLAY)
             {

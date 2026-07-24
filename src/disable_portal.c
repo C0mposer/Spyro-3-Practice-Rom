@@ -85,16 +85,24 @@ bool UpdateILExitFade(void)
     {
         return UpdateILPortalTransition();
     }
-
-    if (drawScreenBlack < 0xFF)
+    else if (IL_exitType == IL_EXIT_MENU_CUTSCENE) // Immediately be fully black on cutscene exit (like hunters tussle)
     {
-        drawScreenBlack += 0x10;
-        if (drawScreenBlack > 0xFF)
-        {
-            drawScreenBlack = 0xFF;
-        }
+        drawScreenBlack = 0xFF;
+        return true;
     }
-    return drawScreenBlack >= 0xF8;
+    else if (IL_exitType == IL_EXIT_MENU)
+    {
+
+        if (drawScreenBlack < 0xFF)
+        {
+            drawScreenBlack += 0x10;
+            if (drawScreenBlack > 0xFF)
+            {
+                drawScreenBlack = 0xFF;
+            }
+        }
+        return drawScreenBlack >= 0xF8;
+    }
 }
 
 void EndILPortalTransition(bool resumeLoad)

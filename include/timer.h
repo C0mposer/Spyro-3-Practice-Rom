@@ -26,7 +26,8 @@ typedef enum ILExitState
 typedef enum ILExitType
 {
     IL_EXIT_MENU,
-    IL_EXIT_PORTAL
+    IL_EXIT_PORTAL,
+    IL_EXIT_MENU_CUTSCENE
 
 } ILExitType;
 

@@ -81,7 +81,7 @@ static void SaveBestTimeAtCurrentFrame(void)
     }
 }
 
-static void FinishILExitFade(void)
+void FinishILExitFade(void)
 {
     drawScreenBlack = 0xFF;
     SaveILTimerAtCurrentFrame();
