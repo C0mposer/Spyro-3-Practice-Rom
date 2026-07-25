@@ -42,6 +42,16 @@ void BootUpdate(void)
         return;
     }
 
+    // Vita/TV/PSP can start the title music earlier than PS1 or PS2 (POPS fixed this with some compat flags I think)
+    // WaitForCD stops the music in the title screen before trying to load CD data, so it doesn't get stuck
+    if (WaitForCd_())
+    {
+        titleScreenState = TITLE_STATE_PREPARE_SELECTED_GAME;
+        titleScreenPreviousState = TITLE_STATE_PREPARE_SELECTED_GAME;
+        titleScreenSubstate = 0;
+        return;
+    }
+
     ReadCdSync(KERN1_FILE_SECTOR, KERN1_MEMORY_ADDRESS, KERN1_READ_SIZE, 0);
     ReadCdSync(KERN2_FILE_SECTOR, KERN2_MEMORY_ADDRESS, KERN2_READ_SIZE, 0);
     FlushCache();

@@ -314,10 +314,10 @@ void ILTimerUpdate(void)
 
 
 
-u32 xx1 = 110;
-u32 xx2 = 400;
-u32 yy1 = 70;
-u32 yy2 = 175;
+const u32 xx1 = 110;
+const u32 xx2 = 400;
+const u32 yy1 = 70;
+const u32 yy2 = 175;
 // Draw Finished Screen
 
 u32 test_color = 0;
@@ -352,7 +352,7 @@ void ILTimerFinishedUpdate(void)
     else
     {
         DrawTextCentered("IL Complete!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, COLOR_YELLOW);
-        your_time_color = COLOR_BROWN;
+        your_time_color = COLOR_BRIGHT_ORANGE;
     }
 
 
