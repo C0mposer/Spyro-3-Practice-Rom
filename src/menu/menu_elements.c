@@ -3,6 +3,8 @@
 #include <symbols.h>
 #include <types.h>
 #include <input_helper.h>
+#include <text_colors.h>
+#include <category_defaults.h>
 
 static void ChangeElementValue(MenuElement* element, bool move_right)
 {
@@ -60,6 +62,12 @@ void UpdateMenuElements(Menu* menu)
         s32 y = menu->y1 + 25 + (14 * i);
         s32 color =
             i == menu->current_selection ? SELECTED_COLOR : UNSELECTED_COLOR;
+
+        // Grey out disabled elements (for category defaults only right now)
+        if (element->disabled == true)
+        {
+            color = COLOR_DARK_GREY;
+        }
 
         DrawTextCentered(element->label, textbox_center - column_offset, y,
                          color);
@@ -151,8 +159,15 @@ void UpdateMenuElements(Menu* menu)
     // Scroll Menu
     if (isButtonPressed == UP_BUTTON)
     {
-        // Don't underflow
-        if (menu->current_selection > 0) { menu->current_selection--; }
+        bool are_options_locked = (main_menu.elements[CATEGORY_MULTI].selection_option != MANUAL);
+        bool is_on_main_page = (menu->current_page == 0);
+        if (is_on_main_page && are_options_locked && menu->current_selection == 5)
+        {
+            menu->current_selection = 0; // Hacky way of forcing menu to skip locked elements. This break if I change the order
+        }
+
+        // Normal Logic
+        else if (menu->current_selection > 0) { menu->current_selection--; }
         else // Wrap around
         {
             menu->current_selection = page_element_count - 1;
@@ -161,7 +176,15 @@ void UpdateMenuElements(Menu* menu)
     }
     else if (isButtonPressed == DOWN_BUTTON)
     {
-        if (menu->current_selection + 1 < page_element_count)
+        bool are_options_locked = (main_menu.elements[CATEGORY_MULTI].selection_option != MANUAL);
+        bool is_on_main_page = (menu->current_page == 0);
+        if (is_on_main_page && are_options_locked && menu->current_selection == 0)
+        {
+            menu->current_selection = 5; // Hacky way of forcing menu to skip locked elements. This break if I change the order
+        }
+
+        // Normal logic
+        else if (menu->current_selection + 1 < page_element_count)
         {
             menu->current_selection++;
         }

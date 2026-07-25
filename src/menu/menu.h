@@ -36,9 +36,9 @@ enum MainMenuElement {
     TIMER_MULTI,
     FAST_LOAD_TOGGLE,
     DISABLE_PORTAL_TOGGLE,
-    DRAW_PORTAL_POLYGONS_TOGGLE,
     FAST_DIALOUGE_TRIGGER,
     DISABLE_BIANCA_TOGGLE,
+    DRAW_PORTAL_POLYGONS_TOGGLE,
     RHYNOC_TRAINER_TOGGLE,
     MAIN_MENU_ELEMENT_COUNT
 };
@@ -59,6 +59,8 @@ typedef struct MenuElement
     u8 option_count;
     u8 type;
     u8 page;
+
+    bool disabled;
 } MenuElement;
 
 typedef struct Menu

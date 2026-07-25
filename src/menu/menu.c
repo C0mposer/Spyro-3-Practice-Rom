@@ -36,7 +36,8 @@ const char* const category_options[] =
 {
     "Any%",
     "100 Egg",
-    "117%"
+    "117%",
+    "Manual",
 };
 
 
