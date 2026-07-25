@@ -8,22 +8,7 @@
 #include "menu_triggers.h"
 #include <bianca_flags.h>
 
-// Update the Off/On logic
-void UpdateMenuTriggers()
-{
-    DifficultyTrigger();
-    DisablePortalTrigger();
-    TimerTrigger();
-    ILTimerTrigger();
-    SparxRangeTrigger();
-    BasketBreakTrigger();
-    DisableBiancaTrigger();
-    RhynocTrainerTrigger();
-    FastDialougeTrigger();
-    ZombieModeToggle();
-}
-
-void DifficultyTrigger()
+static void DifficultyTrigger()
 {
     if (main_menu.elements[DIFFICULTY_MULTI].selection_option == DIFFICULTY_EASY)
     {
@@ -41,21 +26,21 @@ void DifficultyTrigger()
 
 // Simply creating a global to access the menu off/on state
 extern bool g_shouldDisablePortal;
-void DisablePortalTrigger()
+static void DisablePortalTrigger()
 {
 
     g_shouldDisablePortal = main_menu.elements[DISABLE_PORTAL_TOGGLE].enabled;
 }
 
 extern int g_ILTimerMode;
-void ILTimerTrigger()
+static void ILTimerTrigger()
 {
     g_ILTimerMode = main_menu.elements[IL_TIMER_MULTI].selection_option;
     //DrawText("Updating", 20, 20, 1, 0);
 }
 
 extern int g_manualTimerMode;
-void TimerTrigger()
+static void TimerTrigger()
 {
     g_manualTimerMode = main_menu.elements[TIMER_MULTI].selection_option;
     //DrawText("Updating", 20, 20, 1, 0);
@@ -63,7 +48,7 @@ void TimerTrigger()
 
 const SparxRangeData sparx_range_default = { 0x80E, 0x15E, 0x280 };
 const SparxRangeData sparx_range_upgraded = { 0xC00, 0x3C0, 0x20D };
-void SparxRangeTrigger()
+static void SparxRangeTrigger()
 {
     if (!main_menu.elements[SPARX_RANGE_TOGGLE].enabled)
     {
@@ -77,7 +62,7 @@ void SparxRangeTrigger()
     }
 }
 
-void BasketBreakTrigger()
+static void BasketBreakTrigger()
 {
     if (!main_menu.elements[BASKET_BREAK_TOGGLE].enabled)
     {
@@ -89,7 +74,7 @@ void BasketBreakTrigger()
     }
 }
 
-void DisableBiancaTrigger()
+static void DisableBiancaTrigger()
 {
     if (main_menu.elements[DISABLE_BIANCA_TOGGLE].enabled)
     {
@@ -101,7 +86,7 @@ void DisableBiancaTrigger()
 }
 
 extern bool g_rhynocTrainerEnabled;
-void RhynocTrainerTrigger()
+static void RhynocTrainerTrigger()
 {
     if (!main_menu.elements[RHYNOC_TRAINER_TOGGLE].enabled)
     {
@@ -114,7 +99,7 @@ void RhynocTrainerTrigger()
 }
 
 extern bool g_fastDialogueEnabled;
-void FastDialougeTrigger()
+static void FastDialougeTrigger()
 {
     if (!main_menu.elements[FAST_DIALOUGE_TRIGGER].enabled)
     {
@@ -128,7 +113,8 @@ void FastDialougeTrigger()
 
 extern bool shouldDisableZombieOnce;
 extern bool shouldEnableZombieOnce;
-void ZombieModeToggle()
+
+static void ZombieModeToggle()
 {
     if (!main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled)
     {
@@ -150,4 +136,20 @@ void ZombieModeToggle()
             shouldDisableZombieOnce = true;
         }
     }
+}
+
+
+// Update the Off/On logic
+void UpdateMenuTriggers()
+{
+    DifficultyTrigger();
+    DisablePortalTrigger();
+    TimerTrigger();
+    ILTimerTrigger();
+    SparxRangeTrigger();
+    BasketBreakTrigger();
+    DisableBiancaTrigger();
+    RhynocTrainerTrigger();
+    FastDialougeTrigger();
+    ZombieModeToggle();
 }
