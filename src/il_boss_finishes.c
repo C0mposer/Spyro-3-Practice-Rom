@@ -10,58 +10,30 @@ bool HasBossFinished()
         // Buzz
         if (currentLevel == BUZZS_DUNGEON)
         {
-            if (buzz_health == 0)
-            {
-                if (fade_effect == 0xFF)
-                {
-                    return true;
-                }
-            }
+            return buzz_health == 0 && fade_effect == 0xFF;
         }
         // Spike
         if (currentLevel == SPIKES_ARENA)
         {
-            if (spike_health == 0)
-            {
-                if (fade_effect == 0xFF)
-                {
-                    return true;
-                }
-            }
+            return spike_health == 0 && fade_effect == 0xFF;
         }
         // Scorch
         if (currentLevel == SCORCHS_PIT)
         {
-            if (scorch_health == 0)
-            {
-                if (fade_effect == 0xFF)
-                {
-                    return true;
-                }
-            }
+            return scorch_health == 0 && fade_effect == 0xFF;
         }
         // Sorc
         if (currentLevel == SORCERESS_LAIR)
         {
-            if (sorc_health == 0)
-            {
-                if (fade_effect == 0xFF)
-                {
-                    return true;
-                }
-            }
+            return sorc_health == 0 && fade_effect == 0xFF;
         }
         // Sorc SBR
         const u32 final_sorc_sublevel_id = 3;
-        if (currentLevel == SUPER_BONUS_ROUND && subLevelID == final_sorc_sublevel_id)
+        if (currentLevel == SUPER_BONUS_ROUND)
         {
-            if (final_sorc_health == 0)
-            {
-                if (fade_effect == 0xFF)
-                {
-                    return true;
-                }
-            }
+            return subLevelID == final_sorc_sublevel_id &&
+                   final_sorc_health == 0 &&
+                   fade_effect == 0xFF;
         }
     }
     return false;

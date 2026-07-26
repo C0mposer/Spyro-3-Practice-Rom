@@ -9,6 +9,7 @@
 #include <common.h>
 #include <text_colors.h>
 #include <level_ids.h>
+#include "menu/menu.h"
 
 extern int g_ILTimerMode;
 extern int menu_frames_closed;
@@ -34,6 +35,8 @@ extern u32 IL_sourceLevelID;
 extern u32 IL_sourceSubLevelID;
 
 extern bool hasLoadstatedDuringIL;
+
+extern const char* const category_options[4];
 
 void RestartLevelFromBeginning(void);
 void FramesToTimer(Timer* ptr_timer);
@@ -332,17 +335,17 @@ void ILTimerFinishedUpdate(void)
     blink_timer = ((blink_timer + 1) % 20);
 
     // Highlight selected option
-    u32 yes_color = IL_retrySelected ? COLOR_BRIGHT_YELLOW : COLOR_YELLOW;
-    u32 no_color = IL_retrySelected ? COLOR_YELLOW : COLOR_BRIGHT_YELLOW;
+    u32 yes_color = IL_retrySelected ? COLOR_WHITE : COLOR_YELLOW;
+    u32 no_color = IL_retrySelected ? COLOR_YELLOW : COLOR_WHITE;
 
     // Blink highlighted option
-    if (yes_color == COLOR_BRIGHT_YELLOW)
+    if (yes_color == COLOR_WHITE)
     {
-        yes_color = (blink_timer < 10) ? COLOR_BRIGHT_YELLOW : COLOR_YELLOW;
+        yes_color = (blink_timer < 10) ? COLOR_WHITE : COLOR_YELLOW;
     }
-    else if (no_color == COLOR_BRIGHT_YELLOW)
+    else if (no_color == COLOR_WHITE)
     {
-        no_color = (blink_timer < 10) ? COLOR_BRIGHT_YELLOW : COLOR_YELLOW;
+        no_color = (blink_timer < 10) ? COLOR_WHITE : COLOR_YELLOW;
     }
 
     DrawTextbox(xx1, xx2, yy1, yy2);
@@ -376,4 +379,10 @@ void ILTimerFinishedUpdate(void)
     DrawTextCentered("Try Again?", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) + 25, 2);
     DrawTextCentered("Yes", ((xx2 + xx1) / 2) - 50, ((yy1 + yy2) / 2) + 40, yes_color);
     DrawTextCentered("No",((xx2 + xx1) / 2) + 50, ((yy1 + yy2) / 2) + 40, no_color);
+
+
+    // Display category default
+    u32 category_default_selection = main_menu.elements[CATEGORY_MULTI].selection_option;
+    u32 chosen_category_text = category_options[category_default_selection];
+    DrawText(chosen_category_text, 7, 12, COLOR_YELLOW, 0);
 }

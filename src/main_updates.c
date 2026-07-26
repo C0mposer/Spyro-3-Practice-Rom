@@ -31,14 +31,18 @@ extern u8 startingSpyroSwimState; // For level entry
 extern u8 startingSpyroSwimStateSubLevel; // For sub level entry
 extern bool shouldEnableZombieOnce;
 
-extern u32 reloadSpyroTimer;
-
 extern Menu main_menu;
 
 extern u32 savestate_button_option;
 extern u32 loadstate_button_option;
 
 extern bool doesHaveExtraRam;
+
+void RememberEntryNpcDialogueSkip(void);
+void ClearEntryNpcDialogueSkip(void);
+void CancelEntryNpcDialogue(void);
+void SorcLayoutForceUpdate(void);
+
 
 inline static void SpeedUpReset(void)
 {
@@ -189,12 +193,12 @@ inline static bool HasSavedSpyroPositionForCurrentLevel(void)
 // Manually save spyro's position
 inline static void ManualSaveSpyroPositionUpdate(void)
 {
-    const u32 saveCombo = (rawButtonHeld & savestate_button_option) == savestate_button_option;
+    const u32 saveCombo = savestate_button_option;
     const u32 savedMessageDuration = 60;
     static bool saveComboWasHeld = false;
     static bool showSavedMessage = false;
     static u32 savedMessageStartTime = 0;
-    bool saveComboIsHeld = (isButtonHeld == saveCombo);
+    bool saveComboIsHeld = isButtonHeld == saveCombo;
 
     if (saveComboIsHeld && !saveComboWasHeld)
     {
@@ -243,6 +247,8 @@ void PrepareSavedSpyroRespawn(void)
 {
     if (HasSavedSpyroPositionForCurrentLevel())
     {
+        RememberEntryNpcDialogueSkip();
+
         // Set spyro's respawn position, to the saved position
         savedCheckpointUpdated = true;
         Vec3Copy(&respawnPosition, &savedSpyroPosition);
@@ -268,6 +274,9 @@ void RespawnSpyro(void)
 
 void RestartLevelFromBeginning(u32 reloadLevelType)
 {
+    if (reloadLevelType == RELOAD_FULL)
+        ClearEntryNpcDialogueSkip();
+
     ClearCollectables();
     ReloadLevelStartingPosition(reloadLevelType);
     PreserveSideCharacterForRespawn();
@@ -373,7 +382,8 @@ void MainUpdates(void)
 {
     SpeedUpReset();
     FastLoadUpdate();
-    ReloadSpyroTimerTick();
+
+    SorcLayoutForceUpdate();
 
     if (gamestate == LOADING_CUTSCENE)
     {
@@ -474,8 +484,6 @@ void MainUpdates(void)
                     fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
                 }
                 RespawnSpyro();
-                reloadSpyroTimer = 1; // Used for skipping frozen and fleet npc
-                                      // dialogues (see npc_dialogue_skip.c)
             }
         }
     #else
@@ -489,10 +497,7 @@ void MainUpdates(void)
         }
     #endif
 
-    if (HasRecentlyLoadedSpyro() || gamestate == DYING)
-    {
-        CancelEntryNpcDialogue();
-    }
+    CancelEntryNpcDialogue();
 
 
 }

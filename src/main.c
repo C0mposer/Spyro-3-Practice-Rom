@@ -7,6 +7,7 @@
 #include <gamestates.h>
 
 extern bool hasLoadedCDCode;
+extern bool hasCheckedExtraRam;
 
 #ifdef INJECTION_ONLY
 void ProxyTrainerUpdate(void);
@@ -33,13 +34,15 @@ void ModMain(int syncArg)
     TimerUpdate();
     ButtonsHeldTimerUpdate();
     RhynocProxyTrainer();
+    //BoarProxyTrainer();
     MoonJumpUpdate();
     SetCorrectVehicleInBossUpdate();
     CategoryDefaultsUpdate();
 
     #ifdef VERSION10_PS1
-    ONCE
+    if (!hasCheckedExtraRam)
     {
+        hasCheckedExtraRam = true;
         CheckIfHasExtraRam();
     }
     #endif

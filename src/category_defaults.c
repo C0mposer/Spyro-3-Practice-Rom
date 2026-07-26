@@ -5,7 +5,7 @@
 #include <difficulty.h>
 #include <category_defaults.h>
 
-void UnlockAllSideCharacterPortals()
+static void UnlockAllSideCharacterPortals()
 {
     eggsCollectedBitmask[0x6] = 0b1; // Set sheila egg as collected
     eggsCollectedBitmask[0xF] = 0b1; // Set sgt byrd egg as collected
@@ -13,7 +13,7 @@ void UnlockAllSideCharacterPortals()
     eggsCollectedBitmask[0x21] = 0b100; // Set agent 9 egg as collected
 }
 
-void CloseAllSideCharacterPortals()
+static void CloseAllSideCharacterPortals()
 {
     eggsCollectedBitmask[0x6] = 0b0; // Set sheila egg as uncollected
     eggsCollectedBitmask[0xF] = 0b0; // Set sgt byrd egg as uncollected
