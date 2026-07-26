@@ -78,10 +78,10 @@ static void CloseMenu(Menu* menu)
     gamestate = GAMEPLAY;
     PlaySound(7, 0, 0);
 
-    if (lowLevelMusicVolume != 0)
-    {
-        lowLevelMusicVolume *= 4;
-    }
+    // if (lowLevelMusicVolume != 0)
+    // {
+    //     lowLevelMusicVolume *= 4;
+    // }
 
     menu->state = MENU_STATE_CLOSED;
 }
