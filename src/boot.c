@@ -18,7 +18,7 @@ enum
 #elif defined(VERSION10_VITA)
 #define KERN1_MEMORY_ADDRESS ((u32*)0x8000C000)
 #define KERN2_MEMORY_ADDRESS ((u32*)0x8000EA00)
-#elif defined(VERSION10_PS2)
+#elif defined(VERSION10_PS2) || defined(VERSION10_PS2_IOP)
 #define KERN1_MEMORY_ADDRESS ((u32*)0x80008EB0)
 #define KERN2_MEMORY_ADDRESS ((u32*)0x80007530)
 #endif

@@ -16,7 +16,7 @@ void ProxyTrainerUpdate(void);
 void ModMain(int syncArg)
 {
 #ifndef INJECTION_ONLY
-#if defined(VERSION10_PS1) || defined(VERSION10_PS2)
+#if defined(VERSION10_PS1) || defined(VERSION10_PS2) || defined(VERSION10_PS2_IOP)
     if (!hasLoadedCDCode)
     {
         drawScreenBlack = 0xFF;

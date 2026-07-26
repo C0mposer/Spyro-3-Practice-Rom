@@ -38,7 +38,7 @@ typedef struct
 static CollisionHeader* cached_collision;
 static u32 cached_level = (u32)-1;
 static u32 cached_sublevel = (u32)-1;
-static u32 portal_triangles[MAX_PORTAL_TRIANGLES];
+static u16 portal_triangles[MAX_PORTAL_TRIANGLES];
 static u8 portal_triangle_count;
 
 static void CachePortalTriangles(void)

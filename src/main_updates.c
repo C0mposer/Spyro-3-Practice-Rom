@@ -455,6 +455,8 @@ void MainUpdates(void)
         }
     }
 
+
+    // On PS1 & Vita/TV/PSP, check if extra ram exists, and act accordingly
     #ifdef VERSION10_PS1
         if (doesHaveExtraRam) // Enable savestates
         {
@@ -486,14 +488,38 @@ void MainUpdates(void)
                 RespawnSpyro();
             }
         }
-    #else
-        if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
+    #endif
+
+
+        // If on ps2 deckard, just allow savestates
+        #ifdef VERSION10_PS2
+            if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
+            {
+                FullSaveState();
+            }
+            else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+            {
+                FullLoadState();
+            }
+        #endif
+
+      // If on ps2 IOP, force position saves.
+      #ifdef VERSION10_PS2_IOP
+        ManualSaveSpyroPositionUpdate(); // I should do the button check outside of the callee, but this is fine for now
+
+        // Restart the level from the saved position
+        if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
         {
-            FullSaveState();
-        }
-        else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
-        {
-            FullLoadState();
+            ClearCollectables();
+            PrepareSavedSpyroRespawn();
+            speedUpResetPending = true;
+            if (FastLoadEnabled())
+            {
+                fastLoadActive = true;
+                fastLoadInScenario = false;
+                fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
+            }
+            RespawnSpyro();
         }
     #endif
 
