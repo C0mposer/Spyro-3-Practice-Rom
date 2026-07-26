@@ -6,3 +6,5 @@ tools/*
 notes/*
 asm/.auto_hooks/*
 platform/*
+unused/*
+__pycache__/*

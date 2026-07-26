@@ -38,6 +38,8 @@ extern Menu main_menu;
 extern u32 savestate_button_option;
 extern u32 loadstate_button_option;
 
+extern bool doesHaveExtraRam;
+
 inline static void SpeedUpReset(void)
 {
     const u32 minimumLayoutWait = 6;
@@ -187,7 +189,7 @@ inline static bool HasSavedSpyroPositionForCurrentLevel(void)
 // Manually save spyro's position
 inline static void ManualSaveSpyroPositionUpdate(void)
 {
-    const u32 saveCombo = SAVE_SPYRO_HOTKEY;
+    const u32 saveCombo = (rawButtonHeld & savestate_button_option) == savestate_button_option;
     const u32 savedMessageDuration = 60;
     static bool saveComboWasHeld = false;
     static bool showSavedMessage = false;
@@ -393,27 +395,11 @@ void MainUpdates(void)
         // sfx.
 
         SaveStartingPositionUpdate();
-        ManualSaveSpyroPositionUpdate();
+        //ManualSaveSpyroPositionUpdate();
 
 
-        // Restart the level from the saved position
-        if (rawButtonHeld == LOAD_SPYRO_HOTKEY)
-        {
-            ClearCollectables();
-            PrepareSavedSpyroRespawn();
-            speedUpResetPending = true;
-            if (FastLoadEnabled())
-            {
-                fastLoadActive = true;
-                fastLoadInScenario = false;
-                fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
-            }
-            RespawnSpyro();
-            reloadSpyroTimer = 1; // Used for skipping frozen and fleet npc
-                                  // dialogues (see npc_dialogue_skip.c)
-        }
         // Restart the level from the spawn point
-        else if (rawButtonHeld == RELOAD_LEVEL_HOTKEY || rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY || rawButtonHeld == RELOAD_LEVEL_CHECKPOINT_HOTKEY) // Theres probably a better way to do this to save space
+        if (rawButtonHeld == RELOAD_LEVEL_HOTKEY || rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY || rawButtonHeld == RELOAD_LEVEL_CHECKPOINT_HOTKEY) // Theres probably a better way to do this to save space
         {
             u32 reloadLevelType;
             if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
@@ -459,14 +445,49 @@ void MainUpdates(void)
         }
     }
 
-    if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
-    {
-        FullSaveState();
-    }
-    else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
-    {
-        FullLoadState();
-    }
+    #ifdef VERSION10_PS1
+        if (doesHaveExtraRam) // Enable savestates
+        {
+            if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
+            {
+                FullSaveState();
+            }
+            else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+            {
+                FullLoadState();
+            }
+        }
+        else // Enable sudo-savestates
+        {
+            ManualSaveSpyroPositionUpdate(); // I should do the button check outside of the callee, but this is fine for now
+
+            // Restart the level from the saved position
+            if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+            {
+                ClearCollectables();
+                PrepareSavedSpyroRespawn();
+                speedUpResetPending = true;
+                if (FastLoadEnabled())
+                {
+                    fastLoadActive = true;
+                    fastLoadInScenario = false;
+                    fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
+                }
+                RespawnSpyro();
+                reloadSpyroTimer = 1; // Used for skipping frozen and fleet npc
+                                      // dialogues (see npc_dialogue_skip.c)
+            }
+        }
+    #else
+        if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
+        {
+            FullSaveState();
+        }
+        else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+        {
+            FullLoadState();
+        }
+    #endif
 
     if (HasRecentlyLoadedSpyro() || gamestate == DYING)
     {
