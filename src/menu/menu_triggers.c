@@ -7,6 +7,9 @@
 #include "menu.h"
 #include "menu_triggers.h"
 #include <bianca_flags.h>
+#include <savestate_buttons.h>
+#include <buttons.h>
+
 
 static void DifficultyTrigger()
 {
@@ -138,6 +141,44 @@ static void ZombieModeToggle()
     }
 }
 
+extern u32 savestate_button_option;
+static void SavestateButtonToggle()
+{
+    if (main_menu.elements[SAVESTATE_BUTTON_MULTI].selection_option == SAVESTATE_L3)
+    {
+        savestate_button_option = L3_BUTTON;
+    }
+    else if (main_menu.elements[SAVESTATE_BUTTON_MULTI].selection_option == SAVESTATE_L1_L2)
+    {
+        savestate_button_option = L1_BUTTON | L2_BUTTON;
+    }
+    else if (main_menu.elements[SAVESTATE_BUTTON_MULTI].selection_option == SAVESTATE_L1_R2)
+    {
+        savestate_button_option = L1_BUTTON | R2_BUTTON;
+    }
+}
+
+extern u32 loadstate_button_option;
+static void LoadstateButtonToggle()
+{
+    if (main_menu.elements[LOADSTATE_BUTTON_MULTI].selection_option == LOADSTATE_R3)
+    {
+        loadstate_button_option = R3_BUTTON;
+    }
+    else if (main_menu.elements[LOADSTATE_BUTTON_MULTI].selection_option == LOADSTATE_SELECT)
+    {
+        loadstate_button_option = SELECT_BUTTON;
+    }
+    else if (main_menu.elements[LOADSTATE_BUTTON_MULTI].selection_option == LOADSTATE_R1_R2)
+    {
+        loadstate_button_option = R1_BUTTON | R2_BUTTON;
+    }
+    else if (main_menu.elements[LOADSTATE_BUTTON_MULTI].selection_option == LOADSTATE_L2_R1)
+    {
+        loadstate_button_option = L2_BUTTON | R1_BUTTON;
+    }
+}
+
 
 // Update the Off/On logic
 void UpdateMenuTriggers()
@@ -152,4 +193,6 @@ void UpdateMenuTriggers()
     RhynocTrainerTrigger();
     FastDialougeTrigger();
     ZombieModeToggle();
+    SavestateButtonToggle();
+    LoadstateButtonToggle();
 }

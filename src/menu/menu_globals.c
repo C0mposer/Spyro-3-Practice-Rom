@@ -17,6 +17,9 @@ extern const char* const timer_options[3];
 extern const char* const sparx_range_options[2];
 extern const char* const category_options[4];
 
+extern const char* const savestate_button_options[3];
+extern const char* const loadstate_button_options[4];
+
 MenuElement main_menu_elements[] =
 {
     MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Category", category_options, 0),
@@ -33,7 +36,9 @@ MenuElement main_menu_elements[] =
     MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Mash Dialogue", false),
     MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Disable Bianca", false),
     MENU_TOGGLE(MAIN_MENU_PAGE_TRAINER, "Draw Portals", false),
-    MENU_TOGGLE(MAIN_MENU_PAGE_TRAINER, "Rhynoc Trainer", false)
+    MENU_TOGGLE(MAIN_MENU_PAGE_TRAINER, "Rhynoc Trainer", false),
+    MENU_MULTI(MAIN_MENU_PAGE_SAVESTATE, "Savestate Combo", savestate_button_options, 0),
+    MENU_MULTI(MAIN_MENU_PAGE_SAVESTATE, "Loadstate Combo", loadstate_button_options, 0)
 };
 
 Menu main_menu = {.page_titles = main_menu_page_titles,

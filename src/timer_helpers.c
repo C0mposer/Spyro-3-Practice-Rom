@@ -7,7 +7,7 @@
 #include <timer_options.h>
 #include <timer.h>
 
-//Math to approx adjust for 59.82hz
+//Math to approx adjust for 59.82hz (maybe adjust for 59.826 in the future)
 void FramesToTimer(Timer* ptr_timer)
 {
     ptr_timer->minutes = (ptr_timer->timer * 10) / 35892;

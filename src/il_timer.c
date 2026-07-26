@@ -33,6 +33,8 @@ extern u32 IL_previousGamestate;
 extern u32 IL_sourceLevelID;
 extern u32 IL_sourceSubLevelID;
 
+extern bool hasLoadstatedDuringIL;
+
 void RestartLevelFromBeginning(void);
 void FramesToTimer(Timer* ptr_timer);
 void LoadAscii(Timer* ptr_timer, char* ascii);
@@ -75,9 +77,12 @@ static void SaveBestTimeAtCurrentFrame(void)
     // Save your best level time so far, if you beat it, or it doesn't yet exist
     if (IL_mainTimer.timer < currentBestTimeInLevel.timer || currentBestTimeInLevel.timer == 0)
     {
-        currentBestTimeInLevel.timer = IL_mainTimer.timer;
-        FramesToTimer(&currentBestTimeInLevel);
-        LoadAscii(&currentBestTimeInLevel, currentBestTimeInLevelAscii);
+        if (!hasLoadstatedDuringIL) // Only save best time if you have not load stated
+        {
+            currentBestTimeInLevel.timer = IL_mainTimer.timer;
+            FramesToTimer(&currentBestTimeInLevel);
+            LoadAscii(&currentBestTimeInLevel, currentBestTimeInLevelAscii);
+        }
     }
 }
 
@@ -348,6 +353,11 @@ void ILTimerFinishedUpdate(void)
     {
         DrawTextCentered("New Best Time!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, COLOR_YELLOW);
         your_time_color = COLOR_GREEN;
+    }
+    else if (hasLoadstatedDuringIL)
+    {
+        DrawTextCentered("Savestated IL Complete!", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) - 45, COLOR_YELLOW);
+        your_time_color = COLOR_BRONZE;
     }
     else
     {

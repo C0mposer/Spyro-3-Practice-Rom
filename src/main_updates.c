@@ -35,6 +35,9 @@ extern u32 reloadSpyroTimer;
 
 extern Menu main_menu;
 
+extern u32 savestate_button_option;
+extern u32 loadstate_button_option;
+
 inline static void SpeedUpReset(void)
 {
     const u32 minimumLayoutWait = 6;
@@ -295,6 +298,7 @@ void UpdateHomeworldEntryType()
     }
 }
 
+extern bool hasLoadstatedDuringIL;
 void ClearCollectables(void)
 {
     u32 gem_reset_value = main_menu.elements[SET_GEM_COUNT_TOGGLE].value;
@@ -333,6 +337,9 @@ void ClearCollectables(void)
     // Reset checkpoint data
     memset(currentCheckpointData, 0, 0x850);
     memset(savedCheckpointData, 0, 0x850);
+
+    // Reset out own savestate during IL flag
+    hasLoadstatedDuringIL = false;
 
 }
 
@@ -452,19 +459,19 @@ void MainUpdates(void)
         }
     }
 
-    // if (rawButtonHeld == (L2_BUTTON + R2_BUTTON + CIRCLE_BUTTON))
-    // {
-    //     FullSaveState();
-    // }
-    // else if (rawButtonHeld & SELECT_BUTTON)
-    // {
-    //     FullLoadState();
-    // }
+    if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
+    {
+        FullSaveState();
+    }
+    else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+    {
+        FullLoadState();
+    }
 
-    // if (HasRecentlyLoadedSpyro() || gamestate == DYING)
-    // {
-    //     CancelEntryNpcDialogue();
-    // }
+    if (HasRecentlyLoadedSpyro() || gamestate == DYING)
+    {
+        CancelEntryNpcDialogue();
+    }
 
 
 }
