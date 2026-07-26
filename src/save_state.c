@@ -23,14 +23,21 @@
 #define SCENE_REGION_ANIMATION_SIZE      4
 
 bool hasLoadstatedDuringIL = false;
+
+// IL Timer
 extern u32 g_ILTimerMode;
 extern u32 IL_mainTimerAtReset;
-extern u32 mainTimerAtReset;
-
 extern u32 ilTimerOffset;
 extern u32 IL_mainTimerAtReset;
 
+// Manual Timer
 extern u32 mainTimerAtReset;
+
+// Rhynoc Trainer
+extern u32 input_timer_during_thrown_anim;
+extern u32 rhynoc_currentButtonSequence;
+extern u32 rhynoc_input_sequence[3];
+extern u32 rhynoc_wait_to_show;
 
 
 // Savestate regions
@@ -128,7 +135,7 @@ static const SaveRegion saveStateRegions[] =
     SAVE_STATE_REGION(0x8006FBD0, 0x04), // currentMenu
     SAVE_STATE_REGION(0x8006FBD4, 0x04),
     SAVE_STATE_REGION(0x8006E49C, 0x04), // pauseMusic
-    SAVE_STATE_REGION(0x80070300, 0x2AC),
+    SAVE_STATE_REGION(0x80070260, 0x34C), // Light effects?
 
     // Portal state
     SAVE_STATE_REGION(0x800722E8, 0x48),
@@ -145,6 +152,12 @@ static const SaveRegion saveStateRegions[] =
 
     // RNG. (Maybe make a toggle for this eventually? Could be nice to choose to have the same rng)
     // SAVE_STATE_REGION(0x80073F3C, 0x04),
+
+    // Save our own rhynoc trainer data
+    SAVE_STATE_REGION(&input_timer_during_thrown_anim, sizeof(input_timer_during_thrown_anim)),
+    SAVE_STATE_REGION(&rhynoc_currentButtonSequence, sizeof(rhynoc_currentButtonSequence)),
+    SAVE_STATE_REGION(&rhynoc_input_sequence, sizeof(rhynoc_input_sequence)),
+    SAVE_STATE_REGION(&rhynoc_wait_to_show, sizeof(rhynoc_wait_to_show)),
 };
 
 #undef SAVE_STATE_REGION
