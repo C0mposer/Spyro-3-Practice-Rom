@@ -116,7 +116,6 @@ static void FastDialougeTrigger()
 
 extern bool shouldDisableZombieOnce;
 extern bool shouldEnableZombieOnce;
-
 static void ZombieModeToggle()
 {
     if (!main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled)
@@ -179,6 +178,30 @@ static void LoadstateButtonToggle()
     }
 }
 
+static void SparxHealthToggle()
+{
+    if (main_menu.elements[SET_HEALTH_TOGGLE].selection_option == 1)
+    {
+        spyroHealth = 3;
+    }
+    else if (main_menu.elements[SET_HEALTH_TOGGLE].selection_option == 2)
+    {
+        spyroHealth = 2;
+    }
+    else if (main_menu.elements[SET_HEALTH_TOGGLE].selection_option == 3)
+    {
+        spyroHealth = 1;
+    }
+    else if (main_menu.elements[SET_HEALTH_TOGGLE].selection_option == 4)
+    {
+        spyroHealth = 0;
+    }
+    else
+    {
+        return;
+    }
+}
+
 
 // Update the Off/On logic
 void UpdateMenuTriggers()
@@ -195,4 +218,5 @@ void UpdateMenuTriggers()
     ZombieModeToggle();
     SavestateButtonToggle();
     LoadstateButtonToggle();
+    SparxHealthToggle();
 }

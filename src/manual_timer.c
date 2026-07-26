@@ -21,6 +21,8 @@ extern bool preparingToStartTimer;
 
 extern u32 g_ILTimerMode;
 
+extern u32 loadstate_button_option;
+
 //Math to approx adjust for 59.82hz
 void FramesToTimer(Timer* ptr_timer)
 {
@@ -48,7 +50,13 @@ void TimerUpdate()
         //Main Timer Checks/Loop
 
         //Button Checks
-        if ((isButtonHeld == LOAD_SPYRO_HOTKEY || isButtonHeld == RELOAD_LEVEL_HOTKEY) && isLoadComboPressed == false)
+
+
+        if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+        {
+            preparingToStartTimer = true;
+        }
+        if ((isButtonHeld == RELOAD_LEVEL_HOTKEY) && isLoadComboPressed == false)
         {
             //mainTimerAtReset = globalTimer;
             //timerState = TIMER_RUNNING;
