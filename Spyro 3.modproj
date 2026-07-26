@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 1,
+  "currently_selected_build_index": 2,
   "symbol_input_mode": "manual",
   "build_versions": [
     {
@@ -130,10 +130,12 @@
             "./src/proxy_trainer.c",
             "./asm/proxy_collision_recorder.s",
             "./src/category_defaults.c",
-            "./src/il_cutscene_finishes.c",
             "./src/sorceress_map.c",
+            "./src/sorc_layout_force.c",
             "./src/menu/menu_elements.c",
-            "./src/menu/savestate_menu.c"
+            "./src/menu/savestate_menu.c",
+            "./src/npc_dialogue_skip_globals.c",
+            "./src/boar_trainer.c"
           ],
           "memory_address": "80300000",
           "size": "100000",
@@ -399,12 +401,14 @@
             "./src/main.c",
             "./src/menu/menu.c",
             "./src/menu/menu_elements.c",
-            "./src/difficulty.c"
+            "./src/difficulty.c",
+            "./src/boss_vehicle_entry.c",
+            "./src/exit_level_patch.c"
           ],
-          "memory_address": "80017b7c",
-          "size": "78C",
+          "memory_address": "80017A04",
+          "size": "904",
           "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x837C",
+          "injection_file_address": "0x8204",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
           "enabled": true
@@ -451,10 +455,10 @@
             "./src/il_timer_globals.c",
             "./src/input_helper_globals.c",
             "./src/menu/menu_globals.c",
-            "./src/exit_level_patch.c",
             "./src/dialogue_mash_globals.c",
             "./src/render_helper.c",
-            "./src/npc_dialogue_skip.c"
+            "./src/npc_dialogue_skip_globals.c",
+            "./src/check_extra_mem.c"
           ],
           "memory_address": "8000b0b8",
           "size": "7b8",
@@ -468,8 +472,7 @@
           "name": "GameOverCave",
           "code_files": [
             "./src/il_boss_finishes.c",
-            "./src/menu/menu_triggers.c",
-            "./src/boss_vehicle_entry.c"
+            "./src/menu/menu_triggers.c"
           ],
           "memory_address": "80054af8",
           "size": "364",
@@ -486,7 +489,8 @@
             "./src/main_updates.c",
             "./src/il_timer.c",
             "./src/dialogue_mash.c",
-            "./src/special_exits.c"
+            "./src/special_exits.c",
+            "./src/moon_jump.c"
           ],
           "memory_address": "8000C000",
           "size": "1800",
@@ -501,11 +505,11 @@
           "code_files": [
             "./src/save_state.c",
             "./src/menu/menu_pages.c",
-            "./src/moon_jump.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
             "./src/menu/savestate_menu.c",
-            "./src/check_extra_mem.c"
+            "./src/npc_dialogue_skip.c",
+            "./src/sorc_layout_force.c"
           ],
           "memory_address": "8000EA00",
           "size": "F38",
@@ -562,6 +566,30 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x3A250",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "CheatPatch",
+          "code_files": [
+            "./asm/cheat_patch_1.s"
+          ],
+          "memory_address": "800568f8",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x470F8",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "CheatPatch2",
+          "code_files": [
+            "./asm/cheat_patch_2.s"
+          ],
+          "memory_address": "80057850",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x48050",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }
@@ -625,12 +653,14 @@
             "./src/main.c",
             "./src/menu/menu.c",
             "./src/menu/menu_elements.c",
-            "./src/difficulty.c"
+            "./src/difficulty.c",
+            "./src/boss_vehicle_entry.c",
+            "./src/exit_level_patch.c"
           ],
-          "memory_address": "80017b7c",
-          "size": "78C",
+          "memory_address": "80017A04",
+          "size": "904",
           "injection_file": "SCUS_944.67",
-          "injection_file_address": "0x837C",
+          "injection_file_address": "0x8204",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
           "enabled": true
@@ -677,10 +707,10 @@
             "./src/il_timer_globals.c",
             "./src/input_helper_globals.c",
             "./src/menu/menu_globals.c",
-            "./src/exit_level_patch.c",
             "./src/dialogue_mash_globals.c",
             "./src/render_helper.c",
-            "./src/npc_dialogue_skip.c"
+            "./src/npc_dialogue_skip_globals.c",
+            "./src/check_extra_mem.c"
           ],
           "memory_address": "8000A918",
           "size": "7b8",
@@ -694,8 +724,7 @@
           "name": "GameOverCave",
           "code_files": [
             "./src/il_boss_finishes.c",
-            "./src/menu/menu_triggers.c",
-            "./src/boss_vehicle_entry.c"
+            "./src/menu/menu_triggers.c"
           ],
           "memory_address": "80054af8",
           "size": "364",
@@ -712,7 +741,8 @@
             "./src/main_updates.c",
             "./src/il_timer.c",
             "./src/dialogue_mash.c",
-            "./src/special_exits.c"
+            "./src/special_exits.c",
+            "./src/moon_jump.c"
           ],
           "memory_address": "080008EB0",
           "size": "1800",
@@ -727,11 +757,11 @@
           "code_files": [
             "./src/save_state.c",
             "./src/menu/menu_pages.c",
-            "./src/moon_jump.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/check_extra_mem.c",
-            "./src/menu/savestate_menu.c"
+            "./src/menu/savestate_menu.c",
+            "./src/npc_dialogue_skip.c",
+            "./src/sorc_layout_force.c"
           ],
           "memory_address": "080007530",
           "size": "F38",
@@ -788,6 +818,30 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x3A250",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "CheatPatch",
+          "code_files": [
+            "./asm/cheat_patch_1.s"
+          ],
+          "memory_address": "800568f8",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x470F8",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "CheatPatch2",
+          "code_files": [
+            "./asm/cheat_patch_2.s"
+          ],
+          "memory_address": "80057850",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x48050",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }
