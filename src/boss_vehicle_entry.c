@@ -12,13 +12,13 @@ void SetCorrectVehicleInBossUpdate()
 {
     if (currentLevel == BUZZS_DUNGEON)
     {
-        progressFlags[0x16] = 0x1; // Enable balloon progress flag
+        //progressFlags[0x16] = 0x1; // Enable balloon progress flag
         previousLevelIDForVehicleEntry = 40; // Enter on balloon
     }
-    else
-    {
-        progressFlags[0x16] = 0x0; // Disable
-    }
+    // else
+    // {
+    //     progressFlags[0x16] = 0x0; // Disable
+    // }
 
     if (currentLevel == SPIKES_ARENA)
     {

@@ -25,13 +25,7 @@ void PreserveSideCharacterForRespawn(void)
         return;
     }
 
-    SaveCheckpointMemoryPatch(
-        mobyState,
-        CHECKPOINT_PATCH_BYTE,
-        savedCheckpointData);
+    SaveCheckpointMemoryPatch(mobyState,CHECKPOINT_PATCH_BYTE,savedCheckpointData);
 
-    SaveCheckpointMemoryPatch(
-        mobyState,
-        CHECKPOINT_PATCH_BYTE,
-        currentCheckpointData);
+    SaveCheckpointMemoryPatch(mobyState,CHECKPOINT_PATCH_BYTE,currentCheckpointData);
 }

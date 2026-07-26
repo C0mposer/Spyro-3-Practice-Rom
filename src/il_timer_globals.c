@@ -27,3 +27,5 @@ bool IL_portalFadeActive = false;
 
 Timer currentBestTimeInLevel = {0};
 char currentBestTimeInLevelAscii[10];
+
+u32 ilTimerOffset = 0;
