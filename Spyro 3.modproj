@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 2,
+  "currently_selected_build_index": 4,
   "symbol_input_mode": "manual",
   "build_versions": [
     {

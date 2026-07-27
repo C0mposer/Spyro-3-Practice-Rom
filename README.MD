@@ -7,9 +7,9 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 | PS1 | ✔️ |
 | PS2 | ✔️ |
 | PS1 Emulator | ✔️ |
-| PSTV | ✔️ (Partially) |
-| PS Vita | ✔️ (Partially) |
-| PSP | ✔️ (Partially) |
+| PSTV | ✔️|
+| PS Vita | ✔️ |
+| PSP | ✔️ |
 
 ## Hotkeys
 | Feature | Hotkey |
@@ -17,26 +17,32 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 | Open Practice Menu | L2 + R2 + L1 + R1 + Triangle |
 | Reset Level | L2 + R2 + Triangle |
 | Reset Level (Enter on Balloon) | L2 + R2 + Down + Triangle |
-| Save Spyro Position | L2 + R2 + Circle |
-| Load Spyro Position | L2 + R2 + Square |
+| Savestate | L3 |
+| Loadstate | R3 |
 | Stop Timer | Select |
 
 ## Features
 - Full level reset  
+- Savestates
 - Atlas warp unlocked (level select)  
-- Built in timer  
-- Save & Load Spyro's position
+- Built in IL Mode & timer for doing individual levels
+- Built in manual timer  
 - Set adaptive difficulty manually  
 - Toggle Sparx upgrades  
+- Toggle Sparx health
+- Toggle zombie mode
 - Set gem & egg counts manually
 - Disable portal entries to quickly practice tough portal entries
-- View portal polygons underneath the map with "Draw Portals", to easily visualize where to aim for OOB portal entries
 - View portal polygons when invisible under the map
 - Toggle a quick reset mode, to remove the fade effect when reloading
 - Automatically mash through text boxes with "Mash Dialogue" mode, to avoid hand & controller strain while practicing
 - Disable Bianca toggle, to avoid talking to her repeatedly during practice
-- Rhynoc Proxy trainer. Display the frame data for your attempts at the rhynoc animation proxy in fireworks factory. This is a very specific feature, that assumes you're using one of the pause buffer setups to line up the actual position of the trick.  
-
+- Rhynoc Proxy trainer: Display the frame data for your attempts at the rhynoc animation proxy in fireworks factory. This is a very specific feature, that assumes you're using one of the pause buffer setups to line up the actual position of the trick.  
+- Sorc Layout: Force any of the 10 initial sorceress cannon positions, to practice each variation.
+- Swim in Air practice: When in sunrise, you can exit sunny or sheila with these hotkeys:  
+A. Exit Sunrise - L1 + R1 + Up + X  
+B. Exit Sheila - L1 + R1 + Right + X  
+  
 ## Downloads
 > [!IMPORTANT]
 > Download the right version for your platform, or the game will not boot
