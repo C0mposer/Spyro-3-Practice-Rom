@@ -47,14 +47,13 @@ B. Exit Sheila - L1 + R1 + Right + X
 > [!IMPORTANT]
 > Download the right version for your platform, or the game will not boot
 
-[Download for PS1 & PS1 Emulator  ](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.PS1.zip)
-  
-[Download for PS2](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.PS2.zip)
+[Download for PS1 & PS1 Emulator](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/V2.0/Spyro.3.Practice.Rom.PS1.zip)
 
-[Download for PSTV/PSVita](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/1.0/Spyro.3.Practice.Rom.v1.0.Vita.7z)
-> [!NOTE]
-> The PSTV/Vita version is missing a few features, including manually setting gem/egg counts, and drawing portals under the map.
-> I am working on ensuring future builds have feature parity. Most useful features are still identical.
+[Download for PS2 (75k-90k)](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/V2.0/Spyro.3.Practice.Rom.PS2.Deckard.zip)
+
+[Download for PS2 (30k-70k)](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/V2.0/Spyro.3.Practice.Rom.PS2.IOP.zip)
+
+[Download for PSTV/PSVita/PSP](https://github.com/C0mposer/Spyro-3-Practice-Rom/releases/download/V2.0/Spyro.3.Practice.Rom.PS1.zip)
 
 ## Building from Source
 ~ Todo ~
