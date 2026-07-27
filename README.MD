@@ -23,7 +23,7 @@ This is a speedrun practice rom for Spyro: Year of the Dragon. It currently supp
 
 ## Features
 - Full level reset  
-- Savestates
+- Savestates (Beta)
 - Atlas warp unlocked (level select)  
 - Built in IL Mode & timer for doing individual levels
 - Built in manual timer  
