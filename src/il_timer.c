@@ -10,6 +10,7 @@
 #include <text_colors.h>
 #include <level_ids.h>
 #include "menu/menu.h"
+#include <category_defaults.h>
 
 extern int g_ILTimerMode;
 extern int menu_frames_closed;
@@ -154,6 +155,17 @@ static void ContinueILExit(void)
     {
         u32 level_to_warp_to = currentLevel + 3; // A boss is always X7, so the next homeworld would be X7 + 3
         level_to_warp_to = level_to_warp_to > 40 ? 40 : level_to_warp_to; // Clamp to a 40, so sorc doesn't take us to 50
+
+        u32 splash_screen = (level_to_warp_to / 10) - 1; // hw splash screens are 0, 1, 2, 3. (If i'm really tight on code space, this isn't fully required, just nice to show the right splash screen. Remove if desperate for space!)
+
+        LoadLevel(splash_screen, level_to_warp_to);
+        ClearCollectables();
+    }
+
+    // If in a sparx level, do a cutscene load to the current homeworld
+    else if (isInSparxLevel)
+    {
+        u32 level_to_warp_to = currentLevel - 8; // A sparx level is always X8, so - 8 will get us back to the howeworld
 
         u32 splash_screen = (level_to_warp_to / 10) - 1; // hw splash screens are 0, 1, 2, 3. (If i'm really tight on code space, this isn't fully required, just nice to show the right splash screen. Remove if desperate for space!)
 
@@ -384,5 +396,17 @@ void ILTimerFinishedUpdate(void)
     // Display category default
     u32 category_default_selection = main_menu.elements[CATEGORY_MULTI].selection_option;
     u32 chosen_category_text = category_options[category_default_selection];
-    DrawText(chosen_category_text, 7, 12, COLOR_YELLOW, 0);
+    DrawText(chosen_category_text, 7, 14, COLOR_YELLOW, 0);
+
+    // Display gem/egg count if doing a 117 IL
+    if (category_default_selection == ONE_SEVENTEEN && !isInBossLevel)
+    {
+        char* gem_count_text[15] = {0};
+        char* egg_count_text[15] = {0};
+        GetLevelGemCompletion(gem_count_text);
+        GetLevelEggCompletion(egg_count_text);
+
+        DrawText(gem_count_text, 7, (SCREEN_BOTTOM_EDGE - 25), COLOR_YELLOW, 0);
+        DrawText(egg_count_text, 7, (SCREEN_BOTTOM_EDGE - 15), COLOR_YELLOW, 0);
+    }
 }
