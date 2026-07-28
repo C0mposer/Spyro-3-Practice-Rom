@@ -124,28 +124,25 @@ inline static void SaveStartingPositionUpdate(void)
     static u32 localPreviousLevelID = 0;
     static u32 currentSubLevelID = 0;
 
-    if (gamestate == GAMEPLAY)
+    if (localPreviousLevelID != currentLevel)
     {
-        if (localPreviousLevelID != currentLevel)
-        {
-            //printf_syscall("Saved Level ID\n");
+        //printf_syscall("Saved Level ID\n");
 
-            Vec3Copy(&savedStartingPosition, &respawnPosition); // Save the respawn position for the current level/sub level
-            savedStartingAngle = respawnAngle; // Save the respawn position for the current level/sub level
-            startingSpyroSwimState = savedCheckpointSwimState;
+        Vec3Copy(&savedStartingPosition, &respawnPosition); // Save the respawn position for the current level/sub level
+        savedStartingAngle = respawnAngle; // Save the respawn position for the current level/sub level
+        startingSpyroSwimState = savedCheckpointSwimState;
 
-            localPreviousLevelID = currentLevel;
-        }
-        if (currentSubLevelID != subLevelID)
-        {
-            //printf_syscall("Saved Sublevel ID\n");
-            Vec3Copy(&savedStartingPositionSubLevel, &respawnPosition); // Save the respawn position for the current level/sub level
-            savedStartingAngleSubLevel = respawnAngle; // Save the respawn position for the current level/sub level
-            startingSpyroSwimStateSubLevel = savedCheckpointSwimState;
-
-            currentSubLevelID = subLevelID;
-        }
+        localPreviousLevelID = currentLevel;
     }
+    if (currentSubLevelID != subLevelID)
+    {
+        //printf_syscall("Saved Sublevel ID\n");
+        Vec3Copy(&savedStartingPositionSubLevel, &respawnPosition); // Save the respawn position for the current level/sub level
+        savedStartingAngleSubLevel = respawnAngle; // Save the respawn position for the current level/sub level
+        startingSpyroSwimStateSubLevel = savedCheckpointSwimState;
+
+        currentSubLevelID = subLevelID;
+        }
 }
 
 extern u32 g_ILTimerMode;
@@ -383,8 +380,6 @@ void MainUpdates(void)
 {
     SpeedUpReset();
     FastLoadUpdate();
-
-    SorcLayoutForceUpdate();
 
     if (gamestate == LOADING_CUTSCENE)
     {

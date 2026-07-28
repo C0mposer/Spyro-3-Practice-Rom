@@ -38,6 +38,7 @@ void ModMain(int syncArg)
     MoonJumpUpdate();
     SetCorrectVehicleInBossUpdate();
     CategoryDefaultsUpdate();
+    SorcLayoutForceUpdate();
 
     #ifdef VERSION10_PS1
     if (!hasCheckedExtraRam)
