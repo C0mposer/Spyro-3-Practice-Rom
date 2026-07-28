@@ -269,6 +269,7 @@ void PrepareSavedSpyroRespawn(void)
 
 void RespawnSpyro(void)
 {
+    memset(0x80070610, 0, 0xD80); // Clear the light trails array. (Fixes crash from too many fireballs on screen before moving spyro far away to kill him)
     spyroZ = 0; // Kill spyro by sending him to the void
 }
 
