@@ -50,7 +50,7 @@ static void TimerTrigger()
 }
 
 const SparxRangeData sparx_range_default = { 0x80E, 0x15E, 0x280 };
-const SparxRangeData sparx_range_upgraded = { 0xC00, 0x3C0, 0x20D };
+const SparxRangeData sparx_range_upgraded = { 0xC00, 0x20D, 0x3C0 };
 static void SparxRangeTrigger()
 {
     if (!main_menu.elements[SPARX_RANGE_TOGGLE].enabled)
@@ -215,8 +215,8 @@ void UpdateMenuTriggers()
     DisableBiancaTrigger();
     RhynocTrainerTrigger();
     FastDialougeTrigger();
-    ZombieModeToggle();
     SavestateButtonToggle();
     LoadstateButtonToggle();
     SparxHealthToggle();
+    ZombieModeToggle();
 }
