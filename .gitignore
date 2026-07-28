@@ -8,3 +8,4 @@ asm/.auto_hooks/*
 platform/*
 unused/*
 __pycache__/*
+updates/*

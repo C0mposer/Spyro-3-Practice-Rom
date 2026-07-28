@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 4,
+  "currently_selected_build_index": 1,
   "symbol_input_mode": "manual",
   "build_versions": [
     {
@@ -135,7 +135,8 @@
             "./src/menu/menu_elements.c",
             "./src/menu/savestate_menu.c",
             "./src/npc_dialogue_skip_globals.c",
-            "./src/boar_trainer.c"
+            "./src/boar_trainer.c",
+            "./src/calculate_level_completion.c"
           ],
           "memory_address": "80300000",
           "size": "100000",
@@ -403,7 +404,8 @@
             "./src/menu/menu_elements.c",
             "./src/difficulty.c",
             "./src/boss_vehicle_entry.c",
-            "./src/exit_level_patch.c"
+            "./src/exit_level_patch.c",
+            "./src/calculate_level_completion.c"
           ],
           "memory_address": "80017A04",
           "size": "904",
@@ -458,7 +460,8 @@
             "./src/dialogue_mash_globals.c",
             "./src/render_helper.c",
             "./src/npc_dialogue_skip_globals.c",
-            "./src/check_extra_mem.c"
+            "./src/check_extra_mem.c",
+            "./src/moon_jump.c"
           ],
           "memory_address": "8000b0b8",
           "size": "7b8",
@@ -489,8 +492,7 @@
             "./src/main_updates.c",
             "./src/il_timer.c",
             "./src/dialogue_mash.c",
-            "./src/special_exits.c",
-            "./src/moon_jump.c"
+            "./src/special_exits.c"
           ],
           "memory_address": "8000C000",
           "size": "1800",
@@ -655,7 +657,8 @@
             "./src/menu/menu_elements.c",
             "./src/difficulty.c",
             "./src/boss_vehicle_entry.c",
-            "./src/exit_level_patch.c"
+            "./src/exit_level_patch.c",
+            "./src/calculate_level_completion.c"
           ],
           "memory_address": "80017A04",
           "size": "904",
@@ -907,7 +910,8 @@
             "./src/menu/menu_elements.c",
             "./src/difficulty.c",
             "./src/boss_vehicle_entry.c",
-            "./src/exit_level_patch.c"
+            "./src/exit_level_patch.c",
+            "./src/calculate_level_completion.c"
           ],
           "memory_address": "80017A04",
           "size": "904",
