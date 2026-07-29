@@ -267,7 +267,7 @@ void PrepareSavedSpyroRespawn(void)
 void RespawnSpyro(void)
 {
     memset(0x80070610, 0, 0xD80); // Clear the light trails array. (Fixes crash from too many fireballs on screen before moving spyro far away to kill him)
-    spyroZ = 0; // Kill spyro by sending him to the void
+    KillSpyro(); // Kill him!
 }
 
 void RestartLevelFromBeginning(u32 reloadLevelType)
@@ -375,6 +375,35 @@ inline static void UnlockAtlasWarp()
     //     }
 }
 
+// Check for level specific respawn locations. Currently only the sunrise SiA respawns
+void CheckLevelSpecificRespawns()
+{
+    if (rawButtonHeld == RELOAD_SHEILA_EXIT_HOTKEY)
+    {
+        speedUpResetPending = true;
+        if (FastLoadEnabled())
+        {
+            fastLoadActive = true;
+            fastLoadInScenario = false;
+            fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
+        }
+
+        SheilaExit();
+    }
+    else if (rawButtonHeld == RELOAD_SUNNY_EXIT_HOTKEY)
+    {
+        speedUpResetPending = true;
+        if (FastLoadEnabled())
+        {
+            fastLoadActive = true;
+            fastLoadInScenario = false;
+            fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
+        }
+
+        SunnyExit();
+    }
+}
+
 // Basic checks that should run every frame
 void MainUpdates(void)
 {
@@ -424,31 +453,9 @@ void MainUpdates(void)
             RestartLevelFromBeginning(reloadLevelType);
             shouldEnableZombieOnce = true;
         }
-        else if (rawButtonHeld == RELOAD_SHEILA_EXIT_HOTKEY)
-        {
-            speedUpResetPending = true;
-            if (FastLoadEnabled())
-            {
-                fastLoadActive = true;
-                fastLoadInScenario = false;
-                fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
-            }
 
-            SheilaExit();
-        }
+        CheckLevelSpecificRespawns();
 
-        else if (rawButtonHeld == RELOAD_SUNNY_EXIT_HOTKEY)
-        {
-            speedUpResetPending = true;
-            if (FastLoadEnabled())
-            {
-                fastLoadActive = true;
-                fastLoadInScenario = false;
-                fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
-            }
-
-            SunnyExit();
-        }
     }
 
 

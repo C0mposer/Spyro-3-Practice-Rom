@@ -155,6 +155,7 @@ s32 PlaySound(s32 soundID, s32 param_2, u8 param_3);
 
 void SetPrimitiveDrawMode(s32 param_1);
 
+void KillSpyro(void);
 void LoadLevel(s32 splashScreenIndex, s32 levelID);
 
 void test();

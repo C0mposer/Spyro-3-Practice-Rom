@@ -127,6 +127,7 @@ DropGem = 0x80036a68;
 DrawTextboxSquare = 0x8001fc90;
 SetPrimitiveDrawMode = 0x8001fabc;
 
+KillSpyro = 0x800498c0;
 LoadLevel = 0x800584bc;
 SunriseUpdateParticles = 0x80086960;
 sunriseUpdateParticlePtr = 0x800742e4;
