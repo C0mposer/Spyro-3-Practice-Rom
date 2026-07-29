@@ -236,7 +236,7 @@ void ILTimerUpdate(void)
             }
         }
         // When reload level hotkey is pressed, prepare the IL timer to start when you enter gameplay
-        if ((isButtonHeld == RELOAD_LEVEL_HOTKEY) && !IL_isLoadComboPressed)
+        if ((rawButtonHeld & RELOAD_LEVEL_HOTKEY) == RELOAD_LEVEL_HOTKEY && !(rawButtonHeld & (L1_BUTTON | R1_BUTTON)) && !IL_isLoadComboPressed)
         {
             IL_preparingToStartTimer = true;
             IL_isLoadComboPressed = true;

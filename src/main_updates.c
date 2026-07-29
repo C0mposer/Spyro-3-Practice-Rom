@@ -378,28 +378,26 @@ inline static void UnlockAtlasWarp()
 // Check for level specific respawn locations. Currently only the sunrise SiA respawns
 void CheckLevelSpecificRespawns()
 {
+    if (rawButtonHeld != RELOAD_SHEILA_EXIT_HOTKEY && rawButtonHeld != RELOAD_SUNNY_EXIT_HOTKEY)
+    {
+        return;
+    }
+
+    speedUpResetPending = true;
+
+    if (FastLoadEnabled())
+    {
+        fastLoadActive = true;
+        fastLoadInScenario = false;
+        fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
+    }
+
     if (rawButtonHeld == RELOAD_SHEILA_EXIT_HOTKEY)
     {
-        speedUpResetPending = true;
-        if (FastLoadEnabled())
-        {
-            fastLoadActive = true;
-            fastLoadInScenario = false;
-            fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
-        }
-
         SheilaExit();
     }
-    else if (rawButtonHeld == RELOAD_SUNNY_EXIT_HOTKEY)
+    else //if (rawButtonHeld == RELOAD_SUNNY_EXIT_HOTKEY) // <-- ADD THIS BACK IF I ADD ANOTHER CONDITION
     {
-        speedUpResetPending = true;
-        if (FastLoadEnabled())
-        {
-            fastLoadActive = true;
-            fastLoadInScenario = false;
-            fastLoadFadeMode = FAST_LOAD_KEEP_FADE_IN;
-        }
-
         SunnyExit();
     }
 }
@@ -434,9 +432,9 @@ void MainUpdates(void)
 
 
         // Restart the level from the spawn point
-        if (rawButtonHeld == RELOAD_LEVEL_HOTKEY || rawButtonHeld == RELOAD_LEVEL_WITH_BALLOON_HOTKEY || rawButtonHeld == RELOAD_LEVEL_CHECKPOINT_HOTKEY) // Theres probably a better way to do this to save space
+        if ((rawButtonHeld & RELOAD_LEVEL_HOTKEY) == RELOAD_LEVEL_HOTKEY && !(rawButtonHeld & (L1_BUTTON | R1_BUTTON))) // Theres still probably a better way to do this (If the reset hotkey is pressed, even if any other buttons are pressed, then reset. UNLESS l1 + r1 is pressed too, then dont because menu hotkey has those)
         {
-            u32 reloadLevelType;
+            u32 reloadLevelType = RELOAD_FULL;
             if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
             {
                 reloadLevelType = RELOAD_FULL;

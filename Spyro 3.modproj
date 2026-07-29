@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 1,
+  "currently_selected_build_index": 2,
   "symbol_input_mode": "manual",
   "build_versions": [
     {
@@ -231,6 +231,28 @@
           "auto_calculate_injection_file_address": false,
           "injection_type": "new_file",
           "enabled": false
+        },
+        {
+          "name": "DemoModeCave",
+          "code_files": [],
+          "memory_address": "8003a2b0",
+          "size": "15C",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x2AAB0",
+          "auto_calculate_injection_file_address": true,
+          "injection_type": "existing_file",
+          "enabled": true
+        },
+        {
+          "name": "PSYQDebugStringsCave",
+          "code_files": [],
+          "memory_address": "08001174C",
+          "size": "2F4",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x1F4C",
+          "auto_calculate_injection_file_address": true,
+          "injection_type": "existing_file",
+          "enabled": true
         }
       ],
       "hooks": [
@@ -327,6 +349,30 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0xC8D4",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen",
+          "code_files": [
+            "./asm/disable_help_screen.s"
+          ],
+          "memory_address": "8001defc",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0xE6FC",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen2",
+          "code_files": [
+            "./asm/disable_help_screen_2.s"
+          ],
+          "memory_address": "80057544",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x47D44",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }
@@ -491,8 +537,7 @@
             "./src/display_portal_verts.c",
             "./src/main_updates.c",
             "./src/il_timer.c",
-            "./src/dialogue_mash.c",
-            "./src/special_exits.c"
+            "./src/dialogue_mash.c"
           ],
           "memory_address": "8000C000",
           "size": "1800",
@@ -519,6 +564,19 @@
           "injection_file_address": "",
           "auto_calculate_injection_file_address": false,
           "injection_type": "new_file",
+          "enabled": true
+        },
+        {
+          "name": "DemoModeCave",
+          "code_files": [
+            "./src/special_exits.c"
+          ],
+          "memory_address": "8003a2b0",
+          "size": "15C",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x2AAB0",
+          "auto_calculate_injection_file_address": true,
+          "injection_type": "existing_file",
           "enabled": true
         }
       ],
@@ -592,6 +650,30 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x48050",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen",
+          "code_files": [
+            "./asm/disable_help_screen.s"
+          ],
+          "memory_address": "8001defc",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0xE6FC",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen2",
+          "code_files": [
+            "./asm/disable_help_screen_2.s"
+          ],
+          "memory_address": "80057544",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x47D44",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }
@@ -744,7 +826,6 @@
             "./src/main_updates.c",
             "./src/il_timer.c",
             "./src/dialogue_mash.c",
-            "./src/special_exits.c",
             "./src/moon_jump.c"
           ],
           "memory_address": "080008EB0",
@@ -772,6 +853,19 @@
           "injection_file_address": "",
           "auto_calculate_injection_file_address": false,
           "injection_type": "new_file",
+          "enabled": true
+        },
+        {
+          "name": "DemoModeCave",
+          "code_files": [
+            "./src/special_exits.c"
+          ],
+          "memory_address": "8003a2b0",
+          "size": "15C",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x2AAB0",
+          "auto_calculate_injection_file_address": true,
+          "injection_type": "existing_file",
           "enabled": true
         }
       ],
@@ -845,6 +939,30 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x48050",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen",
+          "code_files": [
+            "./asm/disable_help_screen.s"
+          ],
+          "memory_address": "8001defc",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0xE6FC",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen2",
+          "code_files": [
+            "./asm/disable_help_screen_2.s"
+          ],
+          "memory_address": "80057544",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x47D44",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }
@@ -997,7 +1115,6 @@
             "./src/main_updates.c",
             "./src/il_timer.c",
             "./src/dialogue_mash.c",
-            "./src/special_exits.c",
             "./src/moon_jump.c"
           ],
           "memory_address": "080008EB0",
@@ -1025,6 +1142,19 @@
           "injection_file_address": "",
           "auto_calculate_injection_file_address": false,
           "injection_type": "new_file",
+          "enabled": true
+        },
+        {
+          "name": "DemoModeCave",
+          "code_files": [
+            "./src/special_exits.c"
+          ],
+          "memory_address": "8003a2b0",
+          "size": "15C",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x2AAB0",
+          "auto_calculate_injection_file_address": true,
+          "injection_type": "existing_file",
           "enabled": true
         }
       ],
@@ -1098,6 +1228,30 @@
           "size": "0",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x48050",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen",
+          "code_files": [
+            "./asm/disable_help_screen.s"
+          ],
+          "memory_address": "8001defc",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0xE6FC",
+          "auto_calculate_injection_file_address": true,
+          "enabled": true
+        },
+        {
+          "name": "DisableHelpScreen2",
+          "code_files": [
+            "./asm/disable_help_screen_2.s"
+          ],
+          "memory_address": "80057544",
+          "size": "0",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x47D44",
           "auto_calculate_injection_file_address": true,
           "enabled": true
         }
