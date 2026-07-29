@@ -102,6 +102,8 @@ ptr_primitiveStruct = 0x8006C664;
 primitiveBufferEnd = 0x8006C668;
 
 game_sparx_range_data = 0x80065810;
+sparxTreasureFinder = 0x80065820;
+sparxMaxHitpoints = 0x8006580c;
 
 fade_effect = 0x8006c598;
 

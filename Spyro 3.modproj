@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 2,
+  "currently_selected_build_index": 1,
   "symbol_input_mode": "manual",
   "build_versions": [
     {
@@ -246,7 +246,7 @@
         {
           "name": "PSYQDebugStringsCave",
           "code_files": [],
-          "memory_address": "08001174C",
+          "memory_address": "8001174C",
           "size": "2F4",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x1F4C",
@@ -537,6 +537,7 @@
             "./src/display_portal_verts.c",
             "./src/main_updates.c",
             "./src/il_timer.c",
+            "./src/menu/savestate_menu.c",
             "./src/dialogue_mash.c"
           ],
           "memory_address": "8000C000",
@@ -554,9 +555,8 @@
             "./src/menu/menu_pages.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/menu/savestate_menu.c",
-            "./src/npc_dialogue_skip.c",
-            "./src/sorc_layout_force.c"
+            "./src/sorc_layout_force.c",
+            "./src/npc_dialogue_skip.c"
           ],
           "memory_address": "8000EA00",
           "size": "F38",
@@ -826,6 +826,7 @@
             "./src/main_updates.c",
             "./src/il_timer.c",
             "./src/dialogue_mash.c",
+            "./src/menu/savestate_menu.c",
             "./src/moon_jump.c"
           ],
           "memory_address": "080008EB0",
@@ -843,7 +844,6 @@
             "./src/menu/menu_pages.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/menu/savestate_menu.c",
             "./src/npc_dialogue_skip.c",
             "./src/sorc_layout_force.c"
           ],
@@ -1115,6 +1115,7 @@
             "./src/main_updates.c",
             "./src/il_timer.c",
             "./src/dialogue_mash.c",
+            "./src/menu/savestate_menu.c",
             "./src/moon_jump.c"
           ],
           "memory_address": "080008EB0",
@@ -1132,7 +1133,6 @@
             "./src/menu/menu_pages.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/menu/savestate_menu.c",
             "./src/npc_dialogue_skip.c",
             "./src/sorc_layout_force.c"
           ],

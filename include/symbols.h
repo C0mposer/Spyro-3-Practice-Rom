@@ -127,6 +127,8 @@ extern u32* ptr_primitiveStruct;
 extern u32* primitiveBufferEnd;
 
 extern SparxRangeData game_sparx_range_data;
+extern u32 sparxTreasureFinder;
+extern u32 sparxMaxHitpoints;
 
 extern u32 fade_effect;
 

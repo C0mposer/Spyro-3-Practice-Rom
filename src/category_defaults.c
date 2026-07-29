@@ -54,7 +54,7 @@ void CategoryDefaultsUpdate()
             main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled = false; // Disable zombie
         }
 
-        if (currentLevel < 29)
+        if (currentLevel < 30)
         {
             main_menu.elements[DIFFICULTY_MULTI].selection_option = DIFFICULTY_MEDIUM; // Set difficulty for all of sunrise and midday
         }
@@ -111,13 +111,27 @@ void CategoryDefaultsUpdate()
             main_menu.elements[SPARX_RANGE_TOGGLE].enabled = false;
         }
 
+        // Sparx treasure finder ( add back when we have space :) )
+        // if (currentLevel >= 30)
+        // {
+        //     sparxTreasureFinder = true; // No menu option for this yet. Maybe in the future?
+        // }
+        // else
+        // {
+        //     sparxTreasureFinder = false; // No menu option for this yet. Maybe in the future?
+        // }
+
         if (currentLevel >= 40)
         {
             main_menu.elements[BASKET_BREAK_TOGGLE].enabled = true;
+
+            sparxMaxHitpoints = 4; // No menu option for this yet. Maybe in the future?
         }
         else
         {
             main_menu.elements[BASKET_BREAK_TOGGLE].enabled = false;
+
+            sparxMaxHitpoints = 3; // No menu option for this yet. Maybe in the future?
         }
     }
 }
