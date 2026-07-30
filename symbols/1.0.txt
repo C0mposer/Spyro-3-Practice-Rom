@@ -116,6 +116,8 @@ scorch_health = 0x8015BE60;
 sorc_health = 0x80151874;
 final_sorc_health = 0x80169d90;
 
+moneybagsPaymentValues = 0x80066EAC;
+
 memset = 0x8004e790;
 MemCopy = 0x8004e7d4;
 

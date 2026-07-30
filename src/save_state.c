@@ -1,8 +1,7 @@
+#include "menu/menu.h"
 #include <common.h>
 #include <gamestates.h>
 #include <save_state.h>
-#include "menu/menu.h"
-
 
 // Platform specific ram addresses for savestates
 #if defined(VERSION10_PS1)
@@ -13,14 +12,14 @@
 #define SAVE_STATE_MEMORY_ADDRESS 0x80400000 // For Duckstation testing
 #endif
 
-#define PARTICLE_POOL_POINTER_ADDRESS    0x8006C554
-#define LEVEL_OBJECTS_POINTER_ADDRESS    0x800722C8
-#define SCENE_REGION_TABLE_ADDRESS       0x8006D048
-#define SCENE_REGION_COUNT_ADDRESS       0x8006D04C
+#define PARTICLE_POOL_POINTER_ADDRESS 0x8006C554
+#define LEVEL_OBJECTS_POINTER_ADDRESS 0x800722C8
+#define SCENE_REGION_TABLE_ADDRESS 0x8006D048
+#define SCENE_REGION_COUNT_ADDRESS 0x8006D04C
 
-#define PARTICLE_POOL_SIZE               0x2020
-#define COLLISION_TRIANGLE_SIZE          0x0C
-#define SCENE_REGION_ANIMATION_SIZE      4
+#define PARTICLE_POOL_SIZE 0x2020
+#define COLLISION_TRIANGLE_SIZE 0x0C
+#define SCENE_REGION_ANIMATION_SIZE 4
 
 bool hasLoadstatedDuringIL = false;
 
@@ -39,7 +38,6 @@ extern u32 rhynoc_currentButtonSequence;
 extern u32 rhynoc_input_sequence[3];
 extern u32 rhynoc_wait_to_show;
 
-
 // Savestate regions
 typedef struct SaveRegion
 {
@@ -47,117 +45,117 @@ typedef struct SaveRegion
     u32 byteCount;
 } SaveRegion;
 
-#define SAVE_STATE_REGION(address, byteCount) { (void*)(address), byteCount }
+#define SAVE_STATE_REGION(address, byteCount) {(void*)(address), byteCount}
 
 static const SaveRegion saveStateRegions[] =
-{
-    // Layout
-    SAVE_STATE_REGION(0x8006C514, 0x08),
-    SAVE_STATE_REGION(0x8006C7E0, 0x04),
-    SAVE_STATE_REGION(0x8006D048, 0x08),
-    SAVE_STATE_REGION(0x8006D070, 0x04),
-    SAVE_STATE_REGION(0x800722C8, 0x04),
+    {
+        // Layout
+        SAVE_STATE_REGION(0x8006C514, 0x08),
+        SAVE_STATE_REGION(0x8006C7E0, 0x04),
+        SAVE_STATE_REGION(0x8006D048, 0x08),
+        SAVE_STATE_REGION(0x8006D070, 0x04),
+        SAVE_STATE_REGION(0x800722C8, 0x04),
 
-    // Moby and particle pointers
-    SAVE_STATE_REGION(0x8006C550, 0x08),
-    SAVE_STATE_REGION(0x8006C574, 0x08),
-    SAVE_STATE_REGION(0x8006C5EC, 0x04),
-    SAVE_STATE_REGION(0x8006C610, 0x08),
-    SAVE_STATE_REGION(0x8006C700, 0x08),
-    SAVE_STATE_REGION(0x8006C710, 0x04),
-    SAVE_STATE_REGION(0x8006C728, 0x0C),
+        // Moby and particle pointers
+        SAVE_STATE_REGION(0x8006C550, 0x08),
+        SAVE_STATE_REGION(0x8006C574, 0x08),
+        SAVE_STATE_REGION(0x8006C5EC, 0x04),
+        SAVE_STATE_REGION(0x8006C610, 0x08),
+        SAVE_STATE_REGION(0x8006C700, 0x08),
+        SAVE_STATE_REGION(0x8006C710, 0x04),
+        SAVE_STATE_REGION(0x8006C728, 0x0C),
 
-    // HUD data
-    SAVE_STATE_REGION(0x80067248, 0x300),
-    SAVE_STATE_REGION(0x8006580C, 0x28),
-    SAVE_STATE_REGION(0x80066BC8, 0x14),
-    SAVE_STATE_REGION(0x8006C564, 0x04),
-    SAVE_STATE_REGION(0x8006C584, 0x04),
-    SAVE_STATE_REGION(0x8006C5F4, 0x04),
-    SAVE_STATE_REGION(0x8006C628, 0x08),
-    SAVE_STATE_REGION(0x8006C640, 0x10),
-    SAVE_STATE_REGION(0x8006C660, 0x04),
-    SAVE_STATE_REGION(0x8006C6C0, 0x08),
-    SAVE_STATE_REGION(0x8006C6F8, 0x04),
-    SAVE_STATE_REGION(0x8006C71C, 0x08),
-    SAVE_STATE_REGION(0x8006C74C, 0x04),
-    SAVE_STATE_REGION(0x8006C784, 0x04),
-    SAVE_STATE_REGION(0x8006C79C, 0x1C),
-    SAVE_STATE_REGION(0x8006C7C0, 0x08),
+        // HUD data
+        SAVE_STATE_REGION(0x80067248, 0x300),
+        SAVE_STATE_REGION(0x8006580C, 0x28),
+        SAVE_STATE_REGION(0x80066BC8, 0x14),
+        SAVE_STATE_REGION(0x8006C564, 0x04),
+        SAVE_STATE_REGION(0x8006C584, 0x04),
+        SAVE_STATE_REGION(0x8006C5F4, 0x04),
+        SAVE_STATE_REGION(0x8006C628, 0x08),
+        SAVE_STATE_REGION(0x8006C640, 0x10),
+        SAVE_STATE_REGION(0x8006C660, 0x04),
+        SAVE_STATE_REGION(0x8006C6C0, 0x08),
+        SAVE_STATE_REGION(0x8006C6F8, 0x04),
+        SAVE_STATE_REGION(0x8006C71C, 0x08),
+        SAVE_STATE_REGION(0x8006C74C, 0x04),
+        SAVE_STATE_REGION(0x8006C784, 0x04),
+        SAVE_STATE_REGION(0x8006C79C, 0x1C),
+        SAVE_STATE_REGION(0x8006C7C0, 0x08),
 
-    // NPC dialogue state
-    SAVE_STATE_REGION(0x8006C51C, 0x08),
-    SAVE_STATE_REGION(0x8006C53C, 0x0C),
-    SAVE_STATE_REGION(0x8006C57C, 0x04),
-    SAVE_STATE_REGION(0x8006C590, 0x10),
-    SAVE_STATE_REGION(0x8006C5A8, 0x08),
-    SAVE_STATE_REGION(0x8006C5C4, 0x04),
-    SAVE_STATE_REGION(0x8006C5FC, 0x04),
-    SAVE_STATE_REGION(0x8006C608, 0x04),
-    SAVE_STATE_REGION(0x8006C620, 0x08),
-    SAVE_STATE_REGION(0x8006C66C, 0x04),
-    SAVE_STATE_REGION(0x8006C674, 0x04),
-    SAVE_STATE_REGION(0x8006C680, 0x04),
-    SAVE_STATE_REGION(0x8006C684, 0x1C),
-    SAVE_STATE_REGION(0x8006C6A4, 0x04),
-    SAVE_STATE_REGION(0x8006C6D8, 0x08),
-    SAVE_STATE_REGION(0x8006C6E4, 0x14),
-    SAVE_STATE_REGION(0x8006C6FC, 0x04),
-    SAVE_STATE_REGION(0x8006C738, 0x04),
-    SAVE_STATE_REGION(0x8006C750, 0x04),
-    SAVE_STATE_REGION(0x8006C76C, 0x04),
-    SAVE_STATE_REGION(0x8006C770, 0x04),
-    SAVE_STATE_REGION(0x8006C778, 0x04),
-    SAVE_STATE_REGION(0x8006C788, 0x14),
-    SAVE_STATE_REGION(0x8006C7BC, 0x04),
-    SAVE_STATE_REGION(0x8006C7D0, 0x04),
+        // NPC dialogue state
+        SAVE_STATE_REGION(0x8006C51C, 0x08),
+        SAVE_STATE_REGION(0x8006C53C, 0x0C),
+        SAVE_STATE_REGION(0x8006C57C, 0x04),
+        SAVE_STATE_REGION(0x8006C590, 0x10),
+        SAVE_STATE_REGION(0x8006C5A8, 0x08),
+        SAVE_STATE_REGION(0x8006C5C4, 0x04),
+        SAVE_STATE_REGION(0x8006C5FC, 0x04),
+        SAVE_STATE_REGION(0x8006C608, 0x04),
+        SAVE_STATE_REGION(0x8006C620, 0x08),
+        SAVE_STATE_REGION(0x8006C66C, 0x04),
+        SAVE_STATE_REGION(0x8006C674, 0x04),
+        SAVE_STATE_REGION(0x8006C680, 0x04),
+        SAVE_STATE_REGION(0x8006C684, 0x1C),
+        SAVE_STATE_REGION(0x8006C6A4, 0x04),
+        SAVE_STATE_REGION(0x8006C6D8, 0x08),
+        SAVE_STATE_REGION(0x8006C6E4, 0x14),
+        SAVE_STATE_REGION(0x8006C6FC, 0x04),
+        SAVE_STATE_REGION(0x8006C738, 0x04),
+        SAVE_STATE_REGION(0x8006C750, 0x04),
+        SAVE_STATE_REGION(0x8006C76C, 0x04),
+        SAVE_STATE_REGION(0x8006C770, 0x04),
+        SAVE_STATE_REGION(0x8006C778, 0x04),
+        SAVE_STATE_REGION(0x8006C788, 0x14),
+        SAVE_STATE_REGION(0x8006C7BC, 0x04),
+        SAVE_STATE_REGION(0x8006C7D0, 0x04),
 
-    // Dialogue line
-    SAVE_STATE_REGION(0x80071390, 0x68),
-    SAVE_STATE_REGION(0x80071938, 0x28),
+        // Dialogue line
+        SAVE_STATE_REGION(0x80071390, 0x68),
+        SAVE_STATE_REGION(0x80071938, 0x28),
 
-    // Current and saved checkpoint data
-    SAVE_STATE_REGION(0x8006C7F8, 0x850),
-    SAVE_STATE_REGION(0x8006D088, 0x850),
+        // Current and saved checkpoint data
+        SAVE_STATE_REGION(0x8006C7F8, 0x850),
+        SAVE_STATE_REGION(0x8006D088, 0x850),
 
-    // Camera data
-    SAVE_STATE_REGION(0x8006DFF8, 0x1FC),
-    SAVE_STATE_REGION(0x8006E390, 0xE0),
-    SAVE_STATE_REGION(0x8006E498, 0x04),
-    SAVE_STATE_REGION(0x8006E4F4, 0x10),
+        // Camera data
+        SAVE_STATE_REGION(0x8006DFF8, 0x1FC),
+        SAVE_STATE_REGION(0x8006E390, 0xE0),
+        SAVE_STATE_REGION(0x8006E498, 0x04),
+        SAVE_STATE_REGION(0x8006E4F4, 0x10),
 
-    // Spyro, side character, Sparx, and game state
-    SAVE_STATE_REGION(0x8006FA2C, 0x54),
-    SAVE_STATE_REGION(0x8006FB90, 0x38),
-    SAVE_STATE_REGION(0x8006E344, 0x04), // gamestate
-    SAVE_STATE_REGION(0x8006FBC8, 0x04), // menuState
-    SAVE_STATE_REGION(0x8006FBCC, 0x04), // menuOption
-    SAVE_STATE_REGION(0x8006FBD0, 0x04), // currentMenu
-    SAVE_STATE_REGION(0x8006FBD4, 0x04),
-    SAVE_STATE_REGION(0x8006E49C, 0x04), // pauseMusic
-    SAVE_STATE_REGION(0x80070260, 0x34C), // Light effects?
+        // Spyro, side character, Sparx, and game state
+        SAVE_STATE_REGION(0x8006FA2C, 0x54),
+        SAVE_STATE_REGION(0x8006FB90, 0x38),
+        SAVE_STATE_REGION(0x8006E344, 0x04), // gamestate
+        SAVE_STATE_REGION(0x8006FBC8, 0x04), // menuState
+        SAVE_STATE_REGION(0x8006FBCC, 0x04), // menuOption
+        SAVE_STATE_REGION(0x8006FBD0, 0x04), // currentMenu
+        SAVE_STATE_REGION(0x8006FBD4, 0x04),
+        SAVE_STATE_REGION(0x8006E49C, 0x04),  // pauseMusic
+        SAVE_STATE_REGION(0x80070260, 0x34C), // Light effects?
 
-    // Portal state
-    SAVE_STATE_REGION(0x800722E8, 0x48),
+        // Portal state
+        SAVE_STATE_REGION(0x800722E8, 0x48),
 
-    // flame, collision, and various hud states
-    SAVE_STATE_REGION(0x8007145C, 0x28),
-    SAVE_STATE_REGION(0x80071570, 0x22C),
+        // flame, collision, and various hud states
+        SAVE_STATE_REGION(0x8007145C, 0x28),
+        SAVE_STATE_REGION(0x80071570, 0x22C),
 
-    // Flame segments, hit flags, and other various flame stuff
-    SAVE_STATE_REGION(0x800717AC, 0x130),
-    SAVE_STATE_REGION(0x80071900, 0x38),
-    SAVE_STATE_REGION(0x800719C8, 0x18),
-    SAVE_STATE_REGION(0x80071A10, 0x5C8),
+        // Flame segments, hit flags, and other various flame stuff
+        SAVE_STATE_REGION(0x800717AC, 0x130),
+        SAVE_STATE_REGION(0x80071900, 0x38),
+        SAVE_STATE_REGION(0x800719C8, 0x18),
+        SAVE_STATE_REGION(0x80071A10, 0x5C8),
 
-    // RNG. (Maybe make a toggle for this eventually? Could be nice to choose to have the same rng)
-    // SAVE_STATE_REGION(0x80073F3C, 0x04),
+        // RNG. (Maybe make a toggle for this eventually? Could be nice to choose to have the same rng)
+        // SAVE_STATE_REGION(0x80073F3C, 0x04),
 
-    // Save our own rhynoc trainer data
-    SAVE_STATE_REGION(&input_timer_during_thrown_anim, sizeof(input_timer_during_thrown_anim)),
-    SAVE_STATE_REGION(&rhynoc_currentButtonSequence, sizeof(rhynoc_currentButtonSequence)),
-    SAVE_STATE_REGION(&rhynoc_input_sequence, sizeof(rhynoc_input_sequence)),
-    SAVE_STATE_REGION(&rhynoc_wait_to_show, sizeof(rhynoc_wait_to_show)),
+        // Save our own rhynoc trainer data
+        SAVE_STATE_REGION(&input_timer_during_thrown_anim, sizeof(input_timer_during_thrown_anim)),
+        SAVE_STATE_REGION(&rhynoc_currentButtonSequence, sizeof(rhynoc_currentButtonSequence)),
+        SAVE_STATE_REGION(&rhynoc_input_sequence, sizeof(rhynoc_input_sequence)),
+        SAVE_STATE_REGION(&rhynoc_wait_to_show, sizeof(rhynoc_wait_to_show)),
 };
 
 #undef SAVE_STATE_REGION
@@ -178,7 +176,7 @@ typedef struct SaveStateHeader
     u32 levelDataSize;
 } SaveStateHeader;
 
-u32 saveStateStoredBytes = 0;
+// u32 saveStateStoredBytes = 0;
 
 static bool IsSafeToUseSaveState(void)
 {
@@ -200,7 +198,6 @@ static void TransferMemoryRegion(u8** saveStateCursor, void* gameAddress, u32 by
 
     *saveStateCursor += byteCount;
 }
-
 
 static u8* TransferSaveStateData(SaveStateOperation operation)
 {
@@ -267,12 +264,12 @@ bool SaveStateCapture(void)
     header->subLevel = subLevelID;
 
     saveStateEnd = TransferSaveStateData(SAVE_STATE);
-    header->totalSize = (u32)saveStateEnd - SAVE_STATE_MEMORY_ADDRESS;
+    // header->totalSize = (u32)saveStateEnd - SAVE_STATE_MEMORY_ADDRESS;
     header->isValid = true;
 
-    saveStateStoredBytes = header->totalSize;
+    // saveStateStoredBytes = header->totalSize;
 
-    //printf_syscall("Size: %X\n", saveStateEnd);
+    // printf_syscall("Size: %X\n", saveStateEnd);
     return true;
 }
 
@@ -298,21 +295,20 @@ bool SaveStateRestore(void)
         return false;
     }
 
-    if (header->totalSize < sizeof(*header))
-    {
-        return false;
-    }
+    // if (header->totalSize < sizeof(*header))
+    // {
+    //     return false;
+    // }
 
     TransferSaveStateData(LOAD_STATE);
 
-    saveStateStoredBytes = header->totalSize;
+    // saveStateStoredBytes = header->totalSize;
     return true;
 }
 
 void FullSaveState(void)
 {
     SaveStateCapture();
-
 
     if (g_ILTimerMode > 0) // If IL mode is on (I should really start using the enum for this...)
     {

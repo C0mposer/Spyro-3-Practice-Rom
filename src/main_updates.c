@@ -1,5 +1,6 @@
 #include "menu/menu.h"
 #include <buttons.h>
+#include <common.h>
 #include <gamestates.h>
 #include <hotkeys.h>
 #include <level_ids.h>
@@ -26,8 +27,8 @@ extern Vec3 savedSpyroPosition;
 extern s32 savedSpyroYawAngle;
 extern u32 savedPositionLevelID;
 extern u32 savedPositionSubLevelID;
-extern u8 savedSpyroSwimState; // For saved pos
-extern u8 startingSpyroSwimState; // For level entry
+extern u8 savedSpyroSwimState;            // For saved pos
+extern u8 startingSpyroSwimState;         // For level entry
 extern u8 startingSpyroSwimStateSubLevel; // For sub level entry
 extern bool shouldEnableZombieOnce;
 
@@ -43,7 +44,6 @@ void ClearEntryNpcDialogueSkip(void);
 void CancelEntryNpcDialogue(void);
 void SorcLayoutForceUpdate(void);
 
-
 inline static void SpeedUpReset(void)
 {
     const u32 minimumLayoutWait = 6;
@@ -58,7 +58,8 @@ inline static void SpeedUpReset(void)
     }
 }
 
-typedef enum FastLoadFadeMode {
+typedef enum FastLoadFadeMode
+{
     FAST_LOAD_CUT_BOTH_FADES,
     FAST_LOAD_KEEP_FADE_IN
 } FastLoadFadeMode;
@@ -81,7 +82,10 @@ inline static void FastLoadUpdate(void)
         0x10; // Phase 4: game subtracts 0x10 then completes at < 1
     const u32 skipArtificialWait = 0x50;
 
-    if (!fastLoadActive) { return; }
+    if (!fastLoadActive)
+    {
+        return;
+    }
 
     if (gamestate == DYING)
     {
@@ -124,25 +128,35 @@ inline static void SaveStartingPositionUpdate(void)
     static u32 localPreviousLevelID = 0;
     static u32 currentSubLevelID = 0;
 
-    if (localPreviousLevelID != currentLevel)
+    // If in a side character level, wait until playing as the character to save the respawn position to avoid saving in the dialogue room
+    bool allowedGamestates = (gamestate == GAMEPLAY || gamestate == INTERACTING);
+    if (isInSideCharacterLevel)
     {
-        //printf_syscall("Saved Level ID\n");
-
-        Vec3Copy(&savedStartingPosition, &respawnPosition); // Save the respawn position for the current level/sub level
-        savedStartingAngle = respawnAngle; // Save the respawn position for the current level/sub level
-        startingSpyroSwimState = savedCheckpointSwimState;
-
-        localPreviousLevelID = currentLevel;
+        allowedGamestates = (gamestate == GAMEPLAY);
     }
-    if (currentSubLevelID != subLevelID)
-    {
-        //printf_syscall("Saved Sublevel ID\n");
-        Vec3Copy(&savedStartingPositionSubLevel, &respawnPosition); // Save the respawn position for the current level/sub level
-        savedStartingAngleSubLevel = respawnAngle; // Save the respawn position for the current level/sub level
-        startingSpyroSwimStateSubLevel = savedCheckpointSwimState;
 
-        currentSubLevelID = subLevelID;
+    if (allowedGamestates)
+    {
+        if (localPreviousLevelID != currentLevel)
+        {
+            // printf_syscall("Saved Level ID\n");
+
+            Vec3Copy(&savedStartingPosition, &respawnPosition); // Save the respawn position for the current level/sub level
+            savedStartingAngle = respawnAngle;                  // Save the respawn position for the current level/sub level
+            startingSpyroSwimState = savedCheckpointSwimState;
+
+            localPreviousLevelID = currentLevel;
         }
+        if (currentSubLevelID != subLevelID)
+        {
+            // printf_syscall("Saved Sublevel ID\n");
+            Vec3Copy(&savedStartingPositionSubLevel, &respawnPosition); // Save the respawn position for the current level/sub level
+            savedStartingAngleSubLevel = respawnAngle;                  // Save the respawn position for the current level/sub level
+            startingSpyroSwimStateSubLevel = savedCheckpointSwimState;
+
+            currentSubLevelID = subLevelID;
+        }
+    }
 }
 
 extern u32 g_ILTimerMode;
@@ -267,7 +281,7 @@ void PrepareSavedSpyroRespawn(void)
 void RespawnSpyro(void)
 {
     memset(0x80070610, 0, 0xD80); // Clear the light trails array. (Fixes crash from too many fireballs on screen before moving spyro far away to kill him)
-    KillSpyro(); // Kill him!
+    KillSpyro();                  // Kill him!
 }
 
 void RestartLevelFromBeginning(u32 reloadLevelType)
@@ -297,12 +311,12 @@ void UpdateHomeworldEntryType()
         if (HasHeldButton(TRIANGLE_BUTTON, 20)) // Load in on balloon
         {
             previousLevelIDForVehicleEntry = 10; // Must be any hw ID (x % 10 essentially)
-            //printf_syscall("Should be balloon\n");
+            // printf_syscall("Should be balloon\n");
         }
         else // Don't load in on balloon
         {
             previousLevelIDForVehicleEntry = 0;
-            //printf_syscall("Should be NO balloon\n");
+            // printf_syscall("Should be NO balloon\n");
         }
     }
 }
@@ -349,15 +363,14 @@ void ClearCollectables(void)
 
     // Reset out own savestate during IL flag
     hasLoadstatedDuringIL = false;
-
 }
 
 inline static void UnlockAtlasWarp()
 {
     memset(hasEnteredLevelFlags, 0x11111111, 40); // Unlock all levels in atlas
-    upgradeFlags = 2; // Hacky because the overlays are encrypted, and doing the
-                      // code below changes it at runtime, breaking the CRC. Fix
-                      // eventually by patching the overlay directly.
+    upgradeFlags = 2;                             // Hacky because the overlays are encrypted, and doing the
+                                                  // code below changes it at runtime, breaking the CRC. Fix
+                                                  // eventually by patching the overlay directly.
 
     // Can't do this at runtime because of anti-tamper :)
     //     // Check if the atlas overlay is loaded. If so, nop the sparx
@@ -396,7 +409,7 @@ void CheckLevelSpecificRespawns()
     {
         SheilaExit();
     }
-    else //if (rawButtonHeld == RELOAD_SUNNY_EXIT_HOTKEY) // <-- ADD THIS BACK IF I ADD ANOTHER CONDITION
+    else // if (rawButtonHeld == RELOAD_SUNNY_EXIT_HOTKEY) // <-- ADD THIS BACK IF I ADD ANOTHER CONDITION
     {
         SunnyExit();
     }
@@ -428,11 +441,20 @@ void MainUpdates(void)
         // sfx.
 
         SaveStartingPositionUpdate();
-        //ManualSaveSpyroPositionUpdate();
 
+        // Check if your in a side character level, not playing as a side character. If so, don't let the player respawn until you're in gamestate gameplay. This avoids resetting before a correct respawn position has been saved
+        u32 allow_reset = true;
+        if (controlledMobyActive == 0 && isInSideCharacterLevel)
+        {
+            allow_reset = false;
+        }
+        else
+        {
+            allow_reset = true;
+        }
 
         // Restart the level from the spawn point
-        if ((rawButtonHeld & RELOAD_LEVEL_HOTKEY) == RELOAD_LEVEL_HOTKEY && !(rawButtonHeld & (L1_BUTTON | R1_BUTTON))) // Theres still probably a better way to do this (If the reset hotkey is pressed, even if any other buttons are pressed, then reset. UNLESS l1 + r1 is pressed too, then dont because menu hotkey has those)
+        if (allow_reset && (rawButtonHeld & RELOAD_LEVEL_HOTKEY) == RELOAD_LEVEL_HOTKEY && !(rawButtonHeld & (L1_BUTTON | R1_BUTTON))) // Theres still probably a better way to do this (If the reset hotkey is pressed, even if any other buttons are pressed, then reset. UNLESS l1 + r1 is pressed too, then dont because menu hotkey has those)
         {
             u32 reloadLevelType = RELOAD_FULL;
             if (rawButtonHeld == RELOAD_LEVEL_HOTKEY)
@@ -453,59 +475,23 @@ void MainUpdates(void)
         }
 
         CheckLevelSpecificRespawns();
-
     }
 
-
-    // On PS1 & Vita/TV/PSP, check if extra ram exists, and act accordingly
+// On PS1 & Vita/TV/PSP, check if extra ram exists, and act accordingly
     #ifdef VERSION10_PS1
-        if (doesHaveExtraRam) // Enable savestates
+    if (doesHaveExtraRam) // Enable savestates
+    {
+        if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
         {
-            if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
-            {
-                FullSaveState();
-            }
-            else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
-            {
-                FullLoadState();
-            }
+            FullSaveState();
         }
-        else // Enable sudo-savestates
+        else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
         {
-            ManualSaveSpyroPositionUpdate(); // I should do the button check outside of the callee, but this is fine for now
-
-            // Restart the level from the saved position
-            if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
-            {
-                ClearCollectables();
-                PrepareSavedSpyroRespawn();
-                speedUpResetPending = true;
-                if (FastLoadEnabled())
-                {
-                    fastLoadActive = true;
-                    fastLoadInScenario = false;
-                    fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
-                }
-                RespawnSpyro();
-            }
+            FullLoadState();
         }
-    #endif
-
-
-        // If on ps2 deckard, just allow savestates
-        #ifdef VERSION10_PS2
-            if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
-            {
-                FullSaveState();
-            }
-            else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
-            {
-                FullLoadState();
-            }
-        #endif
-
-      // If on ps2 IOP, force position saves.
-      #ifdef VERSION10_PS2_IOP
+    }
+    else // Enable sudo-savestates
+    {
         ManualSaveSpyroPositionUpdate(); // I should do the button check outside of the callee, but this is fine for now
 
         // Restart the level from the saved position
@@ -522,9 +508,40 @@ void MainUpdates(void)
             }
             RespawnSpyro();
         }
+    }
+    #endif
+
+// If on ps2 deckard, just allow savestates
+    #ifdef VERSION10_PS2
+    if ((rawButtonHeld & savestate_button_option) == savestate_button_option)
+    {
+        FullSaveState();
+    }
+    else if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+    {
+        FullLoadState();
+    }
+    #endif
+
+// If on ps2 IOP, force position saves.
+    #ifdef VERSION10_PS2_IOP
+    ManualSaveSpyroPositionUpdate(); // I should do the button check outside of the callee, but this is fine for now
+
+    // Restart the level from the saved position
+    if ((rawButtonHeld & loadstate_button_option) == loadstate_button_option)
+    {
+        ClearCollectables();
+        PrepareSavedSpyroRespawn();
+        speedUpResetPending = true;
+        if (FastLoadEnabled())
+        {
+            fastLoadActive = true;
+            fastLoadInScenario = false;
+            fastLoadFadeMode = FAST_LOAD_CUT_BOTH_FADES;
+        }
+        RespawnSpyro();
+    }
     #endif
 
     CancelEntryNpcDialogue();
-
-
 }

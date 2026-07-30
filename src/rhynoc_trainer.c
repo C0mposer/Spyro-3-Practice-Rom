@@ -5,7 +5,12 @@
 #include <syscalls.h>
 #include <types.h>
 
-enum InputSequence { INITIAL_CHARGE_JUMP, GLIDE, CHARGE };
+enum InputSequence
+{
+    INITIAL_CHARGE_JUMP,
+    GLIDE,
+    CHARGE
+};
 #define RHYNOC_THROWN_ANIM 4
 
 const raw_memory_ptr* rhynocAnimState = 0x8018E414;
@@ -14,7 +19,7 @@ u32 input_timer_during_thrown_anim = 0;
 
 u32 rhynoc_currentButtonSequence = 0;
 
-u32 rhynoc_input_sequence[3] = { 0 };
+u32 rhynoc_input_sequence[3] = {0};
 
 u32 rhynoc_wait_to_show = 0;
 
@@ -66,16 +71,19 @@ void RhynocProxyTrainer()
                 // printf_syscall("Charge Jump: %d, Glide: %d, Proxy: %d\n",
                 // rhynoc_input_sequence[0], rhynoc_input_sequence[1], rhynoc_input_sequence[2]);
 
-                if (rhynoc_wait_to_show < 5) { rhynoc_wait_to_show++; }
+                if (rhynoc_wait_to_show < 5)
+                {
+                    rhynoc_wait_to_show++;
+                }
 
                 else
                 {
                     char* buffer[16];
                     char* buffer2[16];
                     char* buffer3[16];
-                    sprintf(buffer, "Charge Jump: %d", rhynoc_input_sequence[0]);
+                    sprintf(buffer, "Jump: %d", rhynoc_input_sequence[0]);
                     sprintf(buffer2, "Glide: %d", rhynoc_input_sequence[1]);
-                    sprintf(buffer3, "Proxy/Charge: %d", rhynoc_input_sequence[2]);
+                    sprintf(buffer3, "Proxy: %d", rhynoc_input_sequence[2]);
 
                     DrawText(buffer, 10, 60, 1, 0);
                     DrawText(buffer2, 10, 70, 1, 0);

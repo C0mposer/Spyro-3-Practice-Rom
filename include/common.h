@@ -1,8 +1,11 @@
+#ifndef INCLUDE_COMMON_H
+#define INCLUDE_COMMON_H
+
 // Common includes
-#include <types.h>
-#include <symbols.h>
 #include <buttons.h>
+#include <symbols.h>
 #include <syscalls.h>
+#include <types.h>
 
 // Common constants
 #define SCREEN_LEFT_EDGE 0x0
@@ -12,5 +15,8 @@
 
 #define isInHomeworld (currentLevel % 10 == 0)
 #define wasInHomeworld (previousLevelID % 10 == 0)
+#define isInSideCharacterLevel ((currentLevel % 10) % 6 == 0)
 #define isInBossLevel ((currentLevel % 10) % 7 == 0)
 #define isInSparxLevel ((currentLevel % 10) % 8 == 0)
+
+#endif /* INCLUDE_COMMON_H */

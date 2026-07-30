@@ -1,11 +1,12 @@
 #ifndef SYMBOLS_H
 #define SYMBOLS_H
 
+#include <collision.h>
+#include <memory_patch.h>
+#include <moneybags.h>
+#include <sparx_upgrades.h>
 #include <types.h>
 #include <vector.h>
-#include <collision.h>
-#include <sparx_upgrades.h>
-#include <memory_patch.h>
 
 typedef struct RECT
 {
@@ -23,7 +24,7 @@ extern s32 spyroYawAngle;
 extern u32 spyroState;
 extern u32 spyroHealth;
 
-extern Vec3 respawnPosition; //1.0: 0x8006D0AC
+extern Vec3 respawnPosition; // 1.0: 0x8006D0AC
 extern u32 respawnAngle;
 
 extern u32 gamestate;
@@ -138,6 +139,10 @@ extern u32 scorch_health;
 extern u32 sorc_health;
 extern u32 final_sorc_health;
 
+extern u32 controlledMobyActive; // 0x8007056C
+extern u8* controlledMoby;       // 0x80070578
+
+extern MoneybagsPayments moneybagsPaymentValues[12];
 
 int sprintf(char* buffer, char* fmt, ...);
 void* memset(void* dest, u32 value, u32 size);
@@ -187,7 +192,7 @@ void AddToWorldTable(void* primitive, s32 depth_bucket);
 void DrawSync(int);
 
 void ReadCdSync(int baseSector, unsigned int* buffer, int numBytes, int offsetByte); // 0x80050578
-void FlushCache(void); // 0x800649BC
+void FlushCache(void);                                                               // 0x800649BC
 
 int ReadCdAsync(int baseSector, unsigned int* buffer, int numBytes, int offsetBytes); // 0x80050680
 
@@ -195,6 +200,6 @@ bool WaitForCd_(void); // 0x800503F8
 
 void DialogueUpdate(void);
 
-void SaveCheckpointMemoryPatch(u8* targetAddress, u8 valueSize, u8 *checkpoint); // valueSize is actually an enum for 0 = 1byte, 1 = 2byte, 2 = 4byte
+void SaveCheckpointMemoryPatch(u8* targetAddress, u8 valueSize, u8* checkpoint); // valueSize is actually an enum for 0 = 1byte, 1 = 2byte, 2 = 4byte
 
-#endif //SYMBOLS_H
+#endif // SYMBOLS_H

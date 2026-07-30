@@ -21,51 +21,48 @@ extern const char* const savestate_button_options[3];
 extern const char* const loadstate_button_options[4];
 
 const char* const sorc_options[11] =
-{
-    "Off",
-    "ABC",
-    "ABD",
-    "ABE",
-    "ACD",
-    "ACE",
-    "ADE",
-    "BCD",
-    "BCE",
-    "BDE",
-    "CDE"
-};
+    {
+        "Off",
+        "ABC",
+        "ABD",
+        "ABE",
+        "ACD",
+        "ACE",
+        "ADE",
+        "BCD",
+        "BCE",
+        "BDE",
+        "CDE"};
 
 const char* const health_options[5] =
-{
-    "Off",
-    "Yellow",
-    "Blue",
-    "Green",
-    "Sparxless"
-};
+    {
+        "Off",
+        "Yellow",
+        "Blue",
+        "Green",
+        "Sparxless"};
 
 MenuElement main_menu_elements[] =
-{
-    MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Category", category_options, 0),
-    MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
-    MENU_TOGGLE(MAIN_MENU_PAGE_GENERAL, "Zombie Mode", false),
-    MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Sparx Range", sparx_range_options, 0),
-    MENU_TOGGLE(MAIN_MENU_PAGE_GENERAL, "Basket Break", false),
-    MENU_SET_VALUE(MAIN_MENU_PAGE_GENERAL, "Gem Count", 0, 20000, &globalGems, 0),
-    MENU_SET_VALUE(MAIN_MENU_PAGE_GENERAL, "Egg Count", 0, 100, &globalEggs, 0),
-    MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Force Health", health_options, 0),
-    MENU_MULTI(MAIN_MENU_PAGE_TIMER, "IL Timer", timer_options, TIMER_OFF),
-    MENU_MULTI(MAIN_MENU_PAGE_TIMER, "Manual Timer", timer_options, TIMER_OFF),
-    MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Fast Reset", true),
-    MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Disable Portals", false),
-    MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Mash Dialogue", false),
-    MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Disable Bianca", false),
-    MENU_TOGGLE(MAIN_MENU_PAGE_TRAINER, "Draw Portals", false),
-    MENU_TOGGLE(MAIN_MENU_PAGE_TRAINER, "Rhynoc Trainer", false),
-    MENU_MULTI(MAIN_MENU_PAGE_TRAINER, "Sorc Layout", sorc_options, 0),
-    MENU_MULTI(MAIN_MENU_PAGE_SAVESTATE, "Savestate Combo", savestate_button_options, 0),
-    MENU_MULTI(MAIN_MENU_PAGE_SAVESTATE, "Loadstate Combo", loadstate_button_options, 0)
-};
+    {
+        MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Category", category_options, 0),
+        MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Difficulty", difficulty_options, DIFFICULTY_MEDIUM),
+        MENU_TOGGLE(MAIN_MENU_PAGE_GENERAL, "Zombie Mode", false),
+        MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Sparx Range", sparx_range_options, 0),
+        MENU_TOGGLE(MAIN_MENU_PAGE_GENERAL, "Basket Break", false),
+        MENU_SET_VALUE(MAIN_MENU_PAGE_GENERAL, "Gem Count", 0, 20000, &globalGems, 0),
+        MENU_SET_VALUE(MAIN_MENU_PAGE_GENERAL, "Egg Count", 0, 100, &globalEggs, 0),
+        MENU_MULTI(MAIN_MENU_PAGE_GENERAL, "Force Health", health_options, 0),
+        MENU_MULTI(MAIN_MENU_PAGE_TIMER, "IL Timer", timer_options, TIMER_OFF),
+        MENU_MULTI(MAIN_MENU_PAGE_TIMER, "Manual Timer", timer_options, TIMER_OFF),
+        MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Fast Reset", true),
+        MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Disable Portals", false),
+        MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Mash Dialogue", false),
+        MENU_TOGGLE(MAIN_MENU_PAGE_QOL, "Disable Bianca", false),
+        MENU_TOGGLE(MAIN_MENU_PAGE_TRAINER, "Draw Portals", false),
+        MENU_TOGGLE(MAIN_MENU_PAGE_TRAINER, "Rhynoc Trainer", false),
+        MENU_MULTI(MAIN_MENU_PAGE_TRAINER, "Sorc Layout", sorc_options, 0),
+        MENU_MULTI(MAIN_MENU_PAGE_SAVESTATE, "Save Combo", savestate_button_options, 0),
+        MENU_MULTI(MAIN_MENU_PAGE_SAVESTATE, "Load Combo", loadstate_button_options, 0)};
 
 Menu main_menu = {.page_titles = main_menu_page_titles,
                   .elements = main_menu_elements,

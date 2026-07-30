@@ -1,29 +1,67 @@
-#include <types.h>
-#include <symbols.h>
-#include <level_ids.h>
 #include "menu/menu.h"
-#include <difficulty.h>
 #include <category_defaults.h>
+#include <difficulty.h>
+#include <gamestates.h>
+#include <level_ids.h>
+#include <symbols.h>
+#include <types.h>
 
 static void UnlockAllSideCharacterPortals()
 {
-    eggsCollectedBitmask[0x6] = 0b1; // Set sheila egg as collected
-    eggsCollectedBitmask[0xF] = 0b1; // Set sgt byrd egg as collected
-    eggsCollectedBitmask[0x18] = 0b1; // Set bently egg as collected
+    eggsCollectedBitmask[0x6] = 0b1;    // Set sheila egg as collected
+    eggsCollectedBitmask[0xF] = 0b1;    // Set sgt byrd egg as collected
+    eggsCollectedBitmask[0x18] = 0b1;   // Set bently egg as collected
     eggsCollectedBitmask[0x21] = 0b100; // Set agent 9 egg as collected
 }
 
 static void CloseAllSideCharacterPortals()
 {
-    eggsCollectedBitmask[0x6] = 0b0; // Set sheila egg as uncollected
-    eggsCollectedBitmask[0xF] = 0b0; // Set sgt byrd egg as uncollected
+    eggsCollectedBitmask[0x6] = 0b0;  // Set sheila egg as uncollected
+    eggsCollectedBitmask[0xF] = 0b0;  // Set sgt byrd egg as uncollected
     eggsCollectedBitmask[0x18] = 0b0; // Set bently egg as uncollected
     eggsCollectedBitmask[0x21] = 0b0; // Set agent 9 egg as uncollected
+}
+
+static void SetMidnightMoneybagsPayments(u16 paid)
+{
+    // Unlock all moneybags payments in midnight levels
+    moneybagsPaymentValues[8].isPurchased = paid;
+    moneybagsPaymentValues[9].isPurchased = paid;
+    moneybagsPaymentValues[11].isPurchased = paid;
+}
+
+// Used to set the 117% Collectable Counts when entering/exiting levels
+
+extern u16 levelEntryGemCounts[68];
+extern u16 levelEntryEggCounts[68];
+static void SetLevelCollectableCounts(void)
+{
+    if (gamestate == LOADING_LEVEL || gamestate == LOADING_CUTSCENE)
+    {
+        globalGems = levelEntryGemCounts[levelIndex];
+        globalEggs = levelEntryEggCounts[levelIndex];
+    }
+}
+
+bool hasSaved = false;
+u8 previousLevelIndex = -1;
+static void SavePreviousLevelIndex()
+{
+    if ((gamestate == LOADING_LEVEL || gamestate == LOADING_CUTSCENE) && !hasSaved)
+    {
+        previousLevelIndex = levelIndex;
+    }
+    else if (!(gamestate == LOADING_LEVEL || gamestate == LOADING_CUTSCENE) && hasSaved)
+    {
+        hasSaved = false;
+    }
 }
 
 // Used to set certain default settings based on what category is chosen
 void CategoryDefaultsUpdate()
 {
+    // SavePreviousLevelIndex();
+
     // Lock/Unlock menu elements
     if (main_menu.elements[CATEGORY_MULTI].selection_option == MANUAL)
     {
@@ -44,6 +82,7 @@ void CategoryDefaultsUpdate()
     if (main_menu.elements[CATEGORY_MULTI].selection_option == ANY)
     {
         CloseAllSideCharacterPortals();
+        SetMidnightMoneybagsPayments(0);
 
         if (currentLevel == CHARMED_RIDGE)
         {
@@ -70,6 +109,7 @@ void CategoryDefaultsUpdate()
     else if (main_menu.elements[CATEGORY_MULTI].selection_option == HUNDRED_EGG)
     {
         UnlockAllSideCharacterPortals();
+        SetMidnightMoneybagsPayments(0);
 
         main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled = false; // Disable zombie when switching categories
 
@@ -89,6 +129,7 @@ void CategoryDefaultsUpdate()
     else if (main_menu.elements[CATEGORY_MULTI].selection_option == ONE_SEVENTEEN)
     {
         UnlockAllSideCharacterPortals();
+        // SetLevelCollectableCounts(); // Set the level gem/egg counts
 
         main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled = false; // Disable zombie when switching categories
 
@@ -121,11 +162,14 @@ void CategoryDefaultsUpdate()
         //     sparxTreasureFinder = false; // No menu option for this yet. Maybe in the future?
         // }
 
+        // If in midnight mountain and above
         if (currentLevel >= 40)
         {
             main_menu.elements[BASKET_BREAK_TOGGLE].enabled = true;
 
             sparxMaxHitpoints = 4; // No menu option for this yet. Maybe in the future?
+
+            SetMidnightMoneybagsPayments(1);
         }
         else
         {

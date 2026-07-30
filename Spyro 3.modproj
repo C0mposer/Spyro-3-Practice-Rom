@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 1,
+  "currently_selected_build_index": 2,
   "symbol_input_mode": "manual",
   "build_versions": [
     {
@@ -24,10 +24,11 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION11",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.1).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.1).bin",
       "compiler_flags": "-O2",
       "is_single_file_mode": false,
       "single_file_path": null,
+      "output_format": "iso",
       "section_maps": {},
       "code_caves": [
         {
@@ -98,10 +99,11 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os",
       "is_single_file_mode": false,
       "single_file_path": null,
+      "output_format": "iso",
       "section_maps": {},
       "code_caves": [
         {
@@ -245,7 +247,9 @@
         },
         {
           "name": "PSYQDebugStringsCave",
-          "code_files": [],
+          "code_files": [
+            "./src/gem_counts.c"
+          ],
           "memory_address": "8001174C",
           "size": "2F4",
           "injection_file": "SCUS_944.67",
@@ -436,10 +440,11 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os -mno-check-zero-division",
       "is_single_file_mode": false,
       "single_file_path": null,
+      "output_format": "iso",
       "section_maps": {},
       "code_caves": [
         {
@@ -536,9 +541,7 @@
           "code_files": [
             "./src/display_portal_verts.c",
             "./src/main_updates.c",
-            "./src/il_timer.c",
-            "./src/menu/savestate_menu.c",
-            "./src/dialogue_mash.c"
+            "./src/il_timer.c"
           ],
           "memory_address": "8000C000",
           "size": "1800",
@@ -556,7 +559,7 @@
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
             "./src/sorc_layout_force.c",
-            "./src/npc_dialogue_skip.c"
+            "./src/special_exits.c"
           ],
           "memory_address": "8000EA00",
           "size": "F38",
@@ -569,7 +572,9 @@
         {
           "name": "DemoModeCave",
           "code_files": [
-            "./src/special_exits.c"
+            "./src/dialogue_mash.c",
+            "./src/menu/savestate_menu.c",
+            "./src/npc_dialogue_skip.c"
           ],
           "memory_address": "8003a2b0",
           "size": "15C",
@@ -725,10 +730,11 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os -mno-check-zero-division",
       "is_single_file_mode": false,
       "single_file_path": null,
+      "output_format": "iso",
       "section_maps": {},
       "code_caves": [
         {
@@ -1014,10 +1020,11 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os -mno-check-zero-division",
       "is_single_file_mode": false,
       "single_file_path": null,
+      "output_format": "iso",
       "section_maps": {},
       "code_caves": [
         {
@@ -1084,7 +1091,8 @@
             "./src/dialogue_mash_globals.c",
             "./src/render_helper.c",
             "./src/npc_dialogue_skip_globals.c",
-            "./src/check_extra_mem.c"
+            "./src/check_extra_mem.c",
+            "./src/moon_jump.c"
           ],
           "memory_address": "8000A918",
           "size": "7b8",
@@ -1113,10 +1121,7 @@
           "code_files": [
             "./src/display_portal_verts.c",
             "./src/main_updates.c",
-            "./src/il_timer.c",
-            "./src/dialogue_mash.c",
-            "./src/menu/savestate_menu.c",
-            "./src/moon_jump.c"
+            "./src/il_timer.c"
           ],
           "memory_address": "080008EB0",
           "size": "1800",
@@ -1133,8 +1138,8 @@
             "./src/menu/menu_pages.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/npc_dialogue_skip.c",
-            "./src/sorc_layout_force.c"
+            "./src/sorc_layout_force.c",
+            "./src/special_exits.c"
           ],
           "memory_address": "080007530",
           "size": "F38",
@@ -1147,7 +1152,9 @@
         {
           "name": "DemoModeCave",
           "code_files": [
-            "./src/special_exits.c"
+            "./src/dialogue_mash.c",
+            "./src/menu/savestate_menu.c",
+            "./src/npc_dialogue_skip.c"
           ],
           "memory_address": "8003a2b0",
           "size": "15C",

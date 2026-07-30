@@ -1,16 +1,16 @@
-#include <types.h>
-#include <syscalls.h>
-#include <symbols.h>
-#include <buttons.h>
-#include <hotkeys.h>
-#include <gamestates.h>
-#include <timer_options.h>
-#include <timer.h>
-#include <common.h>
-#include <text_colors.h>
-#include <level_ids.h>
 #include "menu/menu.h"
+#include <buttons.h>
 #include <category_defaults.h>
+#include <common.h>
+#include <gamestates.h>
+#include <hotkeys.h>
+#include <level_ids.h>
+#include <symbols.h>
+#include <syscalls.h>
+#include <text_colors.h>
+#include <timer.h>
+#include <timer_options.h>
+#include <types.h>
 
 extern int g_ILTimerMode;
 extern int menu_frames_closed;
@@ -153,7 +153,7 @@ static void ContinueILExit(void)
     // If in a boss level, do a cutscene load to the next homeworld
     else if (isInBossLevel)
     {
-        u32 level_to_warp_to = currentLevel + 3; // A boss is always X7, so the next homeworld would be X7 + 3
+        u32 level_to_warp_to = currentLevel + 3;                          // A boss is always X7, so the next homeworld would be X7 + 3
         level_to_warp_to = level_to_warp_to > 40 ? 40 : level_to_warp_to; // Clamp to a 40, so sorc doesn't take us to 50
 
         u32 splash_screen = (level_to_warp_to / 10) - 1; // hw splash screens are 0, 1, 2, 3. (If i'm really tight on code space, this isn't fully required, just nice to show the right splash screen. Remove if desperate for space!)
@@ -229,7 +229,7 @@ void ILTimerUpdate(void)
         // When entering a new level, prepare the IL timer to start when you enter gameplay
         if (!IL_isLoadComboPressed)
         {
-            if (gamestate == LOADING_CUTSCENE || gamestate == LOADING_LEVEL)
+            if (gamestate == LOADING_CUTSCENE || gamestate == LOADING_LEVEL || (isInSideCharacterLevel && controlledMobyActive == false))
             {
                 IL_preparingToStartTimer = true;
                 IL_isLoadComboPressed = true;
@@ -248,11 +248,10 @@ void ILTimerUpdate(void)
         // Start the IL timer when entering gameplay
         if (IL_preparingToStartTimer && (gamestate == GAMEPLAY || gamestate == INTERACTING))
         {
-            //printf_syscall("Resetting timer!\n");
+            // printf_syscall("Resetting timer!\n");
             IL_mainTimerAtReset = globalTimer;
             IL_timerState = TIMER_RUNNING;
             IL_preparingToStartTimer = false;
-
         }
         // Allow the hotkey to be pressed again if buttons released, or fully reset
         if ((isButtonHeld != RELOAD_LEVEL_HOTKEY || gamestate == GAMEPLAY) && IL_isLoadComboPressed)
@@ -332,8 +331,6 @@ void ILTimerUpdate(void)
     }
 }
 
-
-
 const u32 xx1 = 110;
 const u32 xx2 = 400;
 const u32 yy1 = 70;
@@ -380,7 +377,6 @@ void ILTimerFinishedUpdate(void)
         your_time_color = COLOR_BRIGHT_ORANGE;
     }
 
-
     DrawTextCentered("Your Time:", ((xx2 + xx1) / 2) - 90, ((yy1 + yy2) / 2) - 20, COLOR_YELLOW);
     DrawTextCentered("Best Time:", ((xx2 + xx1) / 2) + 90, ((yy1 + yy2) / 2) - 20, COLOR_YELLOW);
 
@@ -390,8 +386,7 @@ void ILTimerFinishedUpdate(void)
 
     DrawTextCentered("Try Again?", ((xx2 + xx1) / 2), ((yy1 + yy2) / 2) + 25, 2);
     DrawTextCentered("Yes", ((xx2 + xx1) / 2) - 50, ((yy1 + yy2) / 2) + 40, yes_color);
-    DrawTextCentered("No",((xx2 + xx1) / 2) + 50, ((yy1 + yy2) / 2) + 40, no_color);
-
+    DrawTextCentered("No", ((xx2 + xx1) / 2) + 50, ((yy1 + yy2) / 2) + 40, no_color);
 
     // Display category default
     u32 category_default_selection = main_menu.elements[CATEGORY_MULTI].selection_option;
