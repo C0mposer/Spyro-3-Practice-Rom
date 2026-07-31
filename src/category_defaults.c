@@ -41,6 +41,9 @@ static void SetLevelCollectableCounts(void)
         globalGems = levelEntryGemCounts[levelIndex];
         globalEggs = levelEntryEggCounts[levelIndex];
     }
+    // Set menu options for clarity, but more importantly so ClearCollectables sets them correctly
+    main_menu.elements[SET_GEM_COUNT_TOGGLE].value = levelEntryGemCounts[levelIndex];
+    main_menu.elements[SET_EGG_COUNT_TOGGLE].value = levelEntryEggCounts[levelIndex];
 }
 
 bool hasSaved = false;
@@ -69,6 +72,8 @@ void CategoryDefaultsUpdate()
         main_menu.elements[SPARX_RANGE_TOGGLE].disabled = false;
         main_menu.elements[BASKET_BREAK_TOGGLE].disabled = false;
         main_menu.elements[ZOMBIE_MODE_TOGGLE].disabled = false;
+        main_menu.elements[SET_GEM_COUNT_TOGGLE].disabled = false;
+        main_menu.elements[SET_EGG_COUNT_TOGGLE].disabled = false;
     }
     else
     {
@@ -76,6 +81,8 @@ void CategoryDefaultsUpdate()
         main_menu.elements[SPARX_RANGE_TOGGLE].disabled = true;
         main_menu.elements[BASKET_BREAK_TOGGLE].disabled = true;
         main_menu.elements[ZOMBIE_MODE_TOGGLE].disabled = true;
+        main_menu.elements[SET_GEM_COUNT_TOGGLE].disabled = true;
+        main_menu.elements[SET_EGG_COUNT_TOGGLE].disabled = true;
     }
 
     // Logic for different category defaults
@@ -129,7 +136,7 @@ void CategoryDefaultsUpdate()
     else if (main_menu.elements[CATEGORY_MULTI].selection_option == ONE_SEVENTEEN)
     {
         UnlockAllSideCharacterPortals();
-        // SetLevelCollectableCounts(); // Set the level gem/egg counts
+        SetLevelCollectableCounts(); // Set the level gem/egg counts
 
         main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled = false; // Disable zombie when switching categories
 

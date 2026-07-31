@@ -1,10 +1,10 @@
 #include "menu.h"
 #include <buttons.h>
-#include <symbols.h>
-#include <types.h>
-#include <input_helper.h>
-#include <text_colors.h>
 #include <category_defaults.h>
+#include <input_helper.h>
+#include <symbols.h>
+#include <text_colors.h>
+#include <types.h>
 
 static void ChangeElementValue(MenuElement* element, bool move_right)
 {
@@ -23,13 +23,19 @@ static void ChangeElementValue(MenuElement* element, bool move_right)
             element->selection_option = element->option_count - 1;
         }
     }
-    else if (element->selection_option == 0) { element->selection_option = 0; }
+    else if (element->selection_option == 0)
+    {
+        element->selection_option = 0;
+    }
     else
     {
         element->selection_option--;
     }
 
-    if (element->selection_option != old_value) { PlaySound(11, 0, 0); }
+    if (element->selection_option != old_value)
+    {
+        PlaySound(11, 0, 0);
+    }
 }
 
 static void SetValueFromElement(MenuElement* element)
@@ -38,7 +44,7 @@ static void SetValueFromElement(MenuElement* element)
 
     PlaySound(11, 0, 0);
     *(element->symbol_to_set) = value_to_set;
-    //printf_syscall("Setting pointer: %X with value %d\n",
+    // printf_syscall("Setting pointer: %X with value %d\n",
     //(element->symbol_to_set), value_to_set);
 }
 
@@ -51,7 +57,10 @@ void UpdateMenuElements(Menu* menu)
 
     page_element_count = GetMenuPageElementCount(menu);
 
-    if (page_element_count == 0) { return; }
+    if (page_element_count == 0)
+    {
+        return;
+    }
 
     textbox_center = (menu->x1 + menu->x2) / 2;
     column_offset = (menu->x2 - menu->x1) / 4;
@@ -167,7 +176,10 @@ void UpdateMenuElements(Menu* menu)
         }
 
         // Normal Logic
-        else if (menu->current_selection > 0) { menu->current_selection--; }
+        else if (menu->current_selection > 0)
+        {
+            menu->current_selection--;
+        }
         else // Wrap around
         {
             menu->current_selection = page_element_count - 1;
@@ -180,7 +192,7 @@ void UpdateMenuElements(Menu* menu)
         bool is_on_main_page = (menu->current_page == 0);
         if (is_on_main_page && are_options_locked && menu->current_selection == 0)
         {
-            menu->current_selection = 5; // Hacky way of forcing menu to skip locked elements. This break if I change the order
+            menu->current_selection = 7; // Hacky way of forcing menu to skip locked elements. This break if I change the order
         }
 
         // Normal logic

@@ -15,8 +15,8 @@
 
 #define isInHomeworld (currentLevel % 10 == 0)
 #define wasInHomeworld (previousLevelID % 10 == 0)
-#define isInSideCharacterLevel ((currentLevel % 10) % 6 == 0)
-#define isInBossLevel ((currentLevel % 10) % 7 == 0)
-#define isInSparxLevel ((currentLevel % 10) % 8 == 0)
+#define isInSideCharacterLevel ((currentLevel % 10) == 6)
+#define isInBossLevel ((currentLevel % 10) == 7)
+#define isInSparxLevel ((currentLevel % 10) == 8)
 
 #endif /* INCLUDE_COMMON_H */

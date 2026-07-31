@@ -1,12 +1,9 @@
-#include <types.h>
 #include <symbols.h>
+#include <types.h>
 
-#define MOBY_STATE_OFFSET      0x48
+#define MOBY_STATE_OFFSET 0x48
 #define PLAYER_CONTROLLED_STATE 3
-#define CHECKPOINT_PATCH_BYTE   1
-
-extern u32 controlledMobyActive;  // 0x8007056C
-extern u8* controlledMoby;        // 0x80070578
+#define CHECKPOINT_PATCH_BYTE 1
 
 // Respawn as the correct side character
 void PreserveSideCharacterForRespawn(void)
@@ -25,7 +22,7 @@ void PreserveSideCharacterForRespawn(void)
         return;
     }
 
-    SaveCheckpointMemoryPatch(mobyState,CHECKPOINT_PATCH_BYTE,savedCheckpointData);
+    SaveCheckpointMemoryPatch(mobyState, CHECKPOINT_PATCH_BYTE, savedCheckpointData);
 
-    SaveCheckpointMemoryPatch(mobyState,CHECKPOINT_PATCH_BYTE,currentCheckpointData);
+    SaveCheckpointMemoryPatch(mobyState, CHECKPOINT_PATCH_BYTE, currentCheckpointData);
 }

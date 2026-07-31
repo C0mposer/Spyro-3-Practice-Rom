@@ -34,6 +34,7 @@ void BootUpdate(void)
         titleScreenState = TITLE_STATE_PREPARE_SELECTED_GAME;
         titleScreenPreviousState = TITLE_STATE_PREPARE_SELECTED_GAME;
         titleScreenSubstate = 0;
+        // DrawText("Test", 20, 20, 2, 0);
         return;
     }
 
