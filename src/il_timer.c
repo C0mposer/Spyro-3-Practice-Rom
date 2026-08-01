@@ -198,11 +198,13 @@ static void UpdateILExitPrompt(void)
         PlaySound(10, 0, 0);
     }
 
-    if ((isButtonPressed & CIRCLE_BUTTON) != 0)
-    {
-        ContinueILExit();
-        PlaySound(7, 0, 0);
-    }
+    // Removed because I don't have space lol, and I guess this isn't fully needed
+    // if ((isButtonPressed & CIRCLE_BUTTON) != 0)
+    // {
+    //     ContinueILExit();
+    //     PlaySound(7, 0, 0);
+    // }
+
     else if ((isButtonPressed & X_BUTTON) != 0)
     {
         if (IL_retrySelected)
@@ -335,9 +337,8 @@ const u32 xx1 = 110;
 const u32 xx2 = 400;
 const u32 yy1 = 70;
 const u32 yy2 = 175;
-// Draw Finished Screen
-
 u32 test_color = 0;
+// Draw Finished Screen
 void ILTimerFinishedUpdate(void)
 {
     static u32 blink_timer = 0;
@@ -403,5 +404,16 @@ void ILTimerFinishedUpdate(void)
 
         DrawText(gem_count_text, 7, (SCREEN_BOTTOM_EDGE - 25), COLOR_YELLOW, 0);
         DrawText(egg_count_text, 7, (SCREEN_BOTTOM_EDGE - 15), COLOR_YELLOW, 0);
+    }
+
+    // Display zombie for lost fleet
+    if (category_default_selection == ANY && currentLevel == LOST_FLEET)
+    {
+        char* buffer[15] = {0};
+        char* hasZombieText = spyroHealth == -1 ? "Yes" : "No";
+
+        sprintf(buffer, "Zombie: %s", hasZombieText);
+
+        DrawText(buffer, 7, (SCREEN_BOTTOM_EDGE - 15), COLOR_YELLOW, 0);
     }
 }

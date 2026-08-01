@@ -91,6 +91,8 @@ void CategoryDefaultsUpdate()
         CloseAllSideCharacterPortals();
         SetMidnightMoneybagsPayments(0);
 
+        sparxTreasureFinder = false;
+
         if (currentLevel == CHARMED_RIDGE)
         {
             main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled = true; // Enable zombie for charmed
@@ -118,6 +120,8 @@ void CategoryDefaultsUpdate()
         UnlockAllSideCharacterPortals();
         SetMidnightMoneybagsPayments(0);
 
+        sparxTreasureFinder = false;
+
         main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled = false; // Disable zombie when switching categories
 
         if (currentLevel <= 11)
@@ -137,6 +141,8 @@ void CategoryDefaultsUpdate()
     {
         UnlockAllSideCharacterPortals();
         SetLevelCollectableCounts(); // Set the level gem/egg counts
+
+        sparxTreasureFinder = true; // Just always on when 117 is the selected category. Maybe make an option eventually?
 
         main_menu.elements[ZOMBIE_MODE_TOGGLE].enabled = false; // Disable zombie when switching categories
 

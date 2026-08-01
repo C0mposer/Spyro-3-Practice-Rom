@@ -172,3 +172,5 @@ DialogueUpdate = 0x80051a60;
 BeginLevelLoad = 0x80053f50;
 
 SaveCheckpointMemoryPatch = 0x8003b7b4;
+
+QuitToTitleScreen = 0x80054e5c;

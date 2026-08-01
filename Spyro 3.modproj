@@ -2,7 +2,7 @@
   "version": "1.0",
   "project_name": "Spyro 3",
   "project_folder": "./",
-  "currently_selected_build_index": 2,
+  "currently_selected_build_index": 3,
   "symbol_input_mode": "manual",
   "build_versions": [
     {
@@ -24,7 +24,7 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION11",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.1).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.1).bin",
       "compiler_flags": "-O2",
       "is_single_file_mode": false,
       "single_file_path": null,
@@ -99,7 +99,7 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os",
       "is_single_file_mode": false,
       "single_file_path": null,
@@ -440,7 +440,7 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os -mno-check-zero-division",
       "is_single_file_mode": false,
       "single_file_path": null,
@@ -558,8 +558,7 @@
             "./src/menu/menu_pages.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/sorc_layout_force.c",
-            "./src/special_exits.c"
+            "./src/sorc_layout_force.c"
           ],
           "memory_address": "8000EA00",
           "size": "F38",
@@ -587,7 +586,8 @@
         {
           "name": "PSYQDebugStringsCave",
           "code_files": [
-            "./src/gem_counts.c"
+            "./src/gem_counts.c",
+            "./src/special_exits.c"
           ],
           "memory_address": "8001174C",
           "size": "2F4",
@@ -743,7 +743,7 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os -mno-check-zero-division",
       "is_single_file_mode": false,
       "single_file_path": null,
@@ -863,8 +863,7 @@
             "./src/menu/menu_pages.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/npc_dialogue_skip.c",
-            "./src/sorc_layout_force.c"
+            "./src/npc_dialogue_skip.c"
           ],
           "memory_address": "080007530",
           "size": "F38",
@@ -883,6 +882,21 @@
           "size": "15C",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x2AAB0",
+          "auto_calculate_injection_file_address": true,
+          "injection_type": "existing_file",
+          "enabled": true
+        },
+        {
+          "name": "PSYQDebugStringsCave",
+          "code_files": [
+            "./src/gem_counts.c",
+            "./src/skip_credits.c",
+            "./src/sorc_layout_force.c"
+          ],
+          "memory_address": "8001174C",
+          "size": "2F4",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x1F4C",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
           "enabled": true
@@ -1033,7 +1047,7 @@
       },
       "extracted_game_folder": "./.config/game_files/VERSION10",
       "main_executable": "SCUS_944.67",
-      "source_path": "D:\\Documents\\Roms\\PS1\\Spyro - Year of the Dragon (v1.0).bin",
+      "source_path": "./D:/Documents/Roms/PS1/Spyro - Year of the Dragon (v1.0).bin",
       "compiler_flags": "-Os -mno-check-zero-division",
       "is_single_file_mode": false,
       "single_file_path": null,
@@ -1151,8 +1165,7 @@
             "./src/menu/menu_pages.c",
             "./src/rhynoc_trainer.c",
             "./src/category_defaults.c",
-            "./src/sorc_layout_force.c",
-            "./src/special_exits.c"
+            "./src/sorc_layout_force.c"
           ],
           "memory_address": "080007530",
           "size": "F38",
@@ -1173,6 +1186,20 @@
           "size": "15C",
           "injection_file": "SCUS_944.67",
           "injection_file_address": "0x2AAB0",
+          "auto_calculate_injection_file_address": true,
+          "injection_type": "existing_file",
+          "enabled": true
+        },
+        {
+          "name": "PSYQDebugStringsCave",
+          "code_files": [
+            "./src/gem_counts.c",
+            "./src/special_exits.c"
+          ],
+          "memory_address": "8001174C",
+          "size": "2F4",
+          "injection_file": "SCUS_944.67",
+          "injection_file_address": "0x1F4C",
           "auto_calculate_injection_file_address": true,
           "injection_type": "existing_file",
           "enabled": true
