@@ -1,9 +1,6 @@
 #include <symbols.h>
 #include <types.h>
 
-// Indexed by levelIndex (level ID order), NOT route order. notes/gems.md lists
-// these in route order, so it can't be copied across row by row.
-
 u16 levelEntryGemCounts[68] = {
 
     0, 52, 501, 1462, 2369, 1956, 956, 2783, 2787, // Sunrise
